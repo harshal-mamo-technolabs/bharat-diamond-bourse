@@ -1,4 +1,4 @@
-import Header from "@/components/v2/Header";
+import Header from "@/components/version1/Header";
 import Partners from "@/components/Partners";
 import Facility from "@/components/Facility";
 import Footer from "@/components/footer";

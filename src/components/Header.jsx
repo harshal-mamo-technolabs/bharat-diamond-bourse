@@ -11,21 +11,41 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
-const slides = ['/Hero-Banner.jpg', '/Hero-Banner.jpg', '/Hero-Banner.jpg'];
+const slides = ['/Hero-Banner.jpg', '/building2.jpg', '/Bdb-hero-2.png'];
 
 export default function Header() {
-  const [current, setCurrent] = useState(0);
   const [showNavbar, setShowNavbar] = useState(false);
   const [isSticky, setIsSticky] = useState(false); // <-- added sticky state
-  const [isLoaded, setIsLoaded] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [current, setCurrent] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // detect on load + resize
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Tailwind's md breakpoint
+    };
+    handleResize(); // initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const slides = isMobile
+    ? ['/building2.jpg', '/Hero-Banner.jpg', '/building1.jpg'] // no /Bdb-hero-2.png on mobile
+    : ['/Hero-Banner.jpg', '/building2.jpg', '/Bdb-hero-2.png'];
+
+  const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
+  const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
+  }, [slides]); // depends on slides
 
   const IMAGE_HEIGHT = 720;
   const SHOW_SCROLL = IMAGE_HEIGHT * 0.5; // 360px - 50%
   const HIDE_SCROLL = IMAGE_HEIGHT * 0.35; // 252px - 35%
-
-  const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
 
   useEffect(() => {
     const interval = setInterval(nextSlide, 5000);

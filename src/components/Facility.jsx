@@ -193,7 +193,7 @@ export default function Facility() {
                                 transition={{ duration: 0.55, ease, delay: 0.1 }}
                                 className="mt-4 md:mt-6 space-y-4"
                             >
-                                <p className={`${sora.className} text-[16px] md:text-[17px] leading-[1.75] font-[400] text-[#162033]/90`}>
+                                <p className={`${sora.className} text-justify text-[16px] md:text-[17px] leading-[1.75] font-[400] text-[#162033]/90`}>
                                     {current.copy}
                                 </p>
 

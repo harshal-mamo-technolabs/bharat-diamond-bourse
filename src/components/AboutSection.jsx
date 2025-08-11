@@ -78,7 +78,7 @@ export default function AboutSection() {
                   WHO WE ARE
                 </h2>
                 <p
-                  className={`text-gray-700 leading-relaxed text-[15px] mb-3 ${sora.className}`}
+                  className={`text-gray-700 leading-relaxed text-[15px] mb-3 text-justify ${sora.className}`}
                 >
                   Established to strengthen and streamline India's role in the
                   international diamond market, BDB is home to thousands of
@@ -88,7 +88,7 @@ export default function AboutSection() {
                   reflects trust, scale, and operational excellence.
                 </p>
                 <p
-                  className={`text-gray-700 leading-relaxed text-[15px] ${sora.className}`}
+                  className={`text-gray-700 leading-relaxed text-[15px] text-justify ${sora.className}`}
                 >
                   We represent not just a physical space but a vibrant ecosystem
                   — where legacy, innovation, and global commerce meet.
@@ -191,7 +191,7 @@ export default function AboutSection() {
                   MISSION & VISION
                 </h2>
                 <p
-                  className={`text-gray-700 leading-relaxed text-[15px] mb-4 ${sora.className}`}
+                  className={`text-gray-700 leading-relaxed text-[15px] mb-4 text-justify ${sora.className}`}
                 >
                   To provide a world-class, secure, and transparent platform for
                   the global diamond trade by fostering excellence, innovation,
@@ -199,7 +199,7 @@ export default function AboutSection() {
                   leadership in the global gems and jewelry sector.
                 </p>
                 <p
-                  className={`text-gray-700 leading-relaxed text-[15px] mb-6 ${sora.className}`}
+                  className={`text-gray-700 leading-relaxed text-[15px] mb-6 text-justify ${sora.className}`}
                 >
                   To be the most trusted and advanced diamond trading destination
                   in the world — a global epicenter where commerce, collaboration,

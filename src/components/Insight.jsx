@@ -139,7 +139,7 @@ export default function Insights() {
                                 <h3 className={`text-[20px] md:text-[22px] leading-snug text-[#0E234E] font-semibold ${sora.className}`}>
                                     {card.title}
                                 </h3>
-                                <p className={`mt-3 text-[14px] md:text-[15px] leading-relaxed text-[#0E1425]/70 ${sora.className}`}>
+                                <p className={`mt-3 text-justify text-[14px] md:text-[15px] leading-relaxed text-[#0E1425]/70 ${sora.className}`}>
                                     {card.description}
                                 </p>
                             </div>

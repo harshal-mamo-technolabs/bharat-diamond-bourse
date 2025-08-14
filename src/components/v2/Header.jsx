@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { FaPhoneAlt, FaMapMarkerAlt, FaEnvelope } from 'react-icons/fa';
 import { Sora } from 'next/font/google';
@@ -38,19 +38,43 @@ export default function Header() {
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
 
+  const intervalRef = useRef(null);
+
+  const clearAuto = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+
+  const startAuto = () => {
+    clearAuto();
+    intervalRef.current = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 5000);
+  };
+
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
-    return () => clearInterval(interval);
-  }, [slides]); // depends on slides
+    startAuto();
+    return () => clearAuto();
+  }, [slides]);
 
   const IMAGE_HEIGHT = 720;
   const SHOW_SCROLL = IMAGE_HEIGHT * 0.5; // 360px - 50%
   const HIDE_SCROLL = IMAGE_HEIGHT * 0.35; // 252px - 35%
 
-  useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  // Manual controls should reset the auto timer to prevent double steps
+  const handleNext = () => {
+    clearAuto();
+    setCurrent((prev) => (prev + 1) % slides.length);
+    startAuto();
+  };
+
+  const handlePrev = () => {
+    clearAuto();
+    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+    startAuto();
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -122,13 +146,13 @@ export default function Header() {
 
         {/* Arrows - Hidden on Mobile */}
         <button
-          onClick={prevSlide}
+          onClick={handlePrev}
           className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-black/50 p-2 rounded-r-lg z-20 transition backdrop-blur-md"
         >
           <IoIosArrowRoundBack className="text-white text-2xl" />
         </button>
         <button
-          onClick={nextSlide}
+          onClick={handleNext}
           className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-black/50 p-2 rounded-l-lg z-20 transition backdrop-blur-md"
         >
           <IoIosArrowRoundForward className="text-white text-2xl" />

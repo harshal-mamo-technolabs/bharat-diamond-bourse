@@ -16,6 +16,12 @@ const gotham = localFont({
   style: 'normal',
 });
 
+const gothamLight = localFont({
+    src: '../../../public/fonts/Gotham Medium.otf',
+    weight: '400',
+    style: 'normal',
+  });
+
 const STATS = [
     { value: "2500", label: "Diamond Offices" },
     { value: "9", label: "Interconnected Towers" },
@@ -194,8 +200,8 @@ export default function BourseSection() {
                                         "transition-all duration-500 ease-out will-change-transform",
                                     ].join(" ")}
                                 >
-                                    <div className="text-[#0E234E] font-extrabold leading-none tracking-tight text-[30px] sm:text-[34px] lg:text-[40px]">
-                                        {s.value}
+<div className={`text-[#0E234E] ${gothamLight.className} font-extrabold leading-none tracking-tight text-[30px] sm:text-[34px] lg:text-[40px]`}>
+{s.value}
                                     </div>
                                     <div
                                         className={[

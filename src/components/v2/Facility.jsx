@@ -14,6 +14,11 @@ const gotham = localFont({
   style: 'normal',
 });
 
+const gothamLight = localFont({
+  src: '../../../public/fonts/Gotham Medium.otf',
+  weight: '400',
+  style: 'normal',
+});
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
 
@@ -151,7 +156,7 @@ export default function Facility() {
                       <Image src={row.iconSrc} alt={`${row.name} icon`} width={22} height={22} />
                     </span>
 
-                    <span className={[`${gotham.className} text-[20px] leading-[1] tracking-[0.2px] font-[300]`, isActive ? `text-white` : `text-[#0E234E]`].join(" ")}>
+                    <span className={[`${gothamLight.className} text-[20px] leading-[1] tracking-[0.2px]`, isActive ? `text-white` : `text-[#0E234E]`].join(" ")}>
                       {row.name.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}
                     </span>
                   </span>

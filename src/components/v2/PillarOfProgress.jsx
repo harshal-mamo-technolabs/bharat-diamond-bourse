@@ -2,18 +2,18 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
-import localFont from 'next/font/local';
+import localFont from "next/font/local";
 import { Sora } from "next/font/google";
 
 // Load Gotham from OTF (replaces Carentro)
 const gotham = localFont({
-  src: '../../../public/fonts/Gotham.otf',
-  weight: '400',
-  style: 'normal',
+  src: "../../../public/fonts/Gotham.otf",
+  weight: "400",
+  style: "normal",
 });
 
 // Load Sora font
-const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
+const sora = Sora({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
 const ITEMS = [
   { title: "Empowering Diamond\nTrade", src: "/pillar-of-progress/empowering-diamond-trade.jpg" },
@@ -28,7 +28,7 @@ function widthClass(rel) {
   if (a === 0) {
     return [
       "w-[72vw] sm:w-[54vw] lg:w-[19vw]", // match largest width
-      "min-w-[260px] lg:min-w-[19vw]",     // prevent shrink
+      "min-w-[260px] lg:min-w-[19vw]", // prevent shrink
       "max-w-[600px]",
     ].join(" ");
   }
@@ -48,12 +48,18 @@ function widthClass(rel) {
 
 function offsetClass(rel) {
   switch (rel) {
-    case -2: return "-translate-y-2 sm:-translate-y-3";
-    case -1: return "translate-y-3 sm:translate-y-4";
-    case 0: return "-translate-y-6 sm:-translate-y-7";
-    case 1: return "translate-y-3 sm:translate-y-4";
-    case 2: return "-translate-y-2 sm:-translate-y-3";
-    default: return "";
+    case -2:
+      return "-translate-y-2 sm:-translate-y-3";
+    case -1:
+      return "translate-y-3 sm:translate-y-4";
+    case 0:
+      return "-translate-y-6 sm:-translate-y-7";
+    case 1:
+      return "translate-y-3 sm:translate-y-4";
+    case 2:
+      return "-translate-y-2 sm:-translate-y-3";
+    default:
+      return "";
   }
 }
 
@@ -78,15 +84,13 @@ export default function PillarOfProgress() {
     if (smooth) {
       const start = scroller.scrollLeft;
       const change = target - start;
-      const duration = 800; // smoother
+      const duration = 800;
       let startTime = null;
 
       const animateScroll = (time) => {
         if (!startTime) startTime = time;
         const progress = Math.min((time - startTime) / duration, 1);
-        const ease = progress < 0.5
-          ? 2 * progress * progress
-          : -1 + (4 - 2 * progress) * progress; // easeInOutQuad
+        const ease = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress; // easeInOutQuad
         scroller.scrollLeft = start + change * ease;
         if (progress < 1) requestAnimationFrame(animateScroll);
       };
@@ -100,20 +104,30 @@ export default function PillarOfProgress() {
     const scroller = scrollerRef.current;
     if (!scroller) return;
     const centerX = scroller.getBoundingClientRect().left + scroller.clientWidth / 2;
-    let best = 0, bestDist = Infinity, secondBestDist = Infinity, secondBest = 0;
+    let best = 0,
+      bestDist = Infinity,
+      secondBestDist = Infinity,
+      secondBest = 0;
     itemsRef.current.forEach((el, i) => {
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const dist = Math.abs(centerX - (rect.left + rect.width / 2));
       if (dist < bestDist) {
-        secondBest = best; secondBestDist = bestDist;
-        bestDist = dist; best = i;
+        secondBest = best;
+        secondBestDist = bestDist;
+        bestDist = dist;
+        best = i;
       } else if (dist < secondBestDist) {
-        secondBestDist = dist; secondBest = i;
+        secondBestDist = dist;
+        secondBest = i;
       }
     });
     const currentBestDist = itemsRef.current[activeRef.current]
-      ? Math.abs(centerX - (itemsRef.current[activeRef.current].getBoundingClientRect().left + itemsRef.current[activeRef.current].getBoundingClientRect().width / 2))
+      ? Math.abs(
+          centerX -
+            (itemsRef.current[activeRef.current].getBoundingClientRect().left +
+              itemsRef.current[activeRef.current].getBoundingClientRect().width / 2)
+        )
       : Infinity;
     if (best !== activeRef.current && bestDist + 6 < currentBestDist) {
       setActive(best);
@@ -122,7 +136,9 @@ export default function PillarOfProgress() {
     }
   };
 
-  useEffect(() => { activeRef.current = active; }, [active]);
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
 
   useLayoutEffect(() => {
     scrollToIndex(active, false);
@@ -139,7 +155,10 @@ export default function PillarOfProgress() {
     let raf = null;
     const onScroll = () => {
       if (raf) return;
-      raf = requestAnimationFrame(() => { raf = null; updateActiveFromScroll(); });
+      raf = requestAnimationFrame(() => {
+        raf = null;
+        updateActiveFromScroll();
+      });
     };
     const onResize = () => {
       scrollToIndex(activeRef.current, false);
@@ -172,7 +191,7 @@ export default function PillarOfProgress() {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const nextIndex = (activeRef.current + 1);
+      const nextIndex = activeRef.current + 1;
       scrollToIndex(nextIndex);
     }, 5000);
     return () => clearInterval(intervalId);
@@ -200,7 +219,6 @@ export default function PillarOfProgress() {
             "flex items-start gap-[3vw] lg:gap-[2vw] px-[3vw] lg:px-[2vw] pb-2",
             "[-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
           ].join(" ")}
-          
         >
           {LOOP_ITEMS.map((item, i) => {
             const rel = i - active;
@@ -209,7 +227,9 @@ export default function PillarOfProgress() {
             return (
               <div
                 key={`${item.src}-${i}`}
-                ref={(el) => { if (el) itemsRef.current[i] = el; }}
+                ref={(el) => {
+                  if (el) itemsRef.current[i] = el;
+                }}
                 onClick={() => scrollToIndex(i)}
                 className={[
                   "shrink-0 relative transition-all duration-[900ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-transform",
@@ -219,10 +239,9 @@ export default function PillarOfProgress() {
                 ].join(" ")}
               >
                 {isActive ? (
-                  <div className="relative isolate rounded-[22px] border border-[#CBD3DD] p-[10px] bg-white">
-                    <div
-                      className="relative h-[64vw] sm:h-[48vw] lg:h-[360px] w-full overflow-hidden rounded-[18px] bg-white"
-                    >
+                  // Frame removed for active card
+                  <div className="relative">
+                    <div className="relative h-[64vw] sm:h-[48vw] lg:h-[360px] w-full overflow-hidden rounded-[8px]">
                       <img
                         src={item.src}
                         alt={item.title.replace("\n", " ")}
@@ -233,9 +252,7 @@ export default function PillarOfProgress() {
                     </div>
 
                     <div className="mt-3 rounded-[14px] bg-[#0E234E] text-white px-4 py-3 flex items-center justify-between">
-                      <div className={`text-[13px] leading-tight whitespace-pre-line ${sora.className}`}>
-                        {item.title}
-                      </div>
+                      <div className={`text-[13px] leading-tight whitespace-pre-line ${sora.className}`}>{item.title}</div>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
                         <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
@@ -243,12 +260,12 @@ export default function PillarOfProgress() {
                   </div>
                 ) : (
                   <div className="relative">
-                    <div className="relative h-[64vw] sm:h-[48vw] lg:h-[360px] w-full overflow-hidden rounded-none">
+                    <div className="relative h-[64vw] sm:h-[48vw] lg:h-[360px] w-full overflow-hidden rounded-[8px]">
                       <Image
                         src={item.src}
                         alt={item.title.replace("\n", " ")}
                         fill
-                        className="object-cover rounded-none brightness-[0.98] saturate-[0.9] contrast-[0.98]"
+                        className="object-cover brightness-[0.98] saturate-[0.9] contrast-[0.98]"
                         sizes="100vw"
                       />
                     </div>

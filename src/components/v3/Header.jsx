@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { FaPhoneAlt, FaEnvelope, FaSearch } from 'react-icons/fa';
 import { Sora } from 'next/font/google';
@@ -18,32 +18,17 @@ const gotham = localFont({
   style: 'normal',
 });
 
-const slides = ['/building2.jpg', '/Hero-Banner.jpg', '/Bdb-hero-2.png'];
-
 const languages = [
   { code: 'EN', label: 'English' },
   { code: 'FR', label: 'French' },
   { code: 'HI', label: 'Hindi' },
 ];
 
-function Arrow({ color = "#FFFFFF", size = 16, stroke = 2, className = "" }) {
+function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
   return (
-    <svg
-      className={className}
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
+    <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M3 12h14" stroke={color} strokeWidth={stroke} strokeLinecap="round" />
-      <path
-        d="M14 7l5 5-5 5"
-        stroke={color}
-        strokeWidth={stroke}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M14 7l5 5-5 5" stroke={color} strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -56,63 +41,78 @@ export default function Header() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  // detect on load + resize
   useEffect(() => {
-    // detect on load + resize
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Tailwind's md breakpoint
-    };
-    handleResize(); // initial check
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const slides = isMobile
-    ? ['/building2.jpg', '/Hero-Banner.jpg', '/building1.jpg'] // no /Bdb-hero-2.png on mobile
-    : ['/building2.jpg', '/Hero-Banner.jpg', '/Bdb-hero-2.png'];
+  // choose slides per device (same sets you had)
+  const slideSources = isMobile
+    ? ['/building2.jpg', '/Hero-Banner.jpg', '/building1.jpg'] // mobile
+    : ['/building2.jpg', '/Hero-Banner.jpg', '/Bdb-hero-2.png']; // desktop
 
-  const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+  // carousel controls
+  const nextSlide = () => setCurrent((prev) => (prev + 1) % slideSources.length);
+  const prevSlide = () => setCurrent((prev) => (prev - 1 + slideSources.length) % slideSources.length);
 
+  // single interval controller (no duplicates)
+  const intervalRef = useRef(null);
+  const clearAuto = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+  const startAuto = () => {
+    clearAuto();
+    intervalRef.current = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slideSources.length);
+    }, 5000);
+  };
+
+  // start/refresh auto when slides change (e.g., resize) and on mount
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
-    return () => clearInterval(interval);
-  }, [slides]); // depends on slides
+    setCurrent(0); // reset index when the slide set changes
+    startAuto();
+    return () => clearAuto();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile]);
+
+  // manual controls should reset the timer to avoid double-step timing
+  const handleNext = () => {
+    clearAuto();
+    nextSlide();
+    startAuto();
+  };
+  const handlePrev = () => {
+    clearAuto();
+    prevSlide();
+    startAuto();
+  };
 
   const IMAGE_HEIGHT = 720;
 
-
-  useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
   useEffect(() => setIsLoaded(true), []);
 
-  // Detect when hero is fully scrolled
+  // sticky navbar after hero
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY >= IMAGE_HEIGHT) {
-        setShowStickyNav(true);
-      } else {
-        setShowStickyNav(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setShowStickyNav(window.scrollY >= IMAGE_HEIGHT);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <>
       {/* Sticky Navbar after hero */}
       {showStickyNav && (
-        <motion.nav
-          initial={{ y: -80 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.4 }}
+        <nav
           className={`hidden md:flex fixed top-0 left-0 w-full bg-white shadow-md py-2 px-12 z-50 ${sora.className}`}
+          style={{ transform: 'translateY(0)', transition: 'transform .4s ease-out' }}
         >
           <div className="flex items-center justify-between w-full">
-            {/* Logo change */}
             <Image src="/BDB-LOGO.png" alt="BDB Logo" width={120} height={50} />
             <ul className="flex space-x-8 text-[14px] font-medium text-[#0b2a57]">
               <li className="hover:text-blue-700">Home</li>
@@ -123,23 +123,23 @@ export default function Header() {
             </ul>
             <button
               className={[
-                "ml-6 group inline-flex items-center justify-between",
-                "rounded-[8px] px-5 py-3.5",
-                "bg-[#0E234E]",
+                'ml-6 group inline-flex items-center justify-between',
+                'rounded-[8px] px-5 py-3.5',
+                'bg-[#0E234E]',
                 `${gotham.className}`,
-                "text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] uppercase text-[13px] font-[600] tracking-[0.5px]",
-                "transition-all duration-200 hover:-translate-y-px",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-              ].join(" ")}
+                'text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] uppercase text-[13px] font-[600] tracking-[0.5px]',
+                'transition-all duration-200 hover:-translate-y-px',
+                'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
+              ].join(' ')}
             >
               START YOUR BUSINESS
               <Arrow color="#FFFFFF" size={16} stroke={2} className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1" />
             </button>
           </div>
-        </motion.nav>
+        </nav>
       )}
 
-      {/* Mobile Hamburger - fixed at top */}
+      {/* Mobile Hamburger */}
       <div className="absolute top-0 left-0 w-full bg-white shadow-md z-50 md:hidden">
         <div className="flex items-center justify-between px-4 py-3">
           <Image src="/BDB-LOGO.png" alt="BDB Logo" width={100} height={40} />
@@ -170,7 +170,7 @@ export default function Header() {
           }`}
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
-          {slides.map((src, idx) => (
+          {slideSources.map((src, idx) => (
             <div key={idx} className="relative w-full flex-shrink-0 h-full">
               <Image src={src} alt={`Slide ${idx + 1}`} fill className="object-cover" priority={idx === 0} />
             </div>
@@ -178,23 +178,23 @@ export default function Header() {
         </div>
 
         {/* Bottom Gradient */}
-        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white/25 to-transparent pointer-events-none z-10"></div>
+        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white/25 to-transparent pointer-events-none z-10" />
 
         {/* Arrows */}
         <button
-          onClick={prevSlide}
+          onClick={handlePrev}
           className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-black/50 p-2 rounded-r-lg z-20 backdrop-blur-md"
         >
           <IoIosArrowRoundBack className="text-white text-2xl" />
         </button>
         <button
-          onClick={nextSlide}
+          onClick={handleNext}
           className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-black/50 p-2 rounded-l-lg z-20 backdrop-blur-md"
         >
           <IoIosArrowRoundForward className="text-white text-2xl" />
         </button>
 
-        {/* ORIGINAL NAVBAR OVER IMAGE (unchanged) */}
+        {/* ORIGINAL NAVBAR OVER IMAGE */}
         <nav
           className={`hidden md:flex flex-col absolute top-0 left-0 w-full px-12 py-1 z-30 text-white ${sora.className} select-none`}
           style={{ background: 'rgba(0,0,0,0.3)' }}
@@ -238,22 +238,17 @@ export default function Header() {
             </ul>
             <button
               className={[
-                "ml-6 group inline-flex items-center justify-between",
-                "rounded-[8px] px-5 py-3.5",
-                "bg-[#0E234E]",
+                'ml-6 group inline-flex items-center justify-between',
+                'rounded-[8px] px-5 py-3.5',
+                'bg-[#0E234E]',
                 `${sora.className} ${gotham.className}`,
-                "text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] uppercase text-[13px] font-[600] tracking-[0.5px]",
-                "transition-all duration-200 hover:-translate-y-px",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-              ].join(" ")}
+                'text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] uppercase text-[13px] font-[600] tracking-[0.5px]',
+                'transition-all duration-200 hover:-translate-y-px',
+                'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
+              ].join(' ')}
             >
               START YOUR BUSINESS
-              <Arrow
-                color="#FFFFFF"
-                size={16}
-                stroke={2}
-                className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
-              />
+              <Arrow color="#FFFFFF" size={16} stroke={2} className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1" />
             </button>
           </div>
         </nav>

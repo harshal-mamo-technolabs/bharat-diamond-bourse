@@ -22,7 +22,7 @@ const gotham = localFont({
 // Load Sora font
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
-function Arrow({ color = "#FFFFFF", size = 16, stroke = 2, className = "" }) {
+function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
   return (
     <svg
       className={className}
@@ -33,19 +33,12 @@ function Arrow({ color = "#FFFFFF", size = 16, stroke = 2, className = "" }) {
       aria-hidden="true"
     >
       <path d="M3 12h14" stroke={color} strokeWidth={stroke} strokeLinecap="round" />
-      <path
-        d="M14 7l5 5-5 5"
-        stroke={color}
-        strokeWidth={stroke}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M14 7l5 5-5 5" stroke={color} strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
 export default function AboutSection() {
-
   const building1Variants = {
     hidden: { opacity: 0, x: 100 },
     visible: { opacity: 1, x: 0, transition: { duration: 1.2, ease: 'easeOut' } },
@@ -75,33 +68,24 @@ export default function AboutSection() {
           <div className="bg-[#F2F4F6] rounded-3xl shadow-xl p-6 sm:p-10 sm:pt-20 relative mb-20 overflow-visible">
             {/* Grid for md+ screens, stacked for mobile */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 md:gap-y-0 md:gap-x-10 items-start">
-
               {/* WHO WE ARE */}
               <div className="max-w-xl">
-                <h2
-                  className={`text-3xl sm:text-4xl font-bold text-[#1D3156] mb-4 ${gotham.className}`}
-                >
+                <h2 className={`text-3xl sm:text-4xl font-bold text-[#1D3156] mb-4 ${gotham.className}`}>
                   Who We Are
                 </h2>
-                <p
-                  className={`text-gray-700 leading-relaxed text-[15px] mb-3 text-justify ${sora.className}`}
-                >
-                  Established to strengthen and streamline India's role in the
-                  international diamond market, BDB is home to thousands of
-                  national and international traders, manufacturers, exporters,
-                  and service providers. The campus offers a highly secure,
-                  transparent, and professionally managed environment that
-                  reflects trust, scale, and operational excellence.
+                <p className={`text-gray-700 leading-relaxed text-[15px] mb-3 text-justify ${sora.className}`}>
+                  Established to strengthen and streamline India's role in the international diamond market, BDB is
+                  home to thousands of national and international traders, manufacturers, exporters, and service
+                  providers. The campus offers a highly secure, transparent, and professionally managed environment
+                  that reflects trust, scale, and operational excellence.
                 </p>
-                <p
-                  className={`text-gray-700 leading-relaxed text-[15px] text-justify ${sora.className}`}
-                >
-                  We represent not just a physical space but a vibrant ecosystem
-                  — where legacy, innovation, and global commerce meet.
+                <p className={`text-gray-700 leading-relaxed text-[15px] text-justify ${sora.className}`}>
+                  We represent not just a physical space but a vibrant ecosystem — where legacy, innovation, and
+                  global commerce meet.
                 </p>
               </div>
 
-              {/* Building 1 image (no shadow, small rounded corners, lift on hover) */}
+              {/* Building 1 image (no border, small rounded corners, lift on hover) */}
               <motion.div
                 className="group flex justify-center md:justify-end items-end relative -mt-4 sm:-mt-12 md:-mt-45 mb-8 sm:mb-16 md:mb-25"
                 initial="hidden"
@@ -114,10 +98,7 @@ export default function AboutSection() {
                   style={{
                     width: 450,
                     height: 450,
-                    border: '4px solid transparent',
-                    borderRadius: '8px',
-                    background:
-                      'linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0)) padding-box, linear-gradient(135deg, #1D3156, #D6DCE5) border-box',
+                    borderRadius: '8px', // ✅ border removed
                   }}
                 >
                   <Image
@@ -129,7 +110,7 @@ export default function AboutSection() {
                 </div>
               </motion.div>
 
-              {/* Building 2 image (no shadow, small rounded corners, lift on hover) */}
+              {/* Building 2 image (no border, small rounded corners, lift on hover) */}
               <motion.div
                 className="group flex justify-center md:justify-start items-start relative -mb-8 sm:-mb-16 md:-mb-24 order-last md:order-none"
                 initial="hidden"
@@ -142,10 +123,7 @@ export default function AboutSection() {
                   style={{
                     width: 450,
                     height: 450,
-                    border: '4px solid transparent',
-                    borderRadius: '8px',
-                    background:
-                      'linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0)) padding-box, linear-gradient(135deg, #1D3156, #D6DCE5) border-box',
+                    borderRadius: '8px', // ✅ border removed
                   }}
                 >
                   <Image
@@ -159,39 +137,31 @@ export default function AboutSection() {
 
               {/* MISSION & VISION */}
               <div className="max-w-xl ml-auto flex flex-col justify-end">
-                <h2
-                  className={`text-3xl sm:text-4xl font-bold text-[#1D3156] mb-3 ${gotham.className}`}
-                >
+                <h2 className={`text-3xl sm:text-4xl font-bold text-[#1D3156] mb-3 ${gotham.className}`}>
                   Mission & Vision
                 </h2>
-                <p
-                  className={`text-gray-700 leading-relaxed text-[15px] mb-4 text-justify ${sora.className}`}
-                >
-                  To provide a world-class, secure, and transparent platform for
-                  the global diamond trade by fostering excellence, innovation,
-                  and integrity — supporting businesses and advancing India's
-                  leadership in the global gems and jewelry sector.
+                <p className={`text-gray-700 leading-relaxed text-[15px] mb-4 text-justify ${sora.className}`}>
+                  To provide a world-class, secure, and transparent platform for the global diamond trade by fostering
+                  excellence, innovation, and integrity — supporting businesses and advancing India's leadership in the
+                  global gems and jewelry sector.
                 </p>
-                <p
-                  className={`text-gray-700 leading-relaxed text-[15px] mb-6 text-justify ${sora.className}`}
-                >
-                  To be the most trusted and advanced diamond trading destination
-                  in the world — a global epicenter where commerce, collaboration,
-                  and community come together to shape the future of the diamond
+                <p className={`text-gray-700 leading-relaxed text-[15px] mb-6 text-justify ${sora.className}`}>
+                  To be the most trusted and advanced diamond trading destination in the world — a global epicenter
+                  where commerce, collaboration, and community come together to shape the future of the diamond
                   industry.
                 </p>
                 <Link
                   href=""
                   className={[
-                    "group relative inline-flex items-center justify-between",
-                    "rounded-[8px] px-5 py-3.5",
-                    "bg-[#0E234E]",
+                    'group relative inline-flex items-center justify-between',
+                    'rounded-[8px] px-5 py-3.5',
+                    'bg-[#0E234E]',
                     `${gotham.className}`,
-                    "text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]",
-                    "transition-all duration-200 hover:-translate-y-px",
-                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-                    "w-max",
-                  ].join(" ")}
+                    'text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]',
+                    'transition-all duration-200 hover:-translate-y-px',
+                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
+                    'w-max',
+                  ].join(' ')}
                 >
                   <span>Read more About us </span>
                   <Arrow
@@ -202,7 +172,6 @@ export default function AboutSection() {
                   />
                 </Link>
               </div>
-
             </div>
           </div>
         </div>

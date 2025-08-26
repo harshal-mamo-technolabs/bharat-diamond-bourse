@@ -2,6 +2,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Sora } from "next/font/google";
 import localFont from "next/font/local";
@@ -12,8 +13,23 @@ const gotham = localFont({
   style: "normal",
 });
 
+const gothamLight = localFont({
+  src: '../../../public/fonts/Gotham Medium.otf',
+  weight: '400',
+  style: 'normal',
+});
+
 // Load Sora font
 const sora = Sora({ subsets: ["latin"], weight: ["400", "500", "700"] });
+
+function Arrow({ color = "#FFFFFF", size = 16, stroke = 2, className = "" }) {
+    return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 12h14" stroke={color} strokeWidth={stroke} strokeLinecap="round" />
+            <path d="M14 7l5 5-5 5" stroke={color} strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    );
+}
 
 const CONTENT = {
   Mission: {
@@ -69,7 +85,7 @@ export default function MissionSection() {
     >
       <div className="max-w-7xl mx-auto">
         {/* ========== TABS ========== */}
-        <div className="relative mb-12 border-b border-gray-200">
+        <div className="relative mb-12 ">
           <div className="flex md:justify-between overflow-x-auto md:overflow-visible no-scrollbar">
             {Object.keys(CONTENT).map((tab) => (
               <button
@@ -93,25 +109,27 @@ export default function MissionSection() {
         {/* ========== CONTENT (Animated) ========== */}
         <div className="grid grid-cols-12 gap-8 items-start">
           {/* IMAGE */}
-          <div className="col-span-12 md:col-span-5 flex md:justify-start justify-center">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeContent.img}
-                initial={{ opacity: 0, scale: 1.02 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.01 }}
-                transition={{ duration: 0.6, ease }}
-                className="relative w-full md:w-[400px] h-[400px] rounded-lg overflow-hidden shadow-md"
-              >
-                <Image
-                  src={activeContent.img}
-                  alt={activeContent.title}
-                  fill
-                  className="object-cover"
-                />
-              </motion.div>
-            </AnimatePresence>
-          </div>
+          {/* IMAGE */}
+<div className="col-span-12 md:col-span-5 flex md:justify-start justify-center">
+  <AnimatePresence mode="wait">
+    <motion.div
+      key={activeTab} // 👈 this makes animation re-trigger on every tab change
+      initial={{ opacity: 0, x: -60 }} // 👈 always start from left
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -60 }}    // 👈 exit to left
+      transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+      className="relative w-full md:w-[400px] h-[400px] rounded-lg overflow-hidden shadow-md"
+    >
+      <Image
+        src={activeContent.img}
+        alt={activeContent.title}
+        fill
+        className="object-cover"
+      />
+    </motion.div>
+  </AnimatePresence>
+</div>
+
 
           {/* TEXT CONTENT */}
           <div className="col-span-12 md:col-span-7 flex flex-col justify-between md:min-h-[400px]">
@@ -123,14 +141,14 @@ export default function MissionSection() {
                 exit={{ opacity: 0, y: 10 }}
                 transition={{ duration: 0.55, ease, delay: 0.1 }}
               >
-                <h2 className="text-[32px] md:text-[50px] leading-tight font-bold text-[#0A1D56] mb-6">
+                <h2 className={`text-[32px] md:text-[50px] leading-tight font-bold text-[#0A1D56] mb-6 ${gothamLight.className}`}>
                   {activeContent.title}
                 </h2>
 
                 {activeContent.copy.map((para, i) => (
                   <p
                     key={i}
-                    className={`text-gray-700 text-base md:text-lg leading-relaxed mb-5 text-justify ${sora.className}`}
+                    className={`text-gray-700 text-base md:text-[17px] leading-relaxed mb-5 text-justify ${sora.className}`}
                   >
                     {para}
                   </p>
@@ -139,9 +157,27 @@ export default function MissionSection() {
             </AnimatePresence>
 
             <div className="mt-8 md:mt-0">
-              <button className="px-6 py-3 bg-[#0A1D56] text-white rounded-md font-medium shadow hover:bg-[#112973] transition">
-                READ MORE ABOUT US →
-              </button>
+               <Link
+                  href=""
+                  className={[
+                    "group relative inline-flex items-center justify-between",
+                    "rounded-[8px] px-5 py-3.5",
+                    "bg-[#0E234E]",
+                    `${gotham.className}`,  
+                    "text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]",
+                    "transition-all duration-200 hover:-translate-y-px",
+                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
+                    "w-max",
+                  ].join(" ")}
+                >
+                  <span>Read more about us </span>
+                  <Arrow
+                    color="#FFFFFF"
+                    size={16}
+                    stroke={2}
+                    className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
+                  />
+                </Link>
             </div>
           </div>
         </div>

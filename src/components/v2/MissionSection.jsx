@@ -23,9 +23,22 @@ const sora = Sora({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
 function Arrow({ color = "#FFFFFF", size = 16, stroke = 2, className = "" }) {
   return (
-    <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      className={className}
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <path d="M3 12h14" stroke={color} strokeWidth={stroke} strokeLinecap="round" />
-      <path d="M14 7l5 5-5 5" stroke={color} strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M14 7l5 5-5 5"
+        stroke={color}
+        strokeWidth={stroke}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -76,16 +89,17 @@ const CONTENT = {
 export default function MissionSection() {
   const [activeTab, setActiveTab] = useState("Mission");
 
-  // Animation controls — tweak these delays/timing as you like
   const easing = [0.22, 0.61, 0.36, 1];
-  const IMAGE_DELAY = 0.2;   // image enters first
-  const TEXT_DELAY = 0.4;    // text follows after image
+  const IMAGE_DELAY = 0.2;
+  const TEXT_DELAY = 0.4;
   const DURATION = 0.6;
 
   const activeContent = CONTENT[activeTab];
 
   return (
-    <section className={`w-full bg-[#EFF3F6] px-6 md:px-16 xl:px-28 py-10 ${gotham.className}`}>
+    <section
+      className={`w-full bg-[#EFF3F6] px-6 md:px-16 xl:px-28 py-10 ${gotham.className}`}
+    >
       <div className="max-w-7xl mx-auto">
         <div className="relative mb-12">
           <div className="flex md:justify-between overflow-x-auto md:overflow-visible no-scrollbar">
@@ -93,7 +107,6 @@ export default function MissionSection() {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-
                 className={`relative pb-4 flex-shrink-0 px-4 md:flex-1 text-lg font-medium text-center transition-all ${gothamLight.className} ${
                   activeTab === tab
                     ? "text-[#0A1D56] font-semibold"
@@ -121,12 +134,17 @@ export default function MissionSection() {
                 transition={{ duration: DURATION, ease: easing, delay: IMAGE_DELAY }}
                 className="relative w-full md:w-[400px] h-[400px] rounded-lg overflow-hidden shadow-md"
               >
-                <Image src={activeContent.img} alt={activeContent.title} fill className="object-cover" />
+                <Image
+                  src={activeContent.img}
+                  alt={activeContent.title}
+                  fill
+                  className="object-cover"
+                />
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* TEXT CONTENT */}
+          {/* TEXT + BUTTON (animate together) */}
           <div className="col-span-12 md:col-span-7 flex flex-col justify-between md:min-h-[400px]">
             <AnimatePresence mode="wait">
               <motion.div
@@ -135,47 +153,50 @@ export default function MissionSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
                 transition={{ duration: 0.55, ease: easing, delay: TEXT_DELAY }}
+                className="flex flex-col justify-between h-full"
               >
-                <h2
-                  className={`text-[32px] md:text-[50px] leading-tight font-bold text-[#0A1D56] mb-6 ${gothamLight.className}`}
-                >
-                  {activeContent.title}
-                </h2>
-
-                {activeContent.copy.map((para, i) => (
-                  <p
-                    key={i}
-                    className={`text-gray-700 text-base md:text-[17px] leading-relaxed mb-5 text-justify ${sora.className}`}
+                <div>
+                  <h2
+                    className={`text-[32px] md:text-[50px] leading-tight font-bold text-[#0A1D56] mb-6 ${gothamLight.className}`}
                   >
-                    {para}
-                  </p>
-                ))}
+                    {activeContent.title}
+                  </h2>
+
+                  {activeContent.copy.map((para, i) => (
+                    <p
+                      key={i}
+                      className={`text-gray-700 text-base md:text-[17px] leading-relaxed mb-5 text-justify ${sora.className}`}
+                    >
+                      {para}
+                    </p>
+                  ))}
+                </div>
+
+                <div className="mt-8 md:mt-0">
+                  <Link
+                    href=""
+                    className={[
+                      "group relative inline-flex items-center justify-between",
+                      "rounded-[8px] px-5 py-3.5",
+                      "bg-[#0E234E]",
+                      `${gotham.className}`,
+                      "text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]",
+                      "transition-all duration-200 hover:-translate-y-px",
+                      "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
+                      "w-max",
+                    ].join(" ")}
+                  >
+                    <span>Read more about us</span>
+                    <Arrow
+                      color="#FFFFFF"
+                      size={16}
+                      stroke={2}
+                      className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
+                    />
+                  </Link>
+                </div>
               </motion.div>
             </AnimatePresence>
-
-            <div className="mt-8 md:mt-0">
-              <Link
-                href=""
-                className={[
-                  "group relative inline-flex items-center justify-between",
-                  "rounded-[8px] px-5 py-3.5",
-                  "bg-[#0E234E]",
-                  `${gotham.className}`,
-                  "text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]",
-                  "transition-all duration-200 hover:-translate-y-px",
-                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-                  "w-max",
-                ].join(" ")}
-              >
-                <span>Read more about us</span>
-                <Arrow
-                  color="#FFFFFF"
-                  size={16}
-                  stroke={2}
-                  className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
-                />
-              </Link>
-            </div>
           </div>
         </div>
       </div>

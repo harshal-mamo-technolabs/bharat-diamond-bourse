@@ -156,7 +156,7 @@ export default function BourseSection() {
                         className={[
                             "rounded-[24px] bg-white",
                             "border border-[#262626]",
-                            "shadow-[0_2px_10px_rgba(0,0,0,0.05)]",
+                            "shadow-[0_2px_10px_rgba(0,0,0,0.03)]",
                             "px-6 sm:px-8 lg:px-10 py-7 lg:py-9",
                         ].join(" ")}
                     >

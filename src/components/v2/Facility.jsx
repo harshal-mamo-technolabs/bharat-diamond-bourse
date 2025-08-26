@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import StartBusinessModal from "../v3/StartBusinessModal";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import localFont from 'next/font/local';
@@ -100,6 +101,7 @@ function Arrow({ color = "#FFFFFF", size = 16, stroke = 2, className = "" }) {
 
 export default function Facility() {
     const [active, setActive] = useState(1);
+    const [showModal, setShowModal] = useState(false);
     const current = ROWS[active];
     const ease = [0.22, 0.61, 0.36, 1]; // smooth
 
@@ -202,8 +204,8 @@ export default function Facility() {
                                     {current.copy}
                                 </p>
 
-                                <Link
-                  href=""
+                                <button
+                  onClick={() => setShowModal(true)}
                   className={[
                     "group relative inline-flex items-center justify-between",
                     "rounded-[8px] px-5 py-3.5",
@@ -222,12 +224,15 @@ export default function Facility() {
                     stroke={2}
                     className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
                   />
-                </Link>
+                </button>
                             </motion.div>
                         </AnimatePresence>
                     </div>
                 </div>
             </div>
+            {showModal && (
+                <StartBusinessModal isOpen={showModal} onClose={() => setShowModal(false)} />
+            )}
         </section>
     );
 }

@@ -93,8 +93,11 @@ export default function MissionSection() {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`relative pb-4 flex-shrink-0 px-4 md:flex-1 text-lg font-medium text-center transition-all ${
-                  activeTab === tab ? "text-[#0A1D56] font-semibold" : "text-gray-700 hover:text-[#0A1D56]"
+
+                className={`relative pb-4 flex-shrink-0 px-4 md:flex-1 text-lg font-medium text-center transition-all ${gothamLight.className} ${
+                  activeTab === tab
+                    ? "text-[#0A1D56] font-semibold"
+                    : "text-gray-700 hover:text-[#0A1D56]"
                 }`}
               >
                 {tab}

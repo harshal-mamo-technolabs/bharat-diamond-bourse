@@ -115,7 +115,7 @@ export default function BourseSection() {
                     {/* video */}
                     <video
                         ref={videoRef}
-                        src="/bourse-tour/bourse-tour.mp4"
+                        src="/bourse-tour/bdb.mp4"
                         className="absolute inset-0 h-full w-full object-cover z-0"
                         playsInline
                         preload="metadata"

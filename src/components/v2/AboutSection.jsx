@@ -102,7 +102,7 @@ export default function AboutSection() {
                   }}
                 >
                   <Image
-                    src="/building1.jpg"
+                    src="/bdb-image-1.png"
                     alt="Modern skyscrapers viewed from below"
                     fill
                     style={{ objectFit: 'cover', borderRadius: '8px' }}
@@ -127,7 +127,7 @@ export default function AboutSection() {
                   }}
                 >
                   <Image
-                    src="/building2.jpg"
+                    src="/bdb-image-2.png"
                     alt="Modern glass building architecture"
                     fill
                     style={{ objectFit: 'cover', borderRadius: '8px' }}

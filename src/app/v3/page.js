@@ -1,6 +1,7 @@
 import Header from "@/components/v3/Header";
 import Partners from "@/components/v2/Partners";
 import Facility from "@/components/v2/Facility";
+import MissionSection from "@/components/v2/MissionSection";
 import Footer from "@/components/v2/footer";
 import Insights from "@/components/v2/Insight";
 import BourseSection from "@/components/v2/BourseSection"
@@ -15,6 +16,7 @@ export default function Home() {
             <Partners/>
             <AboutSection/>
             <PillarOfProgress/>
+            <MissionSection/>
             <Facility/>
             <BourseSection/>
             <Insights/>

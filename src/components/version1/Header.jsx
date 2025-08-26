@@ -60,8 +60,8 @@ export default function Header() {
   }, []);
 
   const slides = isMobile
-    ? ['/building2.jpg', '/Hero-Banner.jpg', '/building1.jpg'] // no /Bdb-hero-2.png on mobile
-    : ['/building2.jpg', '/Hero-Banner.jpg', '/Bdb-hero-2.png'];
+    ? ['/bdb-1-hero.jpg', '/bdb-2-hero.jpg', '/building1.jpg'] // no /Bdb-hero-2.png on mobile
+    : ['/bdb-1-hero.jpg', '/bdb-2-hero.jpg', '/Bdb-hero-2.png'];
 
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);

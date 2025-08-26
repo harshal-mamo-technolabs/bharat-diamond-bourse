@@ -51,8 +51,8 @@ export default function Header() {
 
   // choose slides per device (same sets you had)
   const slideSources = isMobile
-    ? ['/building2.jpg', '/Hero-Banner.jpg', '/building1.jpg'] // mobile
-    : ['/building2.jpg', '/Hero-Banner.jpg', '/Bdb-hero-2.png']; // desktop
+    ? ['/bdb-1-hero.png', '/bdb-2-hero.png'] // mobile
+    : ['/bdb-1-hero.png', '/bdb-2-hero.png']; // desktop
 
   // carousel controls
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slideSources.length);
@@ -113,8 +113,8 @@ export default function Header() {
           style={{ transform: 'translateY(0)', transition: 'transform .4s ease-out' }}
         >
           <div className="flex items-center justify-between w-full">
-            <Image src="/BDB-LOGO.png" alt="BDB Logo" width={120} height={50} />
-            <ul className="flex space-x-8 text-[14px] font-medium text-[#0b2a57]">
+            <Image src="/bdb-logo-black-font.png" alt="BDB Logo" width={120} height={50} />
+            <ul className="flex space-x-8 text-[14px] font-medium text-black">
               <li className="hover:text-blue-700">Home</li>
               <li className="hover:text-blue-700">About Us</li>
               <li className="hover:text-blue-700">Our Facilities ▾</li>
@@ -149,14 +149,14 @@ export default function Header() {
         </div>
         {mobileMenuOpen && (
           <ul className="px-4 pb-4 space-y-3 text-[15px] font-semibold text-gray-800 bg-white">
-            <li className="hover:text-[#0b2a57] cursor-pointer">Home</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">About Us</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">Our Facilities</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">BDB Circulars</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">Photo Gallery</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">Board Members</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">News & Events</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">Contact Us</li>
+            <li className="hover:text-black cursor-pointer">Home</li>
+            <li className="hover:text-black cursor-pointer">About Us</li>
+            <li className="hover:text-black cursor-pointer">Our Facilities</li>
+            <li className="hover:text-black cursor-pointer">BDB Circulars</li>
+            <li className="hover:text-black cursor-pointer">Photo Gallery</li>
+            <li className="hover:text-black cursor-pointer">Board Members</li>
+            <li className="hover:text-black cursor-pointer">News & Events</li>
+            <li className="hover:text-black cursor-pointer">Contact Us</li>
           </ul>
         )}
       </div>
@@ -172,7 +172,7 @@ export default function Header() {
         >
           {slideSources.map((src, idx) => (
             <div key={idx} className="relative w-full flex-shrink-0 h-full">
-              <Image src={src} alt={`Slide ${idx + 1}`} fill className="object-cover" priority={idx === 0} />
+              <Image src={src} alt={`Slide ${idx + 1}`} fill className="object-fill" priority={idx === 0} />
             </div>
           ))}
         </div>
@@ -196,27 +196,27 @@ export default function Header() {
 
         {/* ORIGINAL NAVBAR OVER IMAGE */}
         <nav
-          className={`hidden md:flex flex-col absolute top-0 left-0 w-full px-12 py-1 z-30 text-white ${sora.className} select-none`}
-          style={{ background: 'rgba(0,0,0,0.3)' }}
+          className={`hidden md:flex flex-col absolute top-0 left-0 w-full px-12 py-1 z-30 bg-white/80 text-white ${sora.className} select-none`}
+          
         >
           <div className="flex justify-end items-center space-x-6 text-[12px] mt-2 select-none">
             <ul className="flex space-x-6 text-[11px] uppercase cursor-pointer">
-              <li className="hover:text-[#0b2a57]">News</li>
-              <li className="hover:text-[#0b2a57]">Gallery</li>
-              <li className="hover:text-[#0b2a57]">Help center</li>
+              <li className="text-black">News</li>
+              <li className="text-black">Gallery</li>
+              <li className="text-black">Help center</li>
             </ul>
-            <div className="relative w-24 text-white">
-              <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-white text-xs pointer-events-none" />
+            <div className="relative w-24 text-black">
+              <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-black text-xs pointer-events-none" />
               <input
                 type="text"
                 placeholder="Search..."
-                className="w-full pl-6 text-[11px] rounded-sm border-b border-white border-opacity-50 bg-transparent py-0.5 text-white placeholder-white focus:outline-none focus:ring-1 focus:ring-white"
+                className="w-full pl-6 text-[11px] rounded-sm border-b border-black border-opacity-50 bg-transparent py-0.5 text-black placeholder-black focus:outline-none focus:ring-1 focus:ring-black"
               />
             </div>
             <select
               value={selectedLang}
               onChange={(e) => setSelectedLang(e.target.value)}
-              className="bg-transparent border border-white border-opacity-50 rounded-sm text-white text-[12px] py-0.5 px-2 cursor-pointer focus:outline-none"
+              className="bg-transparent border border-black border-opacity-50 rounded-sm text-black text-[12px] py-0.5 px-2 cursor-pointer focus:outline-none"
             >
               {languages.map(({ code }) => (
                 <option key={code} value={code}>
@@ -227,14 +227,14 @@ export default function Header() {
           </div>
           <div className="flex items-center justify-between mt-1">
             <div className="flex-shrink-0 mb-1">
-              <Image src="/bdb-logo-white.png" alt="BDB Logo" width={135} height={140} />
+              <Image src="/bdb-logo-black-font.png" alt="BDB Logo" width={135} height={140} />
             </div>
             <ul className="flex space-x-8 text-[14px] font-normal cursor-pointer mx-auto">
-              <li className="hover:text-[#0b2a57]">Home</li>
-              <li className="hover:text-[#0b2a57]">About Us</li>
-              <li className="hover:text-[#0b2a57]">Our Facilities ▾</li>
-              <li className="hover:text-[#0b2a57]">BDB Circulars</li>
-              <li className="hover:text-[#0b2a57]">Board Members ▾</li>
+              <li className="text-black">Home</li>
+              <li className="text-black">About Us</li>
+              <li className="text-black">Our Facilities ▾</li>
+              <li className="text-black">BDB Circulars</li>
+              <li className="text-black">Board Members ▾</li>
             </ul>
             <button
               className={[

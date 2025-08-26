@@ -268,7 +268,9 @@ export default function Header() {
           <div className={`relative mx-4 w-full max-w-md rounded-[14px] bg-white p-6 shadow-xl ${sora.className}`}>
             <button onClick={() => setShowModal(false)} className="absolute right-3 top-3 text-[#0E234E]/70 hover:text-[#0E234E]" aria-label="Close">✕</button>
             <h3 className={`${gotham.className} text-[#0E234E] text-[20px] font-semibold mb-1`}>Start Your Business</h3>
-            <p className="text-[13px] text-[#0E1425]/70 mb-4">Step {modalStep} of 2</p>
+            {modalStep < 3 && (
+              <p className="text-[13px] text-[#0E1425]/70 mb-4">Step {modalStep} of 2</p>
+            )}
             {modalStep === 1 ? (
               <div>
                 <label className="block text-[13px] text-[#0E1425]/80 mb-1">Email</label>

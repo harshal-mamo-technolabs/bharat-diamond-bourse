@@ -20,7 +20,7 @@ const ITEMS = [
   { title: "Boosting Imports\n& Exports", src: "/pillar-of-progress/boosting-imports-and-exports.jpg" },
   { title: "Connecting Trade\n& Industry", src: "/pillar-of-progress/connecting-trade-and-industry.jpg" },
   { title: "Positioning Modern\nIndia", src: "/pillar-of-progress/positioning-modern-india.jpg" },
-  { title: "Supporting Business\nInfrastructure", src: "/pillar-of-progress/supporting-business-infrastructure.jpg" },
+  { title: "Supporting Business\nInfrastructure", src: "/bdb-image-2.png" },
 ];
 
 function widthClass(rel) {

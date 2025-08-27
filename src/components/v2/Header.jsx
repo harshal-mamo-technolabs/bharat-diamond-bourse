@@ -57,7 +57,7 @@ export default function Header() {
   }, []);
 
   const slides = isMobile
-    ? ['/bdb-1-hero.png', '/bdb-2-hero.png'] // no /Bdb-hero-2.png on mobile
+    ? ['/bdb-1-hero.png', '/bdb-2-hero.png'] 
     : ['/bdb-1-hero.png', '/bdb-2-hero.png'];
 
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);

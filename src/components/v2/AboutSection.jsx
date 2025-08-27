@@ -4,7 +4,9 @@ import Image from 'next/image';
 import { Sora } from 'next/font/google';
 import localFont from 'next/font/local';
 import Link from 'next/link';
+import StartBusinessModal from '../v3/StartBusinessModal';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 // Load Carentro from OTF
 const carentro = localFont({
@@ -39,6 +41,7 @@ function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
 }
 
 export default function AboutSection() {
+  const [showModal, setShowModal] = useState(false);
   const building1Variants = {
     hidden: { opacity: 0, x: 100 },
     visible: { opacity: 1, x: 0, transition: { duration: 1.2, ease: 'easeOut' } },
@@ -150,8 +153,8 @@ export default function AboutSection() {
                   where commerce, collaboration, and community come together to shape the future of the diamond
                   industry.
                 </p>
-                <Link
-                  href=""
+                <button
+                  onClick={() => setShowModal(true)}
                   className={[
                     'group relative inline-flex items-center justify-between',
                     'rounded-[8px] px-5 py-3.5',
@@ -170,12 +173,15 @@ export default function AboutSection() {
                     stroke={2}
                     className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
                   />
-                </Link>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+      {showModal && (
+        <StartBusinessModal isOpen={showModal} onClose={() => setShowModal(false)} />
+      )}
     </section>
   );
 }

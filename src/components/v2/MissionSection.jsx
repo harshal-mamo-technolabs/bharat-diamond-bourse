@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import StartBusinessModal from "../v3/StartBusinessModal";
 import { AnimatePresence, motion } from "framer-motion";
 import { Sora } from "next/font/google";
 import localFont from "next/font/local";
@@ -87,6 +88,7 @@ const CONTENT = {
 };
 
 export default function MissionSection() {
+  const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("Mission");
 
   const easing = [0.22, 0.61, 0.36, 1];
@@ -173,8 +175,8 @@ export default function MissionSection() {
                 </div>
 
                 <div className="mt-8 md:mt-0">
-                  <Link
-                    href=""
+                  <button
+                    onClick={() => setShowModal(true)}
                     className={[
                       "group relative inline-flex items-center justify-between",
                       "rounded-[8px] px-5 py-3.5",
@@ -193,13 +195,16 @@ export default function MissionSection() {
                       stroke={2}
                       className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
                     />
-                  </Link>
+                  </button>
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
         </div>
       </div>
+      {showModal && (
+        <StartBusinessModal isOpen={showModal} onClose={() => setShowModal(false)} />
+      )}
     </section>
   );
 }

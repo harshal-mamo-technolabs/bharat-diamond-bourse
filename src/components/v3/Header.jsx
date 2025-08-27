@@ -139,6 +139,15 @@ export default function Header() {
     setShowModal(true);
   };
 
+  // Auto-open when URL contains ?start=1
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('start') === '1') {
+      openModal();
+    }
+  }, []);
+
   const goToOtp = () => {
     const emailOk = /.+@.+\..+/.test(email.trim());
     const phoneOk = /^\+?\d{7,15}$/.test(phone.trim());

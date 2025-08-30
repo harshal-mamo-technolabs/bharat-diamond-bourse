@@ -130,7 +130,7 @@ export default function AboutSection() {
                   }}
                 >
                   <Image
-                    src="/bdb-image-2.png"
+                    src="/missonandvission.png"
                     alt="Modern glass building architecture"
                     fill
                     style={{ objectFit: 'cover', borderRadius: '8px' }}

@@ -356,7 +356,7 @@ export default function Header() {
             <ul className="flex space-x-8 text-[14px] font-normal cursor-pointer mx-auto">
               <li className="text-black">Home</li>
               <li className="text-black">About Us</li>
-              <li className="text-black">Facilities ▾</li>
+              <li className="text-black">Facilities</li>
               <li className="text-black">News & Events</li>
               <li className="text-black">Sustainability</li>
             </ul>

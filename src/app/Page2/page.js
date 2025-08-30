@@ -13,7 +13,7 @@ export default function Home(){
         <Header/>
         <Feature/>
         <BourseSection/>
-        <WorldClassFacilities/>
+        {/* <WorldClassFacilities/> */}
         <Trust/>
         <Insights/>
         <PartnerSection/>

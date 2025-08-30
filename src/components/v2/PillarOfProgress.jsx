@@ -16,11 +16,12 @@ const gotham = localFont({
 const sora = Sora({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
 const ITEMS = [
-  { title: "Empowering Diamond\nTrade", src: "/pillar-of-progress/empowering-diamond-trade.jpg" },
-  { title: "Boosting Imports\n& Exports", src: "/pillar-of-progress/boosting-imports-and-exports.jpg" },
-  { title: "Connecting Trade\n& Industry", src: "/pillar-of-progress/connecting-trade-and-industry.jpg" },
-  { title: "Positioning Modern\nIndia", src: "/pillar-of-progress/positioning-modern-india.jpg" },
-  { title: "Supporting Business\nInfrastructure", src: "/bdb-image-1.png" },
+  { title: "Bank", src: "/Bank.png" },
+  { title: "Restaurants", src: "/restaurent.png" },
+  { title: "Sports", src: "/sport.png" },
+  { title: "MDMA Diamond Hall", src: "/MDMA-Diamond-Hall.png" },
+  { title: "Convention Hall", src: "/Convention-Hall.png" },
+  { title: "IDTC", src: "/IDTC.png" },
 ];
 
 function widthClass(rel) {
@@ -207,7 +208,7 @@ export default function PillarOfProgress() {
           className={`text-[#CBD3DD] text-center leading-none select-none pointer-events-none mb-8 sm:mb-10 tracking-[0.035em] ${gotham.className}`}
           style={{ fontSize: "clamp(34px, 6.2vw, 66px)" }}
         >
-          Our Pillars Of Progress
+          Our Facilities
         </h2>
       </div>
 

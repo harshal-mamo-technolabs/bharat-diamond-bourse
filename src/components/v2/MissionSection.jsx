@@ -45,51 +45,41 @@ function Arrow({ color = "#FFFFFF", size = 16, stroke = 2, className = "" }) {
 }
 
 const CONTENT = {
-  Mission: {
-    title: "Mission & Vision",
-    img: "/bdb-image-1.png",
+  "Recent Events": {
+    title: "Recent Events",
+    img: "/recent-events.png",
     copy: [
-      "To provide a world-class, secure, and transparent platform for the global diamond trade by fostering excellence, innovation, and integrity — supporting businesses and advancing India’s leadership in the global gems and jewelry sector.",
-      "To be the most trusted and advanced diamond trading destination in the world — a global epicenter where commerce, collaboration, and community come together to shape the future of the diamond industry.",
+      "This Independence Day, we come together to celebrate the spirit of freedom, unity, and pride that defines our nation. The event will be filled with cultural performances, patriotic tributes, and moments of reflection that honor the sacrifices of our freedom fighters. Join us as we raise the tricolor with pride and celebrate the journey of India — a land of rich heritage, resilience, and progress. Let us unite to cherish our independence and look forward to a brighter future together.",
+      "Independence Day is a time to honor our nation's glorious past and embrace the promise of its future. Our celebration will feature inspiring speeches, cultural showcases, and activities that bring together people from all walks of life. ",
     ],
   },
-  Innovation: {
-    title: "Driving Innovation",
-    img: "/bdb-image-1.png",
+  "Upcoming Events": {
+    title: "Upcoming Events",
+    img: "/upcoming-events.png",
     copy: [
-      "We continuously adopt modern technologies to enhance transparency and efficiency in the diamond trade.",
-      "Innovation at BDB ensures the ecosystem remains future-ready for global trade opportunities.",
+      "From September 22-24, 2025, the Bharat Diamond Bourse (BDB) will host its highly anticipated Leadership Series at the iconic Convention Hall in Mumbai’s BKC. The event kicks off with a two-day symposium, AGDRT 2025 (Advances in Gem & Diamond Research and Technology), organized by the Gemmological Institute of India, spotlighting the latest in gemology, diamond—natural and lab-grown—technology, and R&D. On September 24, the program culminates with a high-impact conference themed “Polishing Our Future”, bringing together industry leaders from across the globe. "
     ],
   },
-  "Our Impact": {
-    title: "Our Global Impact",
-    img: "/bdb-image-1.png",
+  "Special Announcements": {
+    title: "Special Announcements",
+    img: "/agdrt-banner.png",
     copy: [
-      "BDB strengthens India's global leadership in gems and jewelry.",
-      "Our initiatives empower businesses, create opportunities, and drive economic growth worldwide.",
+      "AGDRT-2025: The Second GII Symposium on Advances in Gem & Diamond Research and Technology As part of the second edition of the BDB Leadership Series, the Gemmological Institute of India (GII) is proud to present its two-day symposium titled AGDRT-2025 (Advances in Gem & Diamond Research and Technology). Scheduled for September 22–23, 2025, at the BDB Convention Hall in Mumbai’s BKC, this event marks GII’s pivotal role in driving innovation in the gem and diamond sector.",
+      "The symposium will bring together distinguished scientists and industry experts for invited talks, contributed oral and poster presentations, and panel discussions that explore cutting-edge R&D across gemstones, diamonds"
     ],
   },
-  Sustainability: {
-    title: "Sustainability at BDB",
-    img: "/bdb-image-1.png",
+  "Guest at BDB": {
+    title: "Guest at BDB",
+    img: "/guest-at-bdb.png",
     copy: [
-      "We are committed to eco-friendly operations, energy efficiency, and sustainable practices.",
-      "BDB fosters an environment where growth aligns with responsibility toward future generations.",
-    ],
-  },
-  Vision: {
-    title: "Our Vision",
-    img: "/bdb-image-1.png",
-    copy: [
-      "To establish BDB as the most advanced and secure diamond trading hub in the world.",
-      "We envision a future where commerce, collaboration, and community transform the diamond industry.",
+      "Opening of the 38th World Diamond Congress – 2018 hosted by Bharat Diamond Bourse on 24th October, 2018 from 9.00 a.m to 10.30 a.m. at Convention Hall, Tower ‘DC’ Ground Floor, BDB, BKC, Mumbai 400 051. The World Diamond Congress is a Bi-annual industry event organized by The World Federation of Diamond Bourse (WFDB) and The International Diamond Manufacturers Association"
     ],
   },
 };
 
 export default function MissionSection() {
   const [showModal, setShowModal] = useState(false);
-  const [activeTab, setActiveTab] = useState("Mission");
+  const [activeTab, setActiveTab] = useState("Recent Events");
 
   const easing = [0.22, 0.61, 0.36, 1];
   const IMAGE_DELAY = 0.2;

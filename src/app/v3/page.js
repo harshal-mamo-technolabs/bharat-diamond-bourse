@@ -8,6 +8,7 @@ import BourseSection from "@/components/v2/BourseSection"
 import AboutSection from "@/components/v2/AboutSection";
 import PillarOfProgress from "@/components/v2/PillarOfProgress";
 import BannerWrapper from "@/components/v3/BannerWrapper";
+import AdSection from "@/components/v3/AdSection";
 
 export default function Home() {
   return (
@@ -18,7 +19,8 @@ export default function Home() {
             <AboutSection/>
             <PillarOfProgress/>
             <MissionSection/>
-            <Facility/>
+            <AdSection/>
+            {/* <Facility/> */}
             <BourseSection/>
             <Insights/>
             <Footer/>

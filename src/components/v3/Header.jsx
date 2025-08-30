@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { FaPhoneAlt, FaEnvelope, FaSearch } from 'react-icons/fa';
 import { Sora } from 'next/font/google';
 import localFont from 'next/font/local';
-import { IoIosArrowRoundBack, IoIosArrowRoundForward } from 'react-icons/io';
+// import { IoIosArrowRoundBack, IoIosArrowRoundForward } from 'react-icons/io';
 import { FiMenu } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { motion } from 'framer-motion';
@@ -37,8 +37,6 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState(languages[0].code);
   const [showStickyNav, setShowStickyNav] = useState(false);
-  const [current, setCurrent] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalStep, setModalStep] = useState(1); // 1: details, 2: OTP
@@ -48,6 +46,7 @@ export default function Header() {
   const [error, setError] = useState('');
   const closeTimerRef = useRef(null);
   const otpRefs = useRef([]);
+  const heroVideoRef = useRef(null);
 
   // detect on load + resize
   useEffect(() => {
@@ -57,53 +56,21 @@ export default function Header() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // choose slides per device (same sets you had)
-  const slideSources = isMobile
-    ? ['/bdb-1-hero.png', '/bdb-2-hero.png'] // mobile
-    : ['/bdb-1-hero.png', '/bdb-2-hero.png']; // desktop
-
-  // carousel controls
-  const nextSlide = () => setCurrent((prev) => (prev + 1) % slideSources.length);
-  const prevSlide = () => setCurrent((prev) => (prev - 1 + slideSources.length) % slideSources.length);
-
-  // single interval controller (no duplicates)
-  const intervalRef = useRef(null);
-  const clearAuto = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  };
-  const startAuto = () => {
-    clearAuto();
-    intervalRef.current = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slideSources.length);
-    }, 5000);
-  };
-
-  // start/refresh auto when slides change (e.g., resize) and on mount
+  // autoplay hero video on mount
   useEffect(() => {
-    setCurrent(0); // reset index when the slide set changes
-    startAuto();
-    return () => clearAuto();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobile]);
-
-  // manual controls should reset the timer to avoid double-step timing
-  const handleNext = () => {
-    clearAuto();
-    nextSlide();
-    startAuto();
-  };
-  const handlePrev = () => {
-    clearAuto();
-    prevSlide();
-    startAuto();
-  };
+    const el = heroVideoRef.current;
+    if (!el) return;
+    const play = async () => {
+      try { await el.play(); }
+      catch { try { el.muted = true; await el.play(); } catch {}
+      }
+    };
+    play();
+  }, []);
 
   const IMAGE_HEIGHT = 720;
 
-  useEffect(() => setIsLoaded(true), []);
+  // no image loading state needed with background video
 
   // sticky navbar after hero
   useEffect(() => {
@@ -227,9 +194,9 @@ export default function Header() {
             <ul className="flex space-x-8 text-[14px] font-medium text-black">
               <li className="hover:text-blue-700">Home</li>
               <li className="hover:text-blue-700">About Us</li>
-              <li className="hover:text-blue-700">Our Facilities ▾</li>
-              <li className="hover:text-blue-700">BDB Circulars</li>
-              <li className="hover:text-blue-700">Board Members ▾</li>
+              <li className="hover:text-blue-700">Facilities</li>
+              <li className="hover:text-blue-700">News & Events</li>
+              <li className="hover:text-blue-700">Sustainability</li>
             </ul>
             <button
               className={[
@@ -260,14 +227,11 @@ export default function Header() {
         </div>
         {mobileMenuOpen && (
           <ul className="px-4 pb-4 space-y-3 text-[15px] font-semibold text-gray-800 bg-white">
-            <li className="hover:text-black cursor-pointer">Home</li>
-            <li className="hover:text-black cursor-pointer">About Us</li>
-            <li className="hover:text-black cursor-pointer">Our Facilities</li>
-            <li className="hover:text-black cursor-pointer">BDB Circulars</li>
-            <li className="hover:text-black cursor-pointer">Photo Gallery</li>
-            <li className="hover:text-black cursor-pointer">Board Members</li>
-            <li className="hover:text-black cursor-pointer">News & Events</li>
-            <li className="hover:text-black cursor-pointer">Contact Us</li>
+            <li className="hover:text-blue-700">Home</li>
+              <li className="hover:text-blue-700">About Us</li>
+              <li className="hover:text-blue-700">Facilities</li>
+              <li className="hover:text-blue-700">News & Events</li>
+              <li className="hover:text-blue-700">Sustainability</li>
           </ul>
         )}
       </div>
@@ -336,36 +300,22 @@ export default function Header() {
 
       {/* HERO SECTION */}
       <div className="relative w-full h-[720px] overflow-hidden">
-        {/* Carousel */}
-        <div
-          className={`absolute inset-0 flex transition-transform duration-[2000ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
-            isLoaded ? 'animate-slideDown' : ''
-          }`}
-          style={{ transform: `translateX(-${current * 100}%)` }}
-        >
-          {slideSources.map((src, idx) => (
-            <div key={idx} className="relative w-full flex-shrink-0 h-full">
-              <Image src={src} alt={`Slide ${idx + 1}`} fill className="object-fill" priority={idx === 0} />
-            </div>
-          ))}
-        </div>
+        {/* Background video */}
+        <video
+          ref={heroVideoRef}
+          src="/BDB.mp4"
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
 
         {/* Bottom Gradient */}
         <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white/25 to-transparent pointer-events-none z-10" />
 
-        {/* Arrows */}
-        <button
-          onClick={handlePrev}
-          className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-black/50 p-2 rounded-r-lg z-20 backdrop-blur-md"
-        >
-          <IoIosArrowRoundBack className="text-white text-2xl" />
-        </button>
-        <button
-          onClick={handleNext}
-          className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-black/50 p-2 rounded-l-lg z-20 backdrop-blur-md"
-        >
-          <IoIosArrowRoundForward className="text-white text-2xl" />
-        </button>
+        {/* Removed carousel arrows for video */}
 
         {/* ORIGINAL NAVBAR OVER IMAGE */}
         <nav
@@ -374,9 +324,10 @@ export default function Header() {
         >
           <div className="flex justify-end items-center space-x-6 text-[12px] mt-2 select-none">
             <ul className="flex space-x-6 text-[11px] uppercase cursor-pointer">
-              <li className="text-black">News</li>
-              <li className="text-black">Gallery</li>
-              <li className="text-black">Help center</li>
+              <li className="text-black">Circulars</li>
+              <li className="text-black">Member's directory</li>
+              <li className="text-black">Contact us</li>
+              <li className="text-black">careers</li>
             </ul>
             <div className="relative w-24 text-black">
               <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-black text-xs pointer-events-none" />
@@ -405,9 +356,9 @@ export default function Header() {
             <ul className="flex space-x-8 text-[14px] font-normal cursor-pointer mx-auto">
               <li className="text-black">Home</li>
               <li className="text-black">About Us</li>
-              <li className="text-black">Our Facilities ▾</li>
-              <li className="text-black">BDB Circulars</li>
-              <li className="text-black">Board Members ▾</li>
+              <li className="text-black">Facilities ▾</li>
+              <li className="text-black">News & Events</li>
+              <li className="text-black">Sustainability</li>
             </ul>
             <button
               className={[

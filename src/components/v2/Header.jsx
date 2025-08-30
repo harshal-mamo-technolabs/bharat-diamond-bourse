@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { FaPhoneAlt, FaMapMarkerAlt, FaEnvelope } from 'react-icons/fa';
 import { Sora } from 'next/font/google';
-import { IoIosArrowRoundBack, IoIosArrowRoundForward } from 'react-icons/io';
 import { FiMenu } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -12,7 +11,7 @@ import localFont from 'next/font/local';
 
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
-const slides = ['/bdb-1-hero.png', '/bdb-2-hero.png'];
+// const slides = ['/bdb-1-hero.png', '/bdb-2-hero.png'];
 
 const gotham = localFont({
   src: '../../../public/fonts/Gotham.otf',
@@ -33,9 +32,7 @@ export default function Header() {
   const [showNavbar, setShowNavbar] = useState(false);
   const [isSticky, setIsSticky] = useState(false); // <-- added sticky state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [current, setCurrent] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const heroVideoRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [modalStep, setModalStep] = useState(1); // 1: details, 2: OTP
   const [email, setEmail] = useState('');
@@ -45,61 +42,26 @@ export default function Header() {
   const closeTimerRef = useRef(null);
   const otpRefs = useRef([]);
 
-
+  // Autoplay hero video on mount
   useEffect(() => {
-    // detect on load + resize
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Tailwind's md breakpoint
+    const el = heroVideoRef.current;
+    if (!el) return;
+    const tryPlay = async () => {
+      try {
+        await el.play();
+      } catch {
+        try {
+          el.muted = true;
+          await el.play();
+        } catch {}
+      }
     };
-    handleResize(); // initial check
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    tryPlay();
   }, []);
-
-  const slides = isMobile
-    ? ['/bdb-1-hero.png', '/bdb-2-hero.png'] 
-    : ['/bdb-1-hero.png', '/bdb-2-hero.png'];
-
-  const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
-
-  const intervalRef = useRef(null);
-
-  const clearAuto = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  };
-
-  const startAuto = () => {
-    clearAuto();
-    intervalRef.current = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
-    }, 5000);
-  };
-
-  useEffect(() => {
-    startAuto();
-    return () => clearAuto();
-  }, [slides]);
 
   const IMAGE_HEIGHT = 720;
   const SHOW_SCROLL = IMAGE_HEIGHT * 0.5; // 360px - 50%
   const HIDE_SCROLL = IMAGE_HEIGHT * 0.35; // 252px - 35%
-
-  // Manual controls should reset the auto timer to prevent double steps
-  const handleNext = () => {
-    clearAuto();
-    setCurrent((prev) => (prev + 1) % slides.length);
-    startAuto();
-  };
-
-  const handlePrev = () => {
-    clearAuto();
-    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
-    startAuto();
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -123,8 +85,6 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => setIsLoaded(true), []);
 
   // Close modal on ESC
   useEffect(() => {
@@ -233,48 +193,33 @@ export default function Header() {
           <ul className="px-4 pb-4 space-y-3 text-[15px] font-semibold text-gray-800 bg-white">
             <li className="hover:text-[#0b2a57] cursor-pointer">Home</li>
             <li className="hover:text-[#0b2a57] cursor-pointer">About Us</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">Our Facilities</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">BDB Circulars</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">Photo Gallery</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">Board Members</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">Facilities</li>
             <li className="hover:text-[#0b2a57] cursor-pointer">News & Events</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">Sustainability</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">Circulars</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">Members Directory</li>
             <li className="hover:text-[#0b2a57] cursor-pointer">Contact Us</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">Careers</li>
           </ul>
         )}
       </div>
 
       {/* HERO SECTION */}
       <div className="relative w-full h-[720px] overflow-hidden">
-        {/* Carousel */}
-        <div
-          className={`absolute inset-0 flex transition-transform duration-[2000ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
-            isLoaded ? 'animate-slideDown' : ''
-          }`}
-          style={{ transform: `translateX(-${current * 100}%)` }}
-        >
-          {slides.map((src, idx) => (
-            <div key={idx} className="relative w-full flex-shrink-0 h-full">
-              <Image src={src} alt={`Slide ${idx + 1}`} fill className="object-fill" priority={idx === 0} />
-            </div>
-          ))}
-        </div>
+        {/* Background video (autoplaying, muted, loop) */}
+        <video
+          ref={heroVideoRef}
+          src="BDB.mp4"
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
 
         {/* Bottom Gradient */}
         <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white/25 to-transparent pointer-events-none z-10"></div>
-
-        {/* Arrows - Hidden on Mobile */}
-        <button
-          onClick={handlePrev}
-          className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-black/50 p-2 rounded-r-lg z-20 transition backdrop-blur-md"
-        >
-          <IoIosArrowRoundBack className="text-white text-2xl" />
-        </button>
-        <button
-          onClick={handleNext}
-          className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-black/50 p-2 rounded-l-lg z-20 transition backdrop-blur-md"
-        >
-          <IoIosArrowRoundForward className="text-white text-2xl" />
-        </button>
 
         {/* Top White Info Card - Hidden on Mobile */}
         <div
@@ -361,14 +306,15 @@ export default function Header() {
           >
             <nav className={`max-w-7xl mx-auto px-6 flex items-center justify-center h-20 w-full ${sora.className}`}>
               <ul className="flex items-center space-x-8 text-[15px] font-semibold text-gray-800">
-                <li className="hover:text-[#0b2a57] cursor-pointer">Home</li>
-                <li className="hover:text-[#0b2a57] cursor-pointer">About Us</li>
-                <li className="hover:text-[#0b2a57] cursor-pointer">Our Facilities ▾</li>
-                <li className="hover:text-[#0b2a57] cursor-pointer">BDB Circulars</li>
-                <li className="hover:text-[#0b2a57] cursor-pointer">Photo Gallery</li>
-                <li className="hover:text-[#0b2a57] cursor-pointer">Board Members ▾</li>
-                <li className="hover:text-[#0b2a57] cursor-pointer">News & Events</li>
-                <li className="hover:text-[#0b2a57] cursor-pointer">Contact Us</li>
+              <li className="hover:text-[#0b2a57] cursor-pointer">Home</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">About Us</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">Facilities</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">News & Events</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">Sustainability</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">Circulars</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">Members Directory</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">Contact Us</li>
+            <li className="hover:text-[#0b2a57] cursor-pointer">Careers</li>
               </ul>
             </nav>
           </motion.div>

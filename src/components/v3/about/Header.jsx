@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { FaPhoneAlt, FaEnvelope, FaSearch } from 'react-icons/fa';
 import { Sora } from 'next/font/google';
 import localFont from 'next/font/local';
-// import { IoIosArrowRoundBack, IoIosArrowRoundForward } from 'react-icons/io';
 import { FiMenu } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { motion } from 'framer-motion';
@@ -14,7 +13,7 @@ import Link from 'next/link';
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
 const gotham = localFont({
-  src: '../../../public/fonts/Gotham.otf',
+  src: '../../../../public/fonts/Gotham.otf',
   weight: '400',
   style: 'normal',
 });
@@ -34,13 +33,19 @@ function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
   );
 }
 
-export default function Header() {
+export default function Header({ 
+  backgroundImage = "/about/about-hero.png", // Default background video
+  backgroundType = "image", // "video" or "image"
+  title = "About Us", // Default title
+  description = "Bharat Diamond Bourse (BDB) is the world's largest and most prestigious diamond trading hub, bringing together thousands of members across 100+ countries.", // Default description
+  showDivider = true // Show the standing line divider
+}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState(languages[0].code);
   const [showStickyNav, setShowStickyNav] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [modalStep, setModalStep] = useState(1); // 1: details, 2: OTP
+  const [modalStep, setModalStep] = useState(1);
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -48,6 +53,8 @@ export default function Header() {
   const closeTimerRef = useRef(null);
   const otpRefs = useRef([]);
   const heroVideoRef = useRef(null);
+
+  const HERO_HEIGHT = 720;
 
   // detect on load + resize
   useEffect(() => {
@@ -57,25 +64,22 @@ export default function Header() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // autoplay hero video on mount
+  // autoplay hero video on mount if video background
   useEffect(() => {
+    if (backgroundType !== 'video') return;
+    
     const el = heroVideoRef.current;
     if (!el) return;
     const play = async () => {
       try { await el.play(); }
-      catch { try { el.muted = true; await el.play(); } catch {}
-      }
+      catch { try { el.muted = true; await el.play(); } catch {} }
     };
     play();
-  }, []);
-
-  const IMAGE_HEIGHT = 720;
-
-  // no image loading state needed with background video
+  }, [backgroundType]);
 
   // sticky navbar after hero
   useEffect(() => {
-    const onScroll = () => setShowStickyNav(window.scrollY >= IMAGE_HEIGHT);
+    const onScroll = () => setShowStickyNav(window.scrollY >= HERO_HEIGHT);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -177,7 +181,6 @@ export default function Header() {
 
   useEffect(() => {
     if (showModal && modalStep === 2) {
-      // focus first OTP box when step 2 opens
       setTimeout(() => otpRefs.current[0]?.focus(), 0);
     }
   }, [showModal, modalStep]);
@@ -196,7 +199,7 @@ export default function Header() {
               <li className="hover:text-blue-700"><Link href="/v3">Home</Link></li>
               <li className="hover:text-blue-700"><Link href="/v3/about">About Us</Link></li>
               <li className="hover:text-blue-700">Facilities</li>
-              <li className="hover:text-blue-700">News & Events</li>
+              <li className="hover:text-blue-700"><Link href="/v3/news&events">News & Events</Link></li>
               <li className="hover:text-blue-700">Sustainability</li>
             </ul>
             <button
@@ -229,13 +232,15 @@ export default function Header() {
         {mobileMenuOpen && (
           <ul className="px-4 pb-4 space-y-3 text-[15px] font-semibold text-gray-800 bg-white">
             <li className="hover:text-blue-700"><Link href="/v3">Home</Link></li>
-              <li className="hover:text-blue-700"><Link href="/v3/about">About Us</Link></li>
-              <li className="hover:text-blue-700">Facilities</li>
-              <li className="hover:text-blue-700">News & Events</li>
-              <li className="hover:text-blue-700">Sustainability</li>
+            <li className="hover:text-blue-700"><Link href="/v3/about">About Us</Link></li>
+            <li className="hover:text-blue-700">Facilities</li>
+            <li className="hover:text-blue-700"><Link href="/v3/news&events">News & Events</Link></li>
+            <li className="hover:text-blue-700">Sustainability</li>
           </ul>
         )}
       </div>
+
+      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-[70] flex items-center justify-center">
           <button aria-label="Close" className="absolute inset-0 bg-black/50" onClick={() => setShowModal(false)} />
@@ -300,28 +305,82 @@ export default function Header() {
       )}
 
       {/* HERO SECTION */}
-      <div className="relative w-full h-[720px] overflow-hidden">
-        {/* Background video */}
-        <video
-          ref={heroVideoRef}
-          src="/BDB.mp4"
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-        />
+      <div className="relative w-full h-[600px] overflow-hidden">
+        {/* Dynamic Background with Framer Motion Zoom Out */}
+        {backgroundType === 'video' ? (
+          <motion.video
+            ref={heroVideoRef}
+            src={backgroundImage}
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            initial={{ scale: 1.2 }}
+            animate={{ scale: 1 }}
+            transition={{ 
+              duration: 8,
+              ease: "easeOut"
+            }}
+          />
+        ) : (
+          <motion.div
+            className="absolute inset-0 w-full h-full"
+            initial={{ scale: 1.2 }}
+            animate={{ scale: 1 }}
+            transition={{ 
+              duration: 8,
+              ease: "easeOut"
+            }}
+          >
+            <Image
+              src={backgroundImage}
+              alt="Background"
+              fill
+              className="object-cover"
+              priority
+            />
+          </motion.div>
+        )}
 
-        {/* Bottom Gradient */}
-        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white/25 to-transparent pointer-events-none z-10" />
+        {/* Content Container */}
+        <div className="relative z-20 flex flex-col justify-center h-full px-4 md:px-12 max-w-7xl mx-auto">
+          {/* Divider and Title Row */}
+          <div className="flex items-start mb-4 md:mb-4">
+            {/* Standing Line Divider */}
+            {showDivider && (
+              <div className="w-1 h-16 bg-white mr-4 md:mr-6 flex-shrink-0 mt-0"></div>
+            )}
+            
+            {/* Title */}
+            <motion.h1 
+              className={`text-white text-3xl md:text-5xl lg:text-6xl ${gotham.className}`}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              {title}
+            </motion.h1>
+          </div>
+          
+          {/* Description - aligned with title */}
+          <motion.div 
+            className="flex"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            {/* Description text */}
+            <p className={`text-white text-base md:text-lg lg:text-xl max-w-4xl leading-relaxed ${sora.className}`}>
+              {description}
+            </p>
+          </motion.div>
+        </div>
 
-        {/* Removed carousel arrows for video */}
-
-        {/* ORIGINAL NAVBAR OVER IMAGE */}
+        {/* ORIGINAL NAVBAR OVER IMAGE - PREVIOUS CODE LAYOUT */}
         <nav
           className={`hidden md:flex flex-col absolute top-0 left-0 w-full px-12 py-1 z-30 bg-white/80 text-white ${sora.className} select-none`}
-          
         >
           <div className="flex justify-end items-center space-x-6 text-[12px] mt-2 select-none">
             <ul className="flex space-x-6 text-[11px] uppercase cursor-pointer">
@@ -358,7 +417,7 @@ export default function Header() {
               <li className="text-black"><Link href="/v3">Home</Link></li>
               <li className="text-black"><Link href="/v3/about">About Us</Link></li>
               <li className="text-black">Facilities</li>
-              <li className="text-black">News & Events</li>
+              <li className="text-black"><Link href="/v3/news&events">News & Events</Link></li>
               <li className="text-black">Sustainability</li>
             </ul>
             <button
@@ -378,24 +437,7 @@ export default function Header() {
             </button>
           </div>
         </nav>
-
-        {/* Title Overlay */}
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center z-20 px-4 md:bottom-[-29px]">
-          <motion.h1
-            initial="hidden"
-            animate="visible"
-            variants={slideFromRight}
-            className="text-white text-[clamp(28px,5vw,80px)] font-extrabold tracking-wide whitespace-nowrap drop-shadow-[0_3px_6px_rgba(0,0,0,0.8)]"
-          >
-            WORLD’S DIAMOND HUB
-          </motion.h1>
-        </div>
       </div>
     </>
   );
 }
-
-const slideFromRight = {
-  hidden: { opacity: 0, x: 100 },
-  visible: { opacity: 1, x: 0, transition: { duration: 1, ease: 'easeOut' } },
-};

@@ -18,6 +18,12 @@ const gotham = localFont({
   style: 'normal',
 });
 
+const gothamLight = localFont({
+    src: "../../../../public/fonts/Gotham Medium.otf",
+    weight: "400",
+    style: "normal",
+  });
+
 const languages = [
   { code: 'EN', label: 'English' },
   { code: 'FR', label: 'French' },
@@ -198,7 +204,7 @@ export default function Header({
             <ul className="flex space-x-8 text-[14px] font-medium text-black">
               <li className="hover:text-blue-700"><Link href="/v3">Home</Link></li>
               <li className="hover:text-blue-700"><Link href="/v3/about">About Us</Link></li>
-              <li className="hover:text-blue-700">Facilities</li>
+              <li className="hover:text-blue-700"><Link href="/v3/facilities">Facilities</Link></li>
               <li className="hover:text-blue-700"><Link href="/v3/news&events">News & Events</Link></li>
               <li className="hover:text-blue-700">Sustainability</li>
             </ul>
@@ -233,7 +239,7 @@ export default function Header({
           <ul className="px-4 pb-4 space-y-3 text-[15px] font-semibold text-gray-800 bg-white">
             <li className="hover:text-blue-700"><Link href="/v3">Home</Link></li>
             <li className="hover:text-blue-700"><Link href="/v3/about">About Us</Link></li>
-            <li className="hover:text-blue-700">Facilities</li>
+            <li className="hover:text-blue-700"><Link href="/v3/facilities">Facilities</Link></li>
             <li className="hover:text-blue-700"><Link href="/v3/news&events">News & Events</Link></li>
             <li className="hover:text-blue-700">Sustainability</li>
           </ul>
@@ -355,7 +361,7 @@ export default function Header({
             
             {/* Title */}
             <motion.h1 
-              className={`text-white text-3xl md:text-5xl lg:text-6xl ${gotham.className}`}
+              className={`text-white text-3xl md:text-5xl lg:text-6xl ${gothamLight.className}`}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -416,7 +422,7 @@ export default function Header({
             <ul className="flex space-x-8 text-[14px] font-normal cursor-pointer mx-auto">
               <li className="text-black"><Link href="/v3">Home</Link></li>
               <li className="text-black"><Link href="/v3/about">About Us</Link></li>
-              <li className="text-black">Facilities</li>
+              <li className="text-black"><Link href="/v3/facilities">Facilities</Link></li>
               <li className="text-black"><Link href="/v3/news&events">News & Events</Link></li>
               <li className="text-black">Sustainability</li>
             </ul>

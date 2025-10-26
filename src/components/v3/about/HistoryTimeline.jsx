@@ -11,6 +11,12 @@ const gotham = localFont({
   style: 'normal',
 });
 
+const gothamLight = localFont({
+    src: "../../../../public/fonts/Gotham Medium.otf",
+    weight: "400",
+    style: "normal",
+  });
+
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
 // Timeline data for each year
@@ -121,7 +127,7 @@ export default function HistoryTimeline() {
       <div className="max-w-[1320px] mx-auto px-3 xs:px-4 sm:px-6 md:px-8">
         {/* Main Title */}
         <motion.h1 
-          className={`${gotham.className} text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-[#05183A] text-center mb-8 xs:mb-12 sm:mb-14 md:mb-16`}
+          className={`${gothamLight.className} text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#05183A] text-center mb-8 xs:mb-12 sm:mb-14 md:mb-16`}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -272,7 +278,7 @@ export default function HistoryTimeline() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
             >
-              <h2 className={`${sora.className} text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold text-gray-700 mb-2 xs:mb-3 sm:mb-3 md:mb-1`}>
+              <h2 className={`${sora.className} text-lg xs:text-xl sm:text-2xl md:text-[18px] font-bold text-gray-700 mb-2 xs:mb-3 sm:mb-3 md:mb-1`}>
                 {currentYearData.title}
               </h2>
               <p className={`text-xs xs:text-sm sm:text-[15px] md:text-[16px] text-gray-600 leading-relaxed ${sora.className}`}>

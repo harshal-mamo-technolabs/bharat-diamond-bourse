@@ -12,6 +12,12 @@ const gotham = localFont({
   style: 'normal',
 });
 
+const gothamLight = localFont({
+    src: "../../../../public/fonts/Gotham Medium.otf",
+    weight: "400",
+    style: "normal",
+  });
+
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
 export default function SustainabilityInitiatives() {
@@ -53,7 +59,7 @@ export default function SustainabilityInitiatives() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         {/* Title */}
         <h1
-          className={`${gotham.className} text-4xl sm:text-4xl md:text-5xl font-bold text-[#05183A] text-center mb-14`}
+          className={`${gothamLight.className} text-4xl sm:text-4xl md:text-5xl font-bold text-[#05183A] text-center mb-14`}
         >
           Sustainability & Community Initiatives
         </h1>

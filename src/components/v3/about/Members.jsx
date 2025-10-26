@@ -10,6 +10,12 @@ const gotham = localFont({
   style: "normal",
 });
 
+const gothamLight = localFont({
+    src: "../../../../public/fonts/Gotham Medium.otf",
+    weight: "400",
+    style: "normal",
+  });
+
 const sora = Sora({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 const directors = [
@@ -126,7 +132,7 @@ export default function BoardOfDirectors() {
         className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 md:mb-10"
       >
         <h1
-          className={`text-2xl sm:text-3xl md:text-[38px] font-bold text-[#05183A] ${gotham.className}`}
+          className={`text-2xl sm:text-3xl md:text-[38px] font-bold text-[#05183A] ${gothamLight.className}`}
         >
           Board of Directors
         </h1>
@@ -167,7 +173,7 @@ export default function BoardOfDirectors() {
             </motion.div>
 
             <motion.h3
-              className={`text-base sm:text-lg font-semibold mb-1 sm:mb-2 text-gray-800 ${gotham.className}`}
+              className={`text-base sm:text-lg font-semibold mb-1 sm:mb-2 text-gray-800 ${gothamLight.className}`}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.1 + 0.4 }}
@@ -177,7 +183,7 @@ export default function BoardOfDirectors() {
             </motion.h3>
 
             <motion.p
-              className={`text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6 ${gotham.className}`}
+              className={`text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6 ${gothamLight.className}`}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 1, delay: index * 0.1 + 0.6 }}

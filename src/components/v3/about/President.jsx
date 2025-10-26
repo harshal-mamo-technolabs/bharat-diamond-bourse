@@ -12,6 +12,12 @@ const gotham = localFont({
   style: 'normal',
 });
 
+const gothamLight = localFont({
+    src: "../../../../public/fonts/Gotham Medium.otf",
+    weight: "400",
+    style: "normal",
+  });
+
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
 export default function President() {
@@ -80,7 +86,7 @@ export default function President() {
               <div className="space-y-6">
                 {/* Title */}
                 <div>
-                  <h2 className={`${gotham.className} text-xl sm:text-2xl md:text-4xl font-bold text-[#05183A]`}>
+                  <h2 className={`${gothamLight.className} text-xl sm:text-2xl md:text-4xl font-bold text-[#05183A]`}>
                     Mr. Anoop V. Mehta
                   </h2>
                   <p className={`${sora.className} text-[12px] sm:text-[13px] md:text-[14px] text-gray-600 mt-2`}>

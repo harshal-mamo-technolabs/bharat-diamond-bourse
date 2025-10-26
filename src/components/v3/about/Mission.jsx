@@ -11,6 +11,7 @@ const gotham = localFont({
   style: 'normal',
 });
 
+
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
 export default function Mission() {

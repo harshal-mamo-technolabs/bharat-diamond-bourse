@@ -12,6 +12,12 @@ const gotham = localFont({
   style: 'normal',
 });
 
+const gothamLight = localFont({
+    src: "../../../../public/fonts/Gotham Medium.otf",
+    weight: "400",
+    style: "normal",
+  });
+
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
 export default function DiamondHubSection() {
@@ -84,7 +90,7 @@ export default function DiamondHubSection() {
               variants={textVariants}
             >
               {/* Title */}
-              <h1 className={`${gotham.className} text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-[#05183A] leading-tight sm:leading-snug lg:leading-normal`}>
+              <h1 className={`${gothamLight.className} text-2xl sm:text-3xl md:text-4xl lg:text-[55px] font-bold text-[#05183A] `}>
                 World&apos;s largest Diamond Hub
               </h1>
               

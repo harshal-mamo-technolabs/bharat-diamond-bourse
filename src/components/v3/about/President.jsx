@@ -50,7 +50,7 @@ export default function President() {
             variants={fadeUp}
           >
             <Image
-              src="/about/AbstractDesign.png"
+              src="/About/AbstractDesign.png"
               alt="Decorative Pattern"
               width={350}
               height={350}
@@ -68,7 +68,7 @@ export default function President() {
             >
               <div className="relative w-full h-full rounded-2xl overflow-hidden bg-gray-200">
                 <Image
-                  src="/about/president.png"
+                  src="/About/president.png"
                   alt="Mr. Anoop V. Mehta - President of Bharat Diamond Bourse"
                   width={800}
                   height={1000}

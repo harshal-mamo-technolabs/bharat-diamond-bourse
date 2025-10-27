@@ -131,7 +131,7 @@ export default function DiamondHubSection() {
                       loop
                       playsInline
                       preload="metadata"
-                      poster="/about/diamond-hub-poster.jpg"
+                      poster="/About/diamond-hub-poster.jpg"
                     >
                       <source src="/videos/diamond-hub-showcase.mp4" type="video/mp4" />
                       <source src="/videos/diamond-hub-showcase.webm" type="video/webm" />

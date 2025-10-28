@@ -56,7 +56,7 @@ export default function Header() {
     { href: '/v3/about', label: 'About Us' },
     { href: '/v3/facilities', label: 'Facilities' },
     { href: '/v3/news&events', label: 'News & Events' },
-    { href: '/sustainability', label: 'Sustainability' },
+    { href: '/v3/sustainability', label: 'Sustainability' },
   ];
 
   // Check if current path matches nav item

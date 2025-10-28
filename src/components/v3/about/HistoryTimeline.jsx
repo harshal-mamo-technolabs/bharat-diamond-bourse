@@ -22,50 +22,55 @@ const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 // Timeline data for each year
 const timelineData = [
   {
-    year: 1985,
-    title: "Post-Blast Momentum and Land Acquisition",
-    description: "1985 serial bomb blasts in Mumbai, including Zaveri Bazaar, underscored the urgent need for a safe, centralized trading environment. This moment gave fresh momentum to the idea of a dedicated diamond bourse. Industry leaders kept the vision alive despite logistical challenges , leading to the eventual securing of a 20-acre plot in the Bandra-Kurla Complex."
+    year: 1984,
+    title: "Foundation and Vision 💎",
+    description: "The Bharat Diamond Bourse (BDB) was founded in August 1984 to support and strengthen India's emerging diamond industry. The vision was to create a thriving, inclusive ecosystem for every stakeholder. Diamond trading at the time was fragmented, taking place across Zaveri Bazaar, the Panchratna Building, and other open areas."
   },
   {
     year: 1990,
-    title: "Post-Blast Momentum and Land Acquisition",
-    description: "1990 serial bomb blasts in Mumbai, including Zaveri Bazaar, underscored the urgent need for a safe, centralized trading environment. This moment gave fresh momentum to the idea of a dedicated diamond bourse. Industry leaders kept the vision alive despite logistical challenges , leading to the eventual securing of a 20-acre plot in the Bandra-Kurla Complex."
+    title: "Early Collaboration and Inclusivity Focus 🤝",
+    description: "BDB initially collaborated closely with MMTC (the designated custodian for diamond exports) to streamline import/export operations. This partnership eventually evolved into a joint custodianship. From its inception, BDB placed the highest importance on inclusiveness and equal opportunity."
   },
   {
     year: 1995,
-    title: "Post-Blast Momentum and Land Acquisition",
-    description: "1993 serial bomb blasts in Mumbai, including Zaveri Bazaar, underscored the urgent need for a safe, centralized trading environment. This moment gave fresh momentum to the idea of a dedicated diamond bourse. Industry leaders kept the vision alive despite logistical challenges , leading to the eventual securing of a 20-acre plot in the Bandra-Kurla Complex."
+    title: "Post-Blast Momentum and Land Acquisition 🚨",
+    description: "The 1993 serial bomb blasts in Mumbai, including Zaveri Bazaar, underscored the urgent need for a safe, centralized trading environment. This moment gave fresh momentum to the idea of a dedicated diamond bourse. Industry leaders kept the vision alive despite logistical challenges , leading to the eventual securing of a 20-acre plot in the Bandra-Kurla Complex."
   },
   {
     year: 2000,
-    title: "Post-Blast Momentum and Land Acquisition",
-    description: "2000 serial bomb blasts in Mumbai, including Zaveri Bazaar, underscored the urgent need for a safe, centralized trading environment. This moment gave fresh momentum to the idea of a dedicated diamond bourse. Industry leaders kept the vision alive despite logistical challenges , leading to the eventual securing of a 20-acre plot in the Bandra-Kurla Complex."
+    title: "Design Phase and Symbolic Structure 🏗️",
+    description: "Renowned architect Mr. B.V. Joshi was appointed to design a secure, functional, and inclusive campus. The structural design of BDB reflects its values ; the towers were named A to J, deliberately omitting 'I' to symbolize unity and a collective spirit over individualism.",
   },
   {
     year: 2005,
-    title: "Post-Blast Momentum and Land Acquisition",
-    description: "2005 serial bomb blasts in Mumbai, including Zaveri Bazaar, underscored the urgent need for a safe, centralized trading environment. This moment gave fresh momentum to the idea of a dedicated diamond bourse. Industry leaders kept the vision alive despite logistical challenges , leading to the eventual securing of a 20-acre plot in the Bandra-Kurla Complex."
+    title: "Fairness in Allotment and Specialized Facilities 🔑",
+    description: "Office allotments were done via a lucky draw, ensuring transparency and fairness for all members. The campus design prioritized the smallest participants in the trade , housing a dedicated hall for new entrants (MDMA members) , a trading hall for small brokers , and safe vaults with lockers."
   },
   {
     year: 2010,
-    title: "Post-Blast Momentum and Land Acquisition",
-    description: "2010 serial bomb blasts in Mumbai, including Zaveri Bazaar, underscored the urgent need for a safe, centralized trading environment. This moment gave fresh momentum to the idea of a dedicated diamond bourse. Industry leaders kept the vision alive despite logistical challenges , leading to the eventual securing of a 20-acre plot in the Bandra-Kurla Complex."
+    title: "Nearing Operational Status 📈",
+    description: "The campus became operational in 2010. Infrastructure was designed with the intent to empower and uplift the entire spectrum of the diamond industry. The managing committee, comprised of seasoned industry leaders, works entirely on an honorary basis to ensure constant innovation."
   },
   {
     year: 2015,
-    title: "Post-Blast Momentum and Land Acquisition",
-    description: "2015 serial bomb blasts in Mumbai, including Zaveri Bazaar, underscored the urgent need for a safe, centralized trading environment. This moment gave fresh momentum to the idea of a dedicated diamond bourse. Industry leaders kept the vision alive despite logistical challenges , leading to the eventual securing of a 20-acre plot in the Bandra-Kurla Complex."
+    title: "Global Hub Status Achieved 🌐",
+    description: "By early 2012, most offices had relocated to the BDB campus. The seamless shift of customs operations helped accelerate occupancy. Today, BDB is the undisputed global hub of the diamond industry , and the largest diamond bourse in the world by physical scale and trade volume."
   },
   {
     year: 2020,
-    title: "Post-Blast Momentum and Land Acquisition",
-    description: "2020 serial bomb blasts in Mumbai, including Zaveri Bazaar, underscored the urgent need for a safe, centralized trading environment. This moment gave fresh momentum to the idea of a dedicated diamond bourse. Industry leaders kept the vision alive despite logistical challenges , leading to the eventual securing of a 20-acre plot in the Bandra-Kurla Complex."
+    title: "Scale and Governance 📊",
+    description: "BDB has a daily footfall exceeding 45,000 people and an annual turnover in the range of $35-40 billion. It is where 14 out of every 15 cut and polished diamonds in the world pass through. BDB has emerged as a model institution in trade facilitation, dispute resolution, and social responsibility."
   },
   {
     year: 2025,
-    title: "Post-Blast Momentum and Land Acquisition",
-    description: "2025 serial bomb blasts in Mumbai, including Zaveri Bazaar, underscored the urgent need for a safe, centralized trading environment. This moment gave fresh momentum to the idea of a dedicated diamond bourse. Industry leaders kept the vision alive despite logistical challenges , leading to the eventual securing of a 20-acre plot in the Bandra-Kurla Complex."
-  }
+    title: "Security Benchmark and Global Navigation 🛡️🌐",
+    description: "In 2025, the Bharat Diamond Bourse (BDB) reinforced its position as a global standard for corporate security by winning the prestigious 'Safe and Secure Corporate of the Year 2025' Award at the Secure India Summit. This recognition validates its rigorous security protocols and commitment to safeguarding its high-value ecosystem. Concurrently, BDB serves as the central platform for the industry to address complex economic issues. Through its Leadership Series events, the bourse convened global experts to discuss challenges such as US reciprocal tariffs leading to export drops, the coexistence of natural and lab-grown diamonds, and the integration of advanced technology like AI in grading and traceability to ensure long-term trust and transparency in the global diamond trade."
+  },
+  {
+    year: 'Present',
+    title: "Benchmark of Excellence ⭐",
+    description: "BDB continues to operate as a pioneering institution built on the principles of inclusion, service, and excellence. It stands as a beacon for how industry-specific hubs can be developed in other sectors. It remains a testament to what unity, foresight, and selfless leadership can achieve."
+  },
 ];
 
 export default function HistoryTimeline() {

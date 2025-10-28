@@ -157,7 +157,7 @@ const AncillariesSection = () => {
 
           {/* Food & Dining Section - Only mobile responsiveness added */}
           <motion.div 
-            className="relative rounded-3xl overflow-hidden"
+            className="relative overflow-hidden"
             variants={imageVariants}
           >
             <div className="relative h-64 md:h-80 lg:h-[400px] w-full">

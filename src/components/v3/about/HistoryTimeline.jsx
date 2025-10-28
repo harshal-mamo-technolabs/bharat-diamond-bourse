@@ -177,12 +177,12 @@ export default function HistoryTimeline() {
                     // Mobile sizes - 3 circles
                     if (positionIndex === 1) {
                       // Middle circle - Biggest on mobile
-                      circleSize = 'w-16 h-16 xs:w-20 xs:h-20';
+                      circleSize = 'w-22 h-22 xs:w-20 xs:h-20';
                       textSize = 'text-base xs:text-lg';
                       circleStyle = 'bg-[#05183A] text-white shadow-lg';
                     } else {
                       // Side circles - Smaller on mobile
-                      circleSize = 'w-12 h-12 xs:w-14 xs:h-14';
+                      circleSize = 'w-14 h-14 xs:w-14 xs:h-14';
                       textSize = 'text-sm xs:text-base';
                       circleStyle = 'bg-white border-2 border-[#05183A] shadow-md';
                     }

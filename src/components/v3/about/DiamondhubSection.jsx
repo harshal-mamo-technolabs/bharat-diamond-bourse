@@ -119,7 +119,7 @@ export default function DiamondHubSection() {
               className="relative lg:col-start-2 lg:-mr-6 lg:ml-0 order-2 lg:order-2"
               variants={videoVariants}
             >
-              <div className="relative overflow-hidden shadow-xl sm:shadow-2xl rounded-lg lg:rounded-none">
+              <div className="relative overflow-hidden rounded-sm lg:rounded-none">
                 {/* Video container with responsive sizing */}
                 <div className="relative bg-gray-900 overflow-hidden w-full h-full">
                   {/* Responsive container */}
@@ -145,20 +145,33 @@ export default function DiamondHubSection() {
                       />
                     </video>
                     
-                    {/* Video play overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
-                        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
-                          <svg 
-                            className="w-4 h-4 sm:w-6 sm:h-6 text-gray-900 ml-0.5 sm:ml-1" 
-                            fill="currentColor" 
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M8 5v14l11-7z"/>
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
+                   {/* Video play overlay */}
+                   <div className="absolute inset-0 flex items-center justify-center">
+  <svg
+    width="80"
+    height="80"
+    viewBox="0 0 80 80"
+    className="sm:w-20 sm:h-20 w-16 h-16"
+  >
+    <defs>
+      <mask id="play-cutout">
+        {/* Full white circle = visible */}
+        <rect width="100%" height="100%" fill="white" />
+        {/* Black triangle = transparent hole */}
+        <polygon points="32,24 32,56 56,40" fill="black" />
+      </mask>
+    </defs>
+
+    {/* Circle with mask applied */}
+    <circle
+      cx="40"
+      cy="40"
+      r="38"
+      fill="white"
+      mask="url(#play-cutout)"
+    />
+  </svg>
+</div>
                   </div>
                 </div>
               </div>

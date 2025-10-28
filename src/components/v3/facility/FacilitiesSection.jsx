@@ -156,7 +156,7 @@ const FacilitiesSection = () => {
             className="order-1 lg:order-2"
             variants={imageVariants}
           >
-            <div className="relative h-64 sm:h-80 lg:h-[300px] rounded-3xl overflow-hidden shadow-xl">
+            <div className="relative h-64 sm:h-80 lg:h-[300px] rounded-none overflow-hidden">
               <Image
                 src={currentContent.image}
                 alt={`${currentContent.title} - ${currentContent.subtitle}`}

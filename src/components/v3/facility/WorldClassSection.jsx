@@ -83,20 +83,17 @@ const WorldClassSection = () => {
   };
 
   return (
-    <section className="w-full bg-gray-100 py-12 md:py-16 lg:py-20 relative overflow-hidden">
-      {/* Abstract Background Design Image */}
-      <div className="absolute inset-0 opacity-10">
-        <Image
-          src="/facilities/design.png" // Replace with your abstract design image
-          alt="Abstract Background Design"
-          fill
-          className="object-cover"
-          sizes="100vw"
-          quality={50}
-          priority
-        />
-        
-      </div>
+    <section
+  className="w-full py-12 md:py-16 lg:py-20 relative overflow-hidden bg-gray-100"
+  style={{
+    backgroundImage: "url('/facilities/design.png')",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    opacity: 1 // keep normal opacity
+  }}
+>
+
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -108,10 +105,10 @@ const WorldClassSection = () => {
         >
           {/* Left Side - Content */}
           <motion.div 
-            className="space-y-2 order-2 lg:order-1"
+            className="order-1 lg:order-1"
             variants={containerVariants}
           >
-            {/* Title */}
+            {/* Title - Always visible */}
             <motion.h1 
               className={`text-3xl md:text-3xl lg:text-4xl font-bold text-[#05183A] leading-tight ${gothamLight.className}`}
               variants={itemVariants}
@@ -119,35 +116,37 @@ const WorldClassSection = () => {
               Our World-Class Facilities
             </motion.h1>
 
-            {/* Description */}
-            <motion.div 
-              className={`space-y-4 text-[#364153] text-base md:text-[14px] text-justify leading-relaxed ${sora.className}`}
-              variants={containerVariants}
-            >
-              <motion.p variants={itemVariants}>
-              The Bharat Diamond Bourse stands as a global benchmark for excellence, offering state-of-the-art infrastructure that caters to every facet of the diamond and jewellery trade. From advanced security systems and seamless logistics to modern offices and well-planned amenities, every detail has been designed to ensure efficiency, comfort, and confidence for our members.
-              </motion.p>
-            </motion.div>
+            {/* Description & Button - Hidden on mobile/tablet (will be shown after image) */}
+            <motion.div className="hidden lg:block space-y-2">
+              <motion.div 
+                className={`space-y-4 text-[#364153] text-base md:text-[14px] text-justify leading-relaxed ${sora.className}`}
+                variants={containerVariants}
+              >
+                <motion.p variants={itemVariants}>
+                  The Bharat Diamond Bourse stands as a global benchmark for excellence, offering state-of-the-art infrastructure that caters to every facet of the diamond and jewellery trade. From advanced security systems and seamless logistics to modern offices and well-planned amenities, every detail has been designed to ensure efficiency, comfort, and confidence for our members.
+                </motion.p>
+              </motion.div>
 
-            {/* Read More Button */}
-            <motion.button
-              className="bg-[#05183A] text-white px-3 py-3 rounded-xl text-[12px] font-semibold flex items-center justify-center space-x-2 mt-4 w-full sm:w-auto"
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-            >
-              <span>KNOW MORE</span>
-              <FaArrowRight className='w-3 h-3'/>
-            </motion.button>
+              {/* Read More Button */}
+              <motion.button
+                className="bg-[#05183A] text-white px-3 py-3 rounded-xl text-[12px] font-semibold flex items-center justify-center space-x-2 mt-4 w-full sm:w-auto"
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                <span>KNOW MORE</span>
+                <FaArrowRight className='w-3 h-3'/>
+              </motion.button>
+            </motion.div>
           </motion.div>
 
-          {/* Right Side - Image */}
+          {/* Right Side - Image - comes second on mobile/tablet */}
           <motion.div 
-            className="order-1 lg:order-2 flex justify-center lg:justify-end"
+            className="order-2 lg:order-2 flex justify-center lg:justify-end"
             variants={imageVariants}
           >
             <div className="relative w-full max-w-sm">
-              <div className="relative h-64 sm:h-72 lg:h-[350px] lg:w-[350px] rounded-lg overflow-hidden shadow-2xl">
+              <div className="relative h-64 sm:h-72 lg:h-[350px] lg:w-[350px] rounded-none overflow-hidden">
                 <Image
                   src="/facilities/worldclass.png"
                   alt="BDB Restaurant Dining Area"
@@ -159,6 +158,32 @@ const WorldClassSection = () => {
                 </div>
             </div>
           </motion.div>
+        </motion.div>
+
+        {/* Mobile/Tablet only - Description and button after image */}
+        <motion.div 
+          className="block lg:hidden mt-8 space-y-2"
+          variants={containerVariants}
+        >
+          <motion.div 
+            className={`space-y-4 text-[#364153] text-base md:text-[14px] text-justify leading-relaxed ${sora.className}`}
+            variants={containerVariants}
+          >
+            <motion.p variants={itemVariants}>
+              The Bharat Diamond Bourse stands as a global benchmark for excellence, offering state-of-the-art infrastructure that caters to every facet of the diamond and jewellery trade. From advanced security systems and seamless logistics to modern offices and well-planned amenities, every detail has been designed to ensure efficiency, comfort, and confidence for our members.
+            </motion.p>
+          </motion.div>
+
+          {/* Read More Button */}
+          <motion.button
+            className="bg-[#05183A] text-white px-3 py-3 rounded-xl text-[12px] font-semibold flex items-center justify-center space-x-2 mt-4 w-full sm:w-auto"
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+          >
+            <span>KNOW MORE</span>
+            <FaArrowRight className='w-3 h-3'/>
+          </motion.button>
         </motion.div>
       </div>
     </section>

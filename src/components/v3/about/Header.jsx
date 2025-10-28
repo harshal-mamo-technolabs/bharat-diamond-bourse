@@ -9,6 +9,7 @@ import { FiMenu } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
@@ -46,6 +47,7 @@ export default function Header({
   description = "Bharat Diamond Bourse (BDB) is the world's largest and most prestigious diamond trading hub, bringing together thousands of members across 100+ countries.", // Default description
   showDivider = true // Show the standing line divider
 }) {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState(languages[0].code);
   const [showStickyNav, setShowStickyNav] = useState(false);
@@ -61,6 +63,22 @@ export default function Header({
   const heroVideoRef = useRef(null);
 
   const HERO_HEIGHT = 720;
+
+  // Navigation items
+  const navItems = [
+    { href: '/v3', label: 'Home' },
+    { href: '/v3/about', label: 'About Us' },
+    { href: '/v3/facilities', label: 'Facilities' },
+    { href: '/v3/news&events', label: 'News & Events' },
+    { href: '/v3/sustainability', label: 'Sustainability' },
+  ];
+
+  // Check if current path matches nav item
+  const isActive = (href) => {
+    if (href === '/v3' && pathname === '/v3') return true;
+    if (href !== '/v3' && pathname.startsWith(href)) return true;
+    return false;
+  };
 
   // detect on load + resize
   useEffect(() => {
@@ -201,12 +219,28 @@ export default function Header({
         >
           <div className="flex items-center justify-between w-full">
             <Image src="/bdb-logo-black-font.png" alt="BDB Logo" width={120} height={50} />
-            <ul className="flex space-x-8 text-[14px] font-medium text-black">
-              <li className="hover:text-blue-700"><Link href="/v3">Home</Link></li>
-              <li className="hover:text-blue-700"><Link href="/v3/about">About Us</Link></li>
-              <li className="hover:text-blue-700"><Link href="/v3/facilities">Facilities</Link></li>
-              <li className="hover:text-blue-700"><Link href="/v3/news&events">News & Events</Link></li>
-              <li className="hover:text-blue-700">Sustainability</li>
+            <ul className="flex space-x-8 text-[14px] font-medium">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link 
+                    href={item.href}
+                    className={`relative pb-1 transition-colors duration-200 ${
+                      isActive(item.href) 
+                        ? 'text-[#05183A] font-semibold' 
+                        : 'text-gray-600 hover:text-[#05183A]'
+                    }`}
+                  >
+                    {item.label}
+                    {isActive(item.href) && (
+                      <motion.div 
+                        className="absolute bottom-0 inset-x-0 mx-auto w-5 h-0.5 bg-[#05183A]"
+                        layoutId="navbar-underline"
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                </li>
+              ))}
             </ul>
             <button
               className={[
@@ -236,12 +270,29 @@ export default function Header({
           </button>
         </div>
         {mobileMenuOpen && (
-          <ul className="px-4 pb-4 space-y-3 text-[15px] font-semibold text-gray-800 bg-white">
-            <li className="hover:text-blue-700"><Link href="/v3">Home</Link></li>
-            <li className="hover:text-blue-700"><Link href="/v3/about">About Us</Link></li>
-            <li className="hover:text-blue-700"><Link href="/v3/facilities">Facilities</Link></li>
-            <li className="hover:text-blue-700"><Link href="/v3/news&events">News & Events</Link></li>
-            <li className="hover:text-blue-700">Sustainability</li>
+          <ul className="px-4 pb-4 space-y-3 text-[15px] font-semibold bg-white">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <Link 
+                  href={item.href}
+                  className={`relative pb-1 transition-colors duration-200 ${
+                    isActive(item.href) 
+                      ? 'text-[#05183A] font-semibold' 
+                      : 'text-gray-600 hover:text-[#05183A]'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                  {isActive(item.href) && (
+                    <motion.div 
+                      className="absolute bottom-0 inset-x-0 mx-auto w-5 h-0.5 bg-[#05183A]"
+                      layoutId="mobile-navbar-underline"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              </li>
+            ))}
           </ul>
         )}
       </div>
@@ -420,11 +471,27 @@ export default function Header({
               <Image src="/bdb-logo-black-font.png" alt="BDB Logo" width={135} height={140} />
             </div>
             <ul className="flex space-x-8 text-[14px] font-normal cursor-pointer mx-auto">
-              <li className="text-black"><Link href="/v3">Home</Link></li>
-              <li className="text-black"><Link href="/v3/about">About Us</Link></li>
-              <li className="text-black"><Link href="/v3/facilities">Facilities</Link></li>
-              <li className="text-black"><Link href="/v3/news&events">News & Events</Link></li>
-              <li className="text-black">Sustainability</li>
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link 
+                    href={item.href}
+                    className={`relative pb-1 transition-colors duration-200 ${
+                      isActive(item.href) 
+                        ? 'text-[#05183A] font-semibold' 
+                        : 'text-black hover:text-[#05183A]'
+                    }`}
+                  >
+                    {item.label}
+                    {isActive(item.href) && (
+                      <motion.div 
+                        className="absolute bottom-0 inset-x-0 mx-auto w-5 h-0.5 bg-[#05183A]"
+                        layoutId="main-navbar-underline"
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                </li>
+              ))}
             </ul>
             <button
               className={[

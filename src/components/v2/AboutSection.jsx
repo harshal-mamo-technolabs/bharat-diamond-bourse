@@ -21,6 +21,12 @@ const gotham = localFont({
   style: 'normal',
 });
 
+const gothamLight = localFont({
+  src: "../../../public/fonts/Gotham Medium.otf",
+  weight: "400",
+  style: "normal",
+});
+
 // Load Sora font
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
@@ -56,41 +62,56 @@ export default function AboutSection() {
     <section className="w-full bg-white py-14 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
         {/* Main heading */}
-        <div className="text-left mb-5">
+        <div className="text-left mb-8">
           <h1
-            className={`text-3xl sm:text-4xl font-bold text-[#1D3156] leading-tight max-w-6xl mx-auto ${gotham.className}`}
+            className={`text-3xl md:text-3xl font-bold text-[#1D3156] leading-tight max-w-7xl mx-auto ${gothamLight.className}`}
           >
-            BDB: Shaping The Future
-            <br className="hidden sm:block" />
-            <span className="block sm:inline">Of Diamond Trade</span>
+            BDB: Shaping The Future Of Diamond Trade
           </h1>
         </div>
 
         {/* Card container */}
         <div className="relative mb-10">
-          <div className="bg-[#F2F4F6] rounded-3xl shadow-xl p-6 sm:p-10 sm:pt-20 relative mb-20 overflow-visible">
-            {/* Grid for md+ screens, stacked for mobile */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 md:gap-y-0 md:gap-x-10 items-start">
+          <div className="bg-[#F2F4F6] rounded-3xl shadow-xl p-6 sm:p-10 sm:pt-10 relative mb-20 overflow-visible">
+            {/* Grid for lg+ screens, stacked for mobile and tablet */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-y-0 lg:gap-x-10 items-start">
               {/* WHO WE ARE */}
               <div className="max-w-xl">
-                <h2 className={`text-3xl sm:text-4xl font-bold text-[#1D3156] mb-4 ${gotham.className}`}>
+                <h2 className={`text-3xl lg:text-6xl font-bold text-[#1D3156] mb-4 ${gothamLight.className}`}>
                   Who We Are
                 </h2>
                 <p className={`text-gray-700 leading-relaxed text-[15px] mb-3 text-justify ${sora.className}`}>
-                  Established to strengthen and streamline India's role in the international diamond market, BDB is
-                  home to thousands of national and international traders, manufacturers, exporters, and service
-                  providers. The campus offers a highly secure, transparent, and professionally managed environment
-                  that reflects trust, scale, and operational excellence.
+                The Bharat Diamond Bourse (BDB) is the world's largest diamond bourse, a self-contained city dedicated to the gem and jewellery trade. Our purpose is to provide a secure and efficient ecosystem that facilitates seamless trade for a diverse community.
                 </p>
                 <p className={`text-gray-700 leading-relaxed text-[15px] text-justify ${sora.className}`}>
-                  We represent not just a physical space but a vibrant ecosystem — where legacy, innovation, and
-                  global commerce meet.
+                Around 2,500 Indian and international firms have established their offices here, ranging from large multinational corporations to small, independent traders.
                 </p>
+                <button
+                  onClick={() => setShowModal(true)}
+                  className={[
+                    'group relative inline-flex items-center justify-between mt-2',
+                    'rounded-[8px] px-5 py-3.5',
+                    'bg-[#0E234E]',
+                    `${gotham.className}`,
+                    'text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]',
+                    'transition-all duration-200 hover:-translate-y-px',
+                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
+                    'w-max',
+                  ].join(' ')}
+                >
+                  <span>Read more About us </span>
+                  <Arrow
+                    color="#FFFFFF"
+                    size={16}
+                    stroke={2}
+                    className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
+                  />
+                </button>
               </div>
 
               {/* Building 1 image (no border, small rounded corners, lift on hover) */}
               <motion.div
-                className="group flex justify-center md:justify-end items-end relative -mt-4 sm:-mt-12 md:-mt-45 mb-8 sm:mb-16 md:mb-25"
+                className="group flex justify-center lg:justify-end items-end relative -mt-4 sm:-mt-12 lg:-mt-30 mb-8 sm:mb-4 lg:mb-4"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.8 }}
@@ -111,70 +132,7 @@ export default function AboutSection() {
                     style={{ objectFit: 'cover', borderRadius: '8px' }}
                   />
                 </div>
-              </motion.div>
-
-              {/* Building 2 image (no border, small rounded corners, lift on hover) */}
-              <motion.div
-                className="group flex justify-center md:justify-start items-start relative -mb-8 sm:-mb-16 md:-mb-24 order-last md:order-none"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.8 }}
-                variants={building2Variants}
-              >
-                <div
-                  className="relative rounded-[8px] overflow-hidden transform-gpu transition-transform duration-300 group-hover:-translate-y-2"
-                  style={{
-                    width: 450,
-                    height: 450,
-                    borderRadius: '8px', // ✅ border removed
-                  }}
-                >
-                  <Image
-                    src="/missonandvission.png"
-                    alt="Modern glass building architecture"
-                    fill
-                    style={{ objectFit: 'cover', borderRadius: '8px' }}
-                  />
-                </div>
-              </motion.div>
-
-              {/* MISSION & VISION */}
-              <div className="max-w-xl ml-auto flex flex-col justify-end">
-                <h2 className={`text-3xl sm:text-4xl font-bold text-[#1D3156] mb-3 ${gotham.className}`}>
-                  Mission & Vision
-                </h2>
-                <p className={`text-gray-700 leading-relaxed text-[15px] mb-4 text-justify ${sora.className}`}>
-                  To provide a world-class, secure, and transparent platform for the global diamond trade by fostering
-                  excellence, innovation, and integrity — supporting businesses and advancing India's leadership in the
-                  global gems and jewelry sector.
-                </p>
-                <p className={`text-gray-700 leading-relaxed text-[15px] mb-6 text-justify ${sora.className}`}>
-                  To be the most trusted and advanced diamond trading destination in the world — a global epicenter
-                  where commerce, collaboration, and community come together to shape the future of the diamond
-                  industry.
-                </p>
-                <button
-                  onClick={() => setShowModal(true)}
-                  className={[
-                    'group relative inline-flex items-center justify-between',
-                    'rounded-[8px] px-5 py-3.5',
-                    'bg-[#0E234E]',
-                    `${gotham.className}`,
-                    'text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]',
-                    'transition-all duration-200 hover:-translate-y-px',
-                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
-                    'w-max',
-                  ].join(' ')}
-                >
-                  <span>Read more About us </span>
-                  <Arrow
-                    color="#FFFFFF"
-                    size={16}
-                    stroke={2}
-                    className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
-                  />
-                </button>
-              </div>
+              </motion.div>              
             </div>
           </div>
         </div>

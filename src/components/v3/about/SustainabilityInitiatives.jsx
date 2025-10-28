@@ -73,7 +73,7 @@ export default function SustainabilityInitiatives() {
                 className="w-full flex items-center justify-between text-left focus:outline-none"
               >
                 <span
-                  className={`${gotham.className} text-sm sm:text-base md:text-[14px] font-semibold text-[#05183A]`}
+                  className={`${gothamLight.className} text-sm sm:text-base md:text-[14px] font-semibold text-[#05183A]`}
                 >
                   {item.title}
                 </span>

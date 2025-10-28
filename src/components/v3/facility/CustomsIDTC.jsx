@@ -99,12 +99,12 @@ const CustomsIDTC = () => {
           variants={containerVariants}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left side - Image - comes first on mobile */}
+            {/* Left side - Image - comes second on mobile/tablet, first on desktop */}
             <motion.div 
-              className="order-1 lg:order-1"
+              className="order-2 lg:order-1"
               variants={imageVariants}
             >
-              <div className="relative overflow-hidden shadow-xl rounded-2xl">
+              <div className="relative overflow-hidden shadow-none rounded-none">
                 <div className="relative h-64 sm:h-80 md:h-96 lg:h-[300px] w-full">
                   <Image
                     src="/facilities/IDTC.jpg"
@@ -120,12 +120,12 @@ const CustomsIDTC = () => {
               </div>
             </motion.div>
 
-            {/* Right side - Content - comes second on mobile */}
+            {/* Right side - Content - comes first on mobile/tablet, second on desktop */}
             <motion.div 
-              className="order-2 lg:order-2 space-y-5"
+              className="order-1 lg:order-2"
               variants={contentVariants}
             >
-              {/* Title */}
+              {/* Title - Always visible */}
               <motion.h2
                 className={`text-2xl sm:text-3xl md:text-5xl font-bold text-[#05183A] leading-tight ${gothamLight.className}`}
                 variants={contentVariants}
@@ -133,39 +133,78 @@ const CustomsIDTC = () => {
                 Customs & IDTC
               </motion.h2>
 
-              {/* Description */}
-              <motion.p
-                className={`text-base md:text-[12px] text-gray-700 leading-relaxed text-justify ${sora.className}`}
-                variants={contentVariants}
-              >
-                BOB houses a full-fledged customs clearance centre and the India Diamond Trading Centre (IDTC) – a secure zone where leading global mining companies like De Beers and ALROSA showcase rough diamonds.
-              </motion.p>
+              {/* Description & Features - Hidden on mobile/tablet (will be shown after image) */}
+              <motion.div className="hidden lg:block space-y-5">
+                <motion.p
+                  className={`text-base md:text-[12px] text-gray-700 leading-relaxed text-justify ${sora.className}`}
+                  variants={contentVariants}
+                >
+                  BOB houses a full-fledged customs clearance centre and the India Diamond Trading Centre (IDTC) – a secure zone where leading global mining companies like De Beers and ALROSA showcase rough diamonds.
+                </motion.p>
 
-              {/* Features List */}
-              <motion.ul
-                className="space-y-6"
-                variants={containerVariants}
-              >
-                {[
-                  "Import/export clearance in hours, not days",
-                  "X-ray scanners, sealing desks, and electronic filing on campus",
-                  "Duty \"parking\" benefit until deals are finalised"
-                ].map((item, index) => (
-                  <motion.li
-                    key={index}
-                    className="flex items-start"
-                    custom={index}
-                    variants={listItemVariants}
-                  >
-                    <div className="flex-shrink-0 w-1 h-1 bg-[#05183A] rounded-none mt-2 mr-4"></div>
-                    <span className={`text-gray-700 font-medium text-[12px] ${sora.className}`}>
-                      {item}
-                    </span>
-                  </motion.li>
-                ))}
-              </motion.ul>
+                {/* Features List */}
+                <motion.ul
+                  className="space-y-6"
+                  variants={containerVariants}
+                >
+                  {[
+                    "Import/export clearance in hours, not days",
+                    "X-ray scanners, sealing desks, and electronic filing on campus",
+                    "Duty \"parking\" benefit until deals are finalised"
+                  ].map((item, index) => (
+                    <motion.li
+                      key={index}
+                      className="flex items-start"
+                      custom={index}
+                      variants={listItemVariants}
+                    >
+                      <div className="flex-shrink-0 w-1 h-1 bg-[#05183A] rounded-none mt-2 mr-4"></div>
+                      <span className={`text-gray-700 font-medium text-[12px] ${sora.className}`}>
+                        {item}
+                      </span>
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </motion.div>
             </motion.div>
           </div>
+
+          {/* Mobile/Tablet only - Description and features after image */}
+          <motion.div 
+            className="block lg:hidden mt-8 space-y-5"
+            variants={contentVariants}
+          >
+            <motion.p
+              className={`text-[13px] md:text-[12px] text-gray-700 leading-relaxed text-justify ${sora.className}`}
+              variants={contentVariants}
+            >
+              BOB houses a full-fledged customs clearance centre and the India Diamond Trading Centre (IDTC) – a secure zone where leading global mining companies like De Beers and ALROSA showcase rough diamonds.
+            </motion.p>
+
+            {/* Features List */}
+            <motion.ul
+              className="space-y-6"
+              variants={containerVariants}
+            >
+              {[
+                "Import/export clearance in hours, not days",
+                "X-ray scanners, sealing desks, and electronic filing on campus",
+                "Duty \"parking\" benefit until deals are finalised"
+              ].map((item, index) => (
+                <motion.li
+                  key={index}
+                  className="flex items-start"
+                  custom={index}
+                  variants={listItemVariants}
+                >
+                  <div className="flex-shrink-0 w-1 h-1 bg-[#05183A] rounded-none mt-2 mr-4"></div>
+                  <span className={`text-gray-700 font-medium text-[12px] ${sora.className}`}>
+                    {item}
+                  </span>
+                </motion.li>
+              ))}
+            </motion.ul>
+          </motion.div>
         </motion.div>
       </div>
     </section>

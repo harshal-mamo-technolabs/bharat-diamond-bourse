@@ -136,13 +136,13 @@ export default function BoardOfDirectors() {
         >
           Board of Directors
         </h1>
-        <p
+        {/* <p
           className={`text-gray-600 md:w-[45%] mt-3 md:mt-0 text-sm sm:text-sm leading-relaxed ${sora.className}`}
         >
           Our team is built on a foundation of collaborative excellence,
           combining diverse talents and expertise to deliver outstanding
           results.
-        </p>
+        </p> */}
       </motion.div>
 
       {/* Directors Grid */}

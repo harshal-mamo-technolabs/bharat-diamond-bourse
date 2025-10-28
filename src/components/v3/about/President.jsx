@@ -38,7 +38,7 @@ export default function President() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         {/* Main Card with Gray Background */}
         <motion.div
-          className="relative bg-[#F2F4F6] shadow-xl overflow-hidden"
+          className="relative bg-[#F2F4F6] overflow-hidden"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -54,19 +54,19 @@ export default function President() {
               alt="Decorative Pattern"
               width={350}
               height={350}
-              className="opacity-70 max-w-[80%] sm:max-w-[60%] md:max-w-[50%] h-auto"
+              className="opacity-70 max-w-[80%] sm:max-w-[60%] md:max-w-[100%] h-auto"
             />
           </motion.div>
 
           {/* Grid */}
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[2.5fr_2fr] gap-6">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[2.5fr_2fr] gap-2 md:gap-6">
 
             {/* Right Side - Image first in responsive */}
             <motion.div
               className="order-1 lg:order-2 relative flex items-center justify-center p-4 sm:p-6"
               variants={fadeUp}
             >
-              <div className="relative w-full h-full rounded-2xl overflow-hidden bg-gray-200">
+              <div className="relative w-full h-full rounded-none overflow-hidden bg-gray-200">
                 <Image
                   src="/about/president.png"
                   alt="Mr. Anoop V. Mehta - President of Bharat Diamond Bourse"
@@ -80,7 +80,7 @@ export default function President() {
 
             {/* Left Side - Content */}
             <motion.div
-              className="order-2 lg:order-1 bg-white rounded-2xl m-6 p-6 sm:p-8 md:p-16 shadow-lg relative flex flex-col"
+              className="order-2 lg:order-1 bg-white rounded-none md:m-6 m-2 p-6 sm:p-8 md:p-16 relative flex flex-col"
               variants={fadeUp}
             >
               <div className="space-y-6">
@@ -119,10 +119,10 @@ export default function President() {
 
               {/* Bottom Button for Mobile/Tablets */}
               <motion.button
-                className="mt-6 lg:absolute lg:bottom-0 lg:right-0 w-full lg:w-auto bg-[#05183A] text-white p-4 sm:p-5 md:p-7 rounded-br-2xl flex items-center justify-center hover:bg-[#0b214f] transition-all"
+                className="mt-6 absolute lg:bottom-0 lg:right-0 w-auto bottom-0 right-0 lg:w-auto bg-[#05183A] text-white p-2.5 sm:p-5 md:p-7 rounded-br-2xl flex items-center justify-center hover:bg-[#0b214f] transition-all"
                 variants={fadeUp}
               >
-                <FaArrowRight className='w-6 sm:w-6 md:w-7 h-6 sm:h-6 md:h-7'/>
+                <FaArrowRight className='w-4 sm:w-3 md:w-7 h-6 sm:h-3 md:h-7'/>
               </motion.button>
             </motion.div>
 

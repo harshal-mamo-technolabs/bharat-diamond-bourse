@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
 import { BsCalendarDate } from "react-icons/bs";
+import { BiSort } from "react-icons/bi";
 import { motion } from 'framer-motion';
 import localFont from 'next/font/local';
 import { Sora } from 'next/font/google';
@@ -138,6 +139,7 @@ const getImageUrl = (type) => {
 export default function News() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedYear, setSelectedYear] = useState('');
+  const [selectedSort, setSelectedSort] = useState('');
   const [selectedMonth, setSelectedMonth] = useState('');
 
   const filters = ['All', 'News', 'Events', 'Obituary', 'Press Release'];
@@ -199,11 +201,23 @@ export default function News() {
 
             {/* Date Selectors */}
             <div className="flex gap-4 w-full lg:w-auto">
+            <div className="relative flex-1 lg:flex-none">
+                <select
+                  value={selectedSort}
+                  onChange={(e) => setSelectedSort(e.target.value)}
+                  className={`w-full lg:w-30 px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
+                >
+                  <option value="">Sort</option>
+                  <option value="latest">By latest</option>
+                  <option value="old">By old</option>
+                </select>
+                <BiSort className="absolute right-3 top-1/2 transform -translate-y-1/2  pointer-events-none" />
+              </div>
               <div className="relative flex-1 lg:flex-none">
                 <select
                   value={selectedYear}
                   onChange={(e) => setSelectedYear(e.target.value)}
-                  className={`w-full lg:w-40 px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${sora.className}`}
+                  className={`w-full lg:w-40 px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
                 >
                   <option value="">Select Year</option>
                   <option value="2025">2025</option>
@@ -218,7 +232,7 @@ export default function News() {
                 <select
                   value={selectedMonth}
                   onChange={(e) => setSelectedMonth(e.target.value)}
-                  className={`w-full lg:w-40 px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${sora.className}`}
+                  className={`w-full lg:w-40 px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
                 >
                   <option value="">Select Month</option>
                   <option value="01">January</option>

@@ -104,7 +104,7 @@ const AncillariesSection = () => {
         >
           {/* Main Title */}
           <motion.h1 
-            className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#05183A] text-center mb-12 md:mb-16 ${gotham.className}`}
+            className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#05183A] text-center mb-12 md:mb-16 ${gothamLight.className}`}
             variants={itemVariants}
           >
             Ancillaries & Safe Vaults
@@ -175,7 +175,7 @@ const AncillariesSection = () => {
               <div className="absolute inset-0 flex items-center">
                 <div className="max-w-2xl ml-4 sm:ml-6 md:ml-12 lg:ml-16 mr-4 sm:mr-0 text-white">
                   <motion.h2 
-                    className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 ${gotham.className}`}
+                    className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 ${gothamLight.className}`}
                     variants={itemVariants}
                   >
                     Food & Dining

@@ -112,7 +112,7 @@ const BankingSection = () => {
         >
           {/* Main Card with Blue Border */}
           <motion.div
-            className="bg-white border-3 border-[#05183A] rounded-3xl p-6 sm:p-8 md:p-12 shadow-lg"
+            className="bg-white border-3 border-[#05183A] rounded-3xl p-6 md:p-4"
             variants={cardVariants}
           >
             {/* Title Section */}
@@ -121,7 +121,7 @@ const BankingSection = () => {
               variants={containerVariants}
             >
               <motion.h1
-                className={`text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 ${gotham.className}`}
+                className={`text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-1 ${gothamLight.className}`}
                 variants={itemVariants}
               >
                 Banking & Finance
@@ -140,7 +140,7 @@ const BankingSection = () => {
                   variants={imageVariants}
                   whileHover="hover"
                 >
-                  <div className="p-2 sm:p-6transition-colors duration-300 h-full flex items-center justify-center">
+                  <div className="p-0 sm:p-6transition-colors duration-300 h-full flex items-center justify-center">
                     <div className="relative w-full h-20 sm:h-24 md:h-36">
                       <Image
                         src={bank.logo}

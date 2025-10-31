@@ -5,6 +5,7 @@ import { FaArrowRight } from "react-icons/fa";
 import Image from 'next/image';
 import localFont from 'next/font/local';
 import { Sora } from 'next/font/google';
+import Link from 'next/link';
 
 const gotham = localFont({
   src: '../../../../public/fonts/Gotham.otf',
@@ -183,15 +184,18 @@ const RestaurantsSection = () => {
           </motion.div>
 
           {/* Read More Button */}
-          <motion.button
-            className="bg-[#05183A] text-white px-3 py-3 rounded-xl text-[12px] font-semibold flex items-center justify-center space-x-2 mt-4 w-full sm:w-auto"
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-          >
-            <span>OUR RESTURANTS</span>
-            <FaArrowRight className='w-3 h-3'/>
-          </motion.button>
+          <Link href="/v3/resturants" className="w-full sm:w-auto">
+  <motion.button
+    className="bg-[#05183A] text-white px-3 py-3 rounded-xl text-[12px] font-semibold flex items-center justify-center space-x-2 mt-4 w-full sm:w-auto"
+    variants={buttonVariants}
+    whileHover="hover"
+    whileTap="tap"
+  >
+    <span>OUR RESTURANTS</span>
+    <FaArrowRight className="w-3 h-3" />
+  </motion.button>
+</Link>
+
         </motion.div>
       </div>
     </section>

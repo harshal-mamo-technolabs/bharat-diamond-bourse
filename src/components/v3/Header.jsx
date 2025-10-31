@@ -57,6 +57,7 @@ export default function Header() {
     { href: '/v3/facilities', label: 'Facilities' },
     { href: '/v3/news&events', label: 'News & Events' },
     { href: '/v3/sustainability', label: 'Sustainability' },
+    
   ];
 
   // Check if current path matches nav item
@@ -375,10 +376,10 @@ export default function Header() {
         >
           <div className="flex justify-end items-center space-x-6 text-[12px] mt-2 select-none">
             <ul className="flex space-x-6 text-[11px] uppercase cursor-pointer">
-              <li className="text-black">Circulars</li>
-              <li className="text-black">Member's directory</li>
-              <li className="text-black">Contact us</li>
-              <li className="text-black">careers</li>
+              <li className="text-black"><Link href="/v3/circulars">Circulars</Link></li>
+              <li className="text-black"><Link href="/v3/members-directory">Member's directory</Link></li>
+              <li className="text-black"><Link href="/v3/contact-us">Contact us</Link></li>
+              <li className="text-black"><Link href="/v3/careers">careers</Link></li>
             </ul>
             <div className="relative w-24 text-black">
               <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-black text-xs pointer-events-none" />

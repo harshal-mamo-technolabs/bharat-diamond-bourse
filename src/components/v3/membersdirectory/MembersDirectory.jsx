@@ -235,14 +235,7 @@ export default function MembersDirectory() {
               exit="hidden"
               className="relative bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
             >
-              {/* Close Button */}
-              <button
-                onClick={closeModal}
-                className="absolute top-4 right-4 z-10 text-gray-500 hover:text-gray-700 text-2xl bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-md"
-              >
-                ×
-              </button>
-
+              
               {/* White Card Container */}
               <div className="bg-white rounded-xl p-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -336,6 +329,15 @@ export default function MembersDirectory() {
                         </div>
                       </div>
                     </div>
+                    <motion.button
+                    variants={buttonVariants}
+                    whileHover="hover"
+                    whileTap="tap"
+                    onClick={closeModal}
+                    className={`flex items-center gap-2 bg-[#05183A] text-white px-5 py-3 rounded-lg text-sm sm:text-[14px] font-semibold transition-colors duration-200 hover:bg-[#0a2a5a] w-full justify-center mt-4 ${sora.className}`}
+                  >
+                    Close
+                  </motion.button>
                   </div>
                 </div>
               </div>

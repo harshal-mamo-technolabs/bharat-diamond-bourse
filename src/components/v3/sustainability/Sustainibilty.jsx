@@ -200,7 +200,7 @@ export default function Sustainability() {
                     className={`order-2 lg:order-1 ${isImageLeft ? 'lg:order-1' : 'lg:order-2'}`}
                     variants={imageVariants}
                   >
-                    <div className="relative h-64 sm:h-72 md:h-80 lg:h-80 w-full overflow-hidden">
+                    <div className="relative h-64 sm:h-72 md:h-80 lg:h-80 w-full rounded-lg overflow-hidden">
                       <Image
                         src={section.image}
                         alt={section.title}

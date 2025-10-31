@@ -199,56 +199,62 @@ export default function News() {
               ))}
             </div>
 
-            {/* Date Selectors */}
-            <div className="flex gap-4 w-full lg:w-auto">
-            <div className="relative flex-1 lg:flex-none">
-                <select
-                  value={selectedSort}
-                  onChange={(e) => setSelectedSort(e.target.value)}
-                  className={`w-full lg:w-30 px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
-                >
-                  <option value="">Sort</option>
-                  <option value="latest">By latest</option>
-                  <option value="old">By old</option>
-                </select>
-                <BiSort className="absolute right-3 top-1/2 transform -translate-y-1/2  pointer-events-none" />
-              </div>
-              <div className="relative flex-1 lg:flex-none">
-                <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  className={`w-full lg:w-40 px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
-                >
-                  <option value="">Select Year</option>
-                  <option value="2025">2025</option>
-                  <option value="2024">2024</option>
-                  <option value="2023">2023</option>
-                  <option value="2022">2022</option>
-                </select>
-                <BsCalendarDate className="absolute right-3 top-1/2 transform -translate-y-1/2  pointer-events-none" />
-              </div>
+            {/* Date Selectors - Updated for mobile responsiveness */}
+            <div className="w-full lg:w-auto">
+              <div className="flex flex-col sm:flex-row gap-3 w-full">
+                {/* Sort Selector */}
+                <div className="relative flex-1 min-w-[150px]">
+                  <select
+                    value={selectedSort}
+                    onChange={(e) => setSelectedSort(e.target.value)}
+                    className={`w-full px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
+                  >
+                    <option value="">Sort</option>
+                    <option value="latest">By latest</option>
+                    <option value="old">By old</option>
+                  </select>
+                  <BiSort className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+                </div>
+                
+                {/* Year Selector */}
+                <div className="relative flex-1 min-w-[150px]">
+                  <select
+                    value={selectedYear}
+                    onChange={(e) => setSelectedYear(e.target.value)}
+                    className={`w-full px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
+                  >
+                    <option value="">Select Year</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                  </select>
+                  <BsCalendarDate className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+                </div>
 
-              <div className="relative flex-1 lg:flex-none">
-                <select
-                  value={selectedMonth}
-                  onChange={(e) => setSelectedMonth(e.target.value)}
-                  className={`w-full lg:w-40 px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
-                >
-                  <option value="">Select Month</option>
-                  <option value="01">January</option>
-                  <option value="02">February</option>
-                  <option value="03">March</option>
-                  <option value="04">April</option>
-                  <option value="05">May</option>
-                  <option value="06">June</option>
-                  <option value="07">July</option>
-                  <option value="08">August</option>
-                  <option value="09">September</option>
-                  <option value="10">October</option>
-                  <option value="11">November</option>
-                  <option value="12">December</option>
-                </select>
-                <BsCalendarDate className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+                {/* Month Selector */}
+                <div className="relative flex-1 min-w-[150px]">
+                  <select
+                    value={selectedMonth}
+                    onChange={(e) => setSelectedMonth(e.target.value)}
+                    className={`w-full px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
+                  >
+                    <option value="">Select Month</option>
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </select>
+                  <BsCalendarDate className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+                </div>
               </div>
             </div>
           </div>

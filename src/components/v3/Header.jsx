@@ -57,7 +57,14 @@ export default function Header() {
     { href: '/v3/facilities', label: 'Facilities' },
     { href: '/v3/news&events', label: 'News & Events' },
     { href: '/v3/sustainability', label: 'Sustainability' },
-    
+  ];
+
+  // Top navigation items (Circulars, Member's directory, Contact us, Careers)
+  const topNavItems = [
+    { href: '/v3/circulars', label: 'Circulars' },
+    { href: '/v3/members-directory', label: 'Member\'s directory' },
+    { href: '/v3/contact-us', label: 'Contact us' },
+    { href: '/v3/careers', label: 'Careers' },
   ];
 
   // Check if current path matches nav item
@@ -261,30 +268,59 @@ export default function Header() {
           </button>
         </div>
         {mobileMenuOpen && (
-          <ul className="px-4 pb-4 space-y-3 text-[15px] font-semibold bg-white">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link 
-                  href={item.href}
-                  className={`relative pb-1 transition-colors duration-200 ${
-                    isActive(item.href) 
-                      ? 'text-[#05183A] font-semibold' 
-                      : 'text-gray-800 hover:text-[#05183A]'
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.label}
-                  {isActive(item.href) && (
-                    <motion.div 
-                      className="absolute bottom-0 inset-x-0 mx-auto w-5 h-0.5 bg-[#05183A]"
-                      layoutId="mobile-navbar-underline"
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    />
-                  )}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="px-4 pb-4 bg-white">
+            {/* Top Navigation Items */}
+            <ul className="space-y-2 text-[14px] mb-4">
+              {topNavItems.map((item) => (
+                <li key={item.href}>
+                  <Link 
+                    href={item.href}
+                    className={`relative pb-1 transition-colors duration-200 ${
+                      isActive(item.href) 
+                        ? 'text-[#05183A] font-semibold' 
+                        : 'text-gray-800 hover:text-[#05183A]'
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                    {isActive(item.href) && (
+                      <motion.div 
+                        className="absolute bottom-0 inset-x-0 mx-auto w-5 h-0.5 bg-[#05183A]"
+                        layoutId="mobile-topnav-underline"
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {/* Main Navigation Items */}
+            <ul className="space-y-3 text-[15px] font-semibold">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link 
+                    href={item.href}
+                    className={`relative pb-1 transition-colors duration-200 ${
+                      isActive(item.href) 
+                        ? 'text-[#05183A] font-semibold' 
+                        : 'text-gray-800 hover:text-[#05183A]'
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                    {isActive(item.href) && (
+                      <motion.div 
+                        className="absolute bottom-0 inset-x-0 mx-auto w-5 h-0.5 bg-[#05183A]"
+                        layoutId="mobile-navbar-underline"
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
       {showModal && (

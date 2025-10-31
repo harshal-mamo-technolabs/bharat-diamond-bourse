@@ -25,6 +25,62 @@ function FieldIcon({ children }) {
 }
 
 export default function Footer() {
+    // Navigation links with proper routes
+    const navigationLinks = [
+        { name: "Home", href: "/v3" },
+        { name: "About Us", href: "/v3/about" },
+        { name: "Gallery", href: "/gallery" },
+        { name: "Facilities", href: "/v3/facilities" },
+        { name: "BDB Circulars", href: "/v3/circulars" },
+        { name: "Member's Directory", href: "/v3/members-directory" },
+        { name: "BDB Forms", href: "/forms" },
+        { name: "News & Events", href: "/v3/news&events" },
+        { name: "Contact Us", href: "/v3/contact-us" },
+        { name: "Privacy Policy", href: "/privacy-policy" },
+        { name: "Cookie Policy", href: "/cookie-policy" },
+    ];
+
+    // Facilities links - you can create individual pages or use anchor links
+    const facilitiesLinks = [
+        { name: "Banks", href: "/facilities#banks" },
+        { name: "Internet Telecom", href: "/facilities#internet-telecom" },
+        { name: "Restaurants", href: "/v3/resturants" },
+        { name: "Online Trading", href: "/facilities#online-trading" },
+        { name: "Bus Services", href: "/facilities#bus-services" },
+        { name: "Testing Laboratories", href: "/facilities#testing-labs" },
+        { name: "Diamond Equipments", href: "/facilities#equipments" },
+        { name: "Trading Hall", href: "/facilities#trading-hall" },
+        { name: "Travel Agents", href: "/facilities#travel-agents" },
+    ];
+
+    // Social media links
+    const socialLinks = [
+        { 
+            name: "X (Twitter)", 
+            href: "https://twitter.com/bdbindia", 
+            icon: "/footer/twitter-icon.png",
+            ariaLabel: "X (Twitter)"
+        },
+        { 
+            name: "Instagram", 
+            href: "https://instagram.com/bdbindia", 
+            icon: "/footer/instagram-icon.png",
+            ariaLabel: "Instagram"
+        },
+        { 
+            name: "LinkedIn", 
+            href: "https://linkedin.com/company/bdbindia", 
+            icon: "/footer/linkedin-icon.png",
+            ariaLabel: "LinkedIn"
+        },
+        { 
+            name: "Facebook", 
+            href: "https://facebook.com/bdbindia", 
+            icon: "/footer/facebook-icon.png",
+            ariaLabel: "Facebook"
+        },
+    ];
+
     return (
         <footer className={`px-4 sm:px-6 lg:px-8 py-10 ${sora.className}`}>
             <div className="mx-auto rounded-[22px] border border-[#E1E6EF] bg-white overflow-hidden">
@@ -68,7 +124,13 @@ export default function Footer() {
 
                             <div className="space-y-4 text-[#0E1425]/85 text-[14px]">
                                 <div className="flex items-start gap-3">
-                                    <Link href="#" aria-label="location" className="hover:opacity-80 shrink-0 mt-0.5">
+                                    <Link 
+                                        href="https://maps.google.com/?q=G+Block+BKC+Bandra+Kurla+Complex+Bandra+East+Mumbai+Maharashtra+400051" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        aria-label="View location on Google Maps" 
+                                        className="hover:opacity-80 shrink-0 mt-0.5"
+                                    >
                                         <Image
                                             src="/footer/location-icon.png"
                                             alt="Location"
@@ -84,7 +146,11 @@ export default function Footer() {
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <Link href="#" aria-label="phone" className="hover:opacity-80 shrink-0">
+                                    <Link 
+                                        href="tel:+912233921500" 
+                                        aria-label="Call +91 22 3392 1500" 
+                                        className="hover:opacity-80 shrink-0"
+                                    >
                                         <Image
                                             src="/footer/phone-icon.png"
                                             alt="Phone"
@@ -93,11 +159,17 @@ export default function Footer() {
                                             className="w-5 h-5"
                                         />
                                     </Link>
-                                    <p>+91 22 3392 1500</p>
+                                    <Link href="tel:+912233921500" className="hover:underline">
+                                        +91 22 3392 1500
+                                    </Link>
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <Link href="#" aria-label="email" className="hover:opacity-80 shrink-0">
+                                    <Link 
+                                        href="mailto:support@bdbindia.org" 
+                                        aria-label="Email support@bdbindia.org" 
+                                        className="hover:opacity-80 shrink-0"
+                                    >
                                         <Image
                                             src="/footer/email-icon.png"
                                             alt="Email"
@@ -106,7 +178,9 @@ export default function Footer() {
                                             className="w-5 h-5"
                                         />
                                     </Link>
-                                    <p>support@bdbindia.org</p>
+                                    <Link href="mailto:support@bdbindia.org" className="hover:underline">
+                                        support@bdbindia.org
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -123,46 +197,32 @@ export default function Footer() {
                             Facilities
                         </h4>
                         <ul className="space-y-2 text-[#0E1425]/85 text-[14px]">
-                            {[
-                                "Banks",
-                                "Internet Telecom",
-                                "Restaurants",
-                                "Online Trading",
-                                "Bus Services",
-                                "Testing Laboratories",
-                                "Diamond Equipments",
-                                "Trading Hall",
-                                "Travel Agents",
-                            ].map((item) => (
-                                <li key={item} className="list-disc ml-5 marker:text-[#A6AFBE]">
-                                    {item}
+                            {facilitiesLinks.map((facility) => (
+                                <li key={facility.name} className="list-disc ml-5 marker:text-[#A6AFBE]">
+                                    <Link 
+                                        href={facility.href} 
+                                        className="hover:underline transition-colors duration-200"
+                                    >
+                                        {facility.name}
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
                     </div>
 
                     {/* Navigation (md: 3/12) */}
-                    <nav className="w-full md:w-3/12 p-6 md:p-7">
+                    <nav className="w-full md:w-3/12 p-6 md:p-7" aria-label="Main navigation">
                         <h4 className={`${gotham.className} text-[#A6AFBE] tracking-[2px] uppercase text-[13px] mb-4`}>
                             Navigation
                         </h4>
                         <ul className="space-y-2 text-[#0E1425]/85 text-[14px]">
-                            {[
-                                "Home",
-                                "About Us",
-                                "Gallery",
-                                "Facilities",
-                                "BDB Circulars",
-                                "Member's Directory",
-                                "BDB Forms",
-                                "News & Events",
-                                "Contact Us",
-                                "Privacy Policy",
-                                "Cookie Policy",
-                            ].map((item) => (
-                                <li key={item} className="list-disc ml-5 marker:text-[#A6AFBE]">
-                                    <Link href="#" className="hover:underline">
-                                        {item}
+                            {navigationLinks.map((link) => (
+                                <li key={link.name} className="list-disc ml-5 marker:text-[#A6AFBE]">
+                                    <Link 
+                                        href={link.href} 
+                                        className="hover:underline transition-colors duration-200"
+                                    >
+                                        {link.name}
                                     </Link>
                                 </li>
                             ))}
@@ -176,54 +236,38 @@ export default function Footer() {
                                 Stay Connected
                             </h4>
                             <div className="flex items-center gap-4 text-[#0E234E]">
-                                <Link href="#" aria-label="X (Twitter)" className="hover:opacity-80">
-                                    <Image
-                                        src="/footer/twitter-icon.png"
-                                        alt="Twitter"
-                                        width={20}
-                                        height={20}
-                                        className="w-5 h-5"
-                                    />
-                                </Link>
-                                <Link href="#" aria-label="Instagram" className="hover:opacity-80">
-                                    <Image
-                                        src="/footer/instagram-icon.png"
-                                        alt="Instagram"
-                                        width={20}
-                                        height={20}
-                                        className="w-5 h-5"
-                                    />
-                                </Link>
-                                <Link href="#" aria-label="LinkedIn" className="hover:opacity-80">
-                                    <Image
-                                        src="/footer/linkedin-icon.png"
-                                        alt="LinkedIn"
-                                        width={20}
-                                        height={20}
-                                        className="w-5 h-5"
-                                    />
-                                </Link>
-                                <Link href="#" aria-label="Facebook" className="hover:opacity-80">
-                                    <Image
-                                        src="/footer/facebook-icon.png"
-                                        alt="Facebook"
-                                        width={20}
-                                        height={20}
-                                        className="w-5 h-5"
-                                    />
-                                </Link>
+                                {socialLinks.map((social) => (
+                                    <Link 
+                                        key={social.name}
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={social.ariaLabel}
+                                        className="hover:opacity-80 transition-opacity duration-200"
+                                    >
+                                        <Image
+                                            src={social.icon}
+                                            alt={social.name}
+                                            width={20}
+                                            height={20}
+                                            className="w-5 h-5"
+                                        />
+                                    </Link>
+                                ))}
                             </div>
                         </div>
 
                         <div className="mt-10 md:mt-auto flex justify-end">
-                            <Image
-                                src="/bdb-logo-black-font.png"
-                                alt="Bharat Diamond Bourse"
-                                width={190}
-                                height={120}
-                                className="h-auto w-[160px] md:w-[190px]"
-                                priority
-                            />
+                            <Link href="/">
+                                <Image
+                                    src="/bdb-logo-black-font.png"
+                                    alt="Bharat Diamond Bourse"
+                                    width={190}
+                                    height={120}
+                                    className="h-auto w-[160px] md:w-[190px] hover:opacity-90 transition-opacity duration-200"
+                                    priority
+                                />
+                            </Link>
                         </div>
                     </div>
                 </div>

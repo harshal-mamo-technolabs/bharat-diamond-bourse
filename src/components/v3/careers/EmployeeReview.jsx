@@ -45,9 +45,9 @@ export default function EmployeeReview() {
           viewport={{ once: true, amount: 0.2 }}
           variants={containerVariants}
         >
-          {/* Abstract Design on Top Right */}
+          {/* Abstract Design - Mobile: top-0, Desktop: bottom-0 */}
           <motion.div
-            className="absolute bottom-0 right-0 z-0"
+            className="absolute top-0 md:top-auto md:bottom-0 right-0 z-0"
             variants={fadeUp}
           >
             <Image
@@ -93,11 +93,11 @@ export default function EmployeeReview() {
                 {/* Content */}
                 <div className={`${sora.className} space-y-4 text-gray-700 leading-relaxed text-justify text-[12px] sm:text-[13px] md:text-[14px]`}>
                   <p>
-                  “Being part of the Bharat Diamond Bourse has been an incredible experience.
+                  "Being part of the Bharat Diamond Bourse has been an incredible experience.
                    The environment fosters growth, innovation, and trust among members from across the globe.
                    Every facility here — from trade infrastructure to security — is designed for excellence 
-                   and efficiency. BDB truly represents the strength and unity of India’s diamond industry,
-                   offering a world-class platform to connect, collaborate, and succeed.”
+                   and efficiency. BDB truly represents the strength and unity of India's diamond industry,
+                   offering a world-class platform to connect, collaborate, and succeed."
                   </p>
                   <div>
                   <h2 className={`${gothamLight.className} text-xl sm:text-xl md:text-xl font-bold text-[#05183A]`}>

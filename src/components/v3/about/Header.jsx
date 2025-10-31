@@ -73,6 +73,14 @@ export default function Header({
     { href: '/v3/sustainability', label: 'Sustainability' },
   ];
 
+  // Top navigation items (Circulars, Member's directory, Contact us, Careers)
+  const topNavItems = [
+    { href: '/v3/circulars', label: 'Circulars' },
+    { href: '/v3/members-directory', label: 'Member\'s directory' },
+    { href: '/v3/contact-us', label: 'Contact us' },
+    { href: '/v3/careers', label: 'Careers' },
+  ];
+
   // Check if current path matches nav item
   const isActive = (href) => {
     if (href === '/v3' && pathname === '/v3') return true;
@@ -270,30 +278,85 @@ export default function Header({
           </button>
         </div>
         {mobileMenuOpen && (
-          <ul className="px-4 pb-4 space-y-3 text-[15px] font-semibold bg-white">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link 
-                  href={item.href}
-                  className={`relative pb-1 transition-colors duration-200 ${
-                    isActive(item.href) 
-                      ? 'text-[#05183A] font-semibold' 
-                      : 'text-gray-600 hover:text-[#05183A]'
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.label}
-                  {isActive(item.href) && (
-                    <motion.div 
-                      className="absolute bottom-0 inset-x-0 mx-auto w-5 h-0.5 bg-[#05183A]"
-                      layoutId="mobile-navbar-underline"
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    />
-                  )}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="px-4 pb-4 bg-white">
+            {/* Top Navigation Items */}
+            <div className="mb-6">
+              <h3 className="text-[13px] font-semibold text-gray-500 uppercase tracking-wider mb-3">Quick Links</h3>
+              <ul className="space-y-2">
+                {topNavItems.map((item) => (
+                  <li key={item.href}>
+                    <Link 
+                      href={item.href}
+                      className={`relative pb-1 transition-colors duration-200 block text-[14px] ${
+                        isActive(item.href) 
+                          ? 'text-[#05183A] font-semibold' 
+                          : 'text-gray-600 hover:text-[#05183A]'
+                      }`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                      {isActive(item.href) && (
+                        <motion.div 
+                          className="absolute bottom-0 left-0 w-5 h-0.5 bg-[#05183A]"
+                          layoutId="mobile-topnav-underline"
+                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        />
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Main Navigation Items */}
+            <div>
+              <h3 className="text-[13px] font-semibold text-gray-500 uppercase tracking-wider mb-3">Main Navigation</h3>
+              <ul className="space-y-3">
+                {navItems.map((item) => (
+                  <li key={item.href}>
+                    <Link 
+                      href={item.href}
+                      className={`relative pb-1 transition-colors duration-200 block text-[15px] font-semibold ${
+                        isActive(item.href) 
+                          ? 'text-[#05183A] font-semibold' 
+                          : 'text-gray-600 hover:text-[#05183A]'
+                      }`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                      {isActive(item.href) && (
+                        <motion.div 
+                          className="absolute bottom-0 left-0 w-5 h-0.5 bg-[#05183A]"
+                          layoutId="mobile-navbar-underline"
+                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        />
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* START YOUR BUSINESS Button for Mobile */}
+            <button
+              className={[
+                'w-full mt-6 group inline-flex items-center justify-center',
+                'rounded-[8px] px-5 py-3.5',
+                'bg-[#0E234E]',
+                `${gotham.className}`,
+                'text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] uppercase text-[13px] font-[600] tracking-[0.5px]',
+                'transition-all duration-200 hover:-translate-y-px',
+                'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
+              ].join(' ')}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                openModal();
+              }}
+            >
+              START YOUR BUSINESS
+              <Arrow color="#FFFFFF" size={16} stroke={2} className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1" />
+            </button>
+          </div>
         )}
       </div>
 
@@ -312,7 +375,7 @@ export default function Header({
                 <label className="block text-[13px] text-[#0E1425]/80 mb-1">Email</label>
                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-[10px] border border-[#E1E6EF] px-3 py-2 text-[14px] outline-none focus:ring-2 focus:ring-[#0E234E]/30" placeholder="you@example.com" />
                 <label className="block mt-3 text-[13px] text-[#0E1425]/80 mb-1">Phone number</label>
-                <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full rounded-[10px] border border-[#E1E6EF] px-3 py-2 text-[14px] outline-none focus:ring-2 focus:ring-[#0E234E]/30" placeholder="+91 98765 43210" />
+                <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full rounded-[10px] border border-[#E1E6EF] px-3 py-2 text-[14px] outline-none focus:ring-2 focus-ring-[#0E234E]/30" placeholder="+91 98765 43210" />
                 {error && <p className="mt-3 text-[12px] text-red-600">{error}</p>}
                 <div className="mt-5 flex justify-end">
                   <button onClick={goToOtp} className={`group inline-flex items-center gap-2 rounded-[10px] px-5 py-2.5 bg-[#0E234E] text-white ${gotham.className} text-[13px] font-[600] tracking-[0.5px] hover:-translate-y-px transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E234E]/40`}>
@@ -441,10 +504,27 @@ export default function Header({
         >
           <div className="flex justify-end items-center space-x-6 text-[12px] mt-2 select-none">
             <ul className="flex space-x-6 text-[11px] uppercase cursor-pointer">
-              <li className="text-black"><Link href="/v3/circulars">Circulars</Link></li>
-              <li className="text-black"><Link href="/v3/members-directory">Member's directory</Link></li>
-              <li className="text-black"><Link href="/v3/contact-us">Contact us</Link></li>
-              <li className="text-black"><Link href="/v3/careers">careers</Link></li>
+              {topNavItems.map((item) => (
+                <li key={item.href}>
+                  <Link 
+                    href={item.href}
+                    className={`relative pb-1 transition-colors duration-200 ${
+                      isActive(item.href) 
+                        ? 'text-[#05183A] font-semibold' 
+                        : 'text-black hover:text-[#05183A]'
+                    }`}
+                  >
+                    {item.label}
+                    {isActive(item.href) && (
+                      <motion.div 
+                        className="absolute bottom-0 inset-x-0 mx-auto w-5 h-0.5 bg-[#05183A]"
+                        layoutId={`topnav-${item.href}`}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                </li>
+              ))}
             </ul>
             <div className="relative w-24 text-black">
               <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-black text-xs pointer-events-none" />

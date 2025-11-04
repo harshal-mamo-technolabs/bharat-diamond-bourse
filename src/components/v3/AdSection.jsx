@@ -18,7 +18,7 @@ function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
 
 export default function AdSection() {
   return (
-    <section className="w-full bg-[#EFF3F6] px-6 md:px-16 xl:px-28 py-16">
+    <section className="w-full bg-white px-6 md:px-16 xl:px-28 py-16">
       <div className="max-w-7xl mx-auto grid grid-cols-12 gap-8 items-center">
         {/* Left text */}
         <div className="col-span-12 md:col-span-6">
@@ -42,16 +42,14 @@ export default function AdSection() {
             <button
               className={[
                 'group inline-flex items-center gap-3 rounded-[12px]',
-                'bg-[#0E234E] px-6 py-3 text-[12px] sm:px-7 sm:py-3.5 sm:text-[13px]',
-                `${gotham.className} uppercase tracking-[0.14em] text-white`,
-                'shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_10px_20px_rgba(2,6,23,0.18)]',
-                'ring-1 ring-black/5 transition-all duration-300 ease-out',
-                'hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_16px_28px_rgba(2,6,23,0.22)]',
+                'px-6 py-3 text-[12px] sm:px-1 sm:py-2 sm:text-[16px]',
+                `${gotham.className} uppercase tracking-[0.14em] text-[#0E234E]`,
+                'hover:-translate-y-0.5',
                 'active:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E234E]'
               ].join(' ')}
             >
-              Read More About Us
-              <Arrow color="#FFFFFF" size={16} stroke={2} className="transition-transform duration-300 group-hover:translate-x-1" />
+              Learn More
+              <Arrow color="#0E234E" size={20} stroke={2} className="transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
         </div>

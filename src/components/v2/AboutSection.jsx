@@ -86,27 +86,27 @@ export default function AboutSection() {
                 <p className={`text-gray-700 leading-relaxed text-[15px] text-justify ${sora.className}`}>
                 Around 2,500 Indian and international firms have established their offices here, ranging from large multinational corporations to small, independent traders.
                 </p>
-                <button
-                  onClick={() => setShowModal(true)}
-                  className={[
-                    'group relative inline-flex items-center justify-between mt-2',
-                    'rounded-[8px] px-5 py-3.5',
-                    'bg-[#0E234E]',
-                    `${gotham.className}`,
-                    'text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]',
-                    'transition-all duration-200 hover:-translate-y-px',
-                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
-                    'w-max',
-                  ].join(' ')}
-                >
-                  <span>Read more About us </span>
-                  <Arrow
-                    color="#FFFFFF"
-                    size={16}
-                    stroke={2}
-                    className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
-                  />
-                </button>
+                <Link
+  href="/v3/about"
+  className={[
+    'group relative inline-flex items-center justify-between mt-2',
+    'rounded-[8px] px-1 py-3.5',
+    `${gotham.className}`,
+    'text-[#0E234E] hover:text-[#0E234E] active:text-[#0E234E] font-carentro uppercase text-[15px] font-[600] tracking-[0.5px]',
+    'transition-all duration-200 hover:-translate-y-px',
+    'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
+    'w-max',
+  ].join(' ')}
+>
+  <span>Learn More</span>
+  <Arrow
+    color="#0E234E"
+    size={20}
+    stroke={2}
+    className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
+  />
+</Link>
+
               </div>
 
               {/* Building 1 image (no border, small rounded corners, lift on hover) */}

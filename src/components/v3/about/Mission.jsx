@@ -29,9 +29,9 @@ export default function Mission() {
   };
 
   return (
-    <section className="w-full px-4 sm:px-6 md:px-10 py-8 bg-white">
+    <section className="w-full py-8 bg-white">
       <motion.div
-        className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 mb-10"
+        className="max-w-7xl mx-auto px-4 sm:px-6 md:px-6  grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 mb-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}

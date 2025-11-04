@@ -18,8 +18,8 @@ function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
 
 export default function AdSection() {
   return (
-    <section className="w-full bg-white px-6 md:px-16 xl:px-28 py-16">
-      <div className="max-w-7xl mx-auto grid grid-cols-12 gap-8 items-center">
+    <section className="w-full bg-white py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6 grid grid-cols-12 gap-8 items-center">
         {/* Left text */}
         <div className="col-span-12 md:col-span-6">
           <p className={`text-sm text-[#6B7280] mb-2 ${sora.className}`}>Our Advertising Partners</p>

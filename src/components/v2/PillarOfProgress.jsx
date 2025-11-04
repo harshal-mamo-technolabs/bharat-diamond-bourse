@@ -203,7 +203,7 @@ export default function PillarOfProgress() {
 
   return (
     <section className="bg-white pt-10 pb-12 sm:pb-14">
-      <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-6">
         <h2
           className={`text-[#CBD3DD] text-center leading-none select-none pointer-events-none mb-8 sm:mb-10 tracking-[0.035em] ${gotham.className}`}
           style={{ fontSize: "clamp(34px, 6.2vw, 66px)" }}
@@ -284,22 +284,36 @@ export default function PillarOfProgress() {
         </div>
       </div>
 
-      <div className="mt-6 flex items-center justify-center gap-2">
-        {ITEMS.map((_, i) => {
-          const isActiveDot = baseIndex(active) === i;
-          const targetIndex = MIDDLE_START + i;
-          return (
-            <button
-              key={i}
-              onClick={() => scrollToIndex(targetIndex)}
-              aria-label={`Go to slide ${i + 1}`}
-              className={[
-                "h-1.5 rounded-full transition-all duration-300",
-                isActiveDot ? "w-5 bg-[#0E234E]" : "w-1.5 bg-[#0E234E]/30 hover:bg-[#0E234E]/50",
-              ].join(" ")}
-            />
-          );
-        })}
+      {/* Single jointed underline indicator */}
+      <div className="mt-6 flex flex-col items-center justify-center">
+        {/* <div className="flex items-center justify-center gap-2 mb-2">
+          {ITEMS.map((_, i) => {
+            const isActiveDot = baseIndex(active) === i;
+            const targetIndex = MIDDLE_START + i;
+            return (
+              <button
+                key={i}
+                onClick={() => scrollToIndex(targetIndex)}
+                aria-label={`Go to slide ${i + 1}`}
+                className={[
+                  "h-1.5 rounded-full transition-all duration-300 relative",
+                  isActiveDot ? "w-8 bg-[#0E234E]" : "w-1.5 bg-[#0E234E]/30 hover:bg-[#0E234E]/50",
+                ].join(" ")}
+              />
+            );
+          })}
+        </div> */}
+        
+        {/* Single jointed underline */}
+        <div className="relative h-1 w-95 bg-[#0E234E]/20">
+          <div 
+            className="absolute top-0 left-0 h-full bg-[#0E234E] rounded-full transition-all duration-300 ease-in-out"
+            style={{
+              width: `${(100 / ITEMS.length)}%`,
+              transform: `translateX(${(baseIndex(active) * 100)}%)`
+            }}
+          />
+        </div>
       </div>
     </section>
   );

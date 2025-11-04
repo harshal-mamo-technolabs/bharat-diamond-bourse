@@ -71,8 +71,8 @@ export default function Insights() {
     }, []);
 
     return (
-        <section className=" py-16 px-4 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-7xl">
+        <section className=" py-16 ">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-6">
                 {/* Header */}
                 <div className="mb-12 text-center">
                     <h2 className={`text-[#0E234E] text-[32px] md:text-[42px] lg:text-[48px] leading-tight ${gotham.className}`}>
@@ -161,10 +161,9 @@ export default function Insights() {
                   href=""
                   className={[
                     "group relative inline-flex items-center justify-between",
-                    "rounded-[8px] px-5 py-3.5",
-                    "bg-[#0E234E]",
+                    "rounded-[8px] px-5 py-2",
                     `${gotham.className}`,  
-                    "text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]",
+                    "text-[#0E234E] hover:text-[#0E234E] active:text-[#0E234E] font-carentro uppercase text-[16px] font-[600] tracking-[0.5px]",
                     "transition-all duration-200 hover:-translate-y-px",
                     "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
                     "w-max",
@@ -172,8 +171,8 @@ export default function Insights() {
                 >
                   <span>View News & Events </span>
                   <Arrow
-                    color="#FFFFFF"
-                    size={16}
+                    color="#0E234E"
+                    size={20}
                     stroke={2}
                     className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
                   />

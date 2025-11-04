@@ -3,6 +3,7 @@ import DiamondhubSection from "@/components/v3/about/DiamondhubSection";
 import Mission from "@/components/v3/about/Mission";
 import HistoryTimeline from "@/components/v3/about/HistoryTimeline"
 import President from "@/components/v3/about/President";
+import VicePresident from "@/components/v3/about/Vice-President";
 import SustainabilityInitiatives from "@/components/v3/about/SustainabilityInitiatives";
 import Members from "@/components/v3/about/Members";
 import Footer from "@/components/v2/footer";
@@ -15,6 +16,7 @@ export default function About() {
               <Mission/>
               <HistoryTimeline/>
               <President/>
+              <VicePresident/>
               <SustainabilityInitiatives/>
               <Members/>
               <Footer/>

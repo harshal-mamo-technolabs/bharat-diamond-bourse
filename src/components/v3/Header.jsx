@@ -7,7 +7,7 @@ import { Sora } from 'next/font/google';
 import localFont from 'next/font/local';
 import { FiMenu } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -38,7 +38,7 @@ export default function HeaderWithHero() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState(languages[0].code);
-  const [showStickyNav, setShowStickyNav] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalStep, setModalStep] = useState(1); // 1: details, 2: OTP
@@ -94,13 +94,23 @@ export default function HeaderWithHero() {
     play();
   }, []);
 
-  const IMAGE_HEIGHT = 720;
-
-  // sticky navbar after hero
+  // DMCC-style smooth scroll handler
   useEffect(() => {
-    const onScroll = () => setShowStickyNav(window.scrollY >= IMAGE_HEIGHT);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          setIsScrolled(scrollY > 20); // Lower threshold for earlier transition
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Close modal on ESC
@@ -274,16 +284,37 @@ export default function HeaderWithHero() {
           )}
         </div>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation - DMCC Style */}
         <nav
-          className={`hidden md:flex flex-col w-full px-12 py-1 bg-white/80 text-white ${sora.className} select-none`}
+          className={`hidden md:flex flex-col w-full px-12 bg-white text-white ${sora.className} select-none transition-all duration-300 ${
+            isScrolled 
+              ? 'fixed top-0 left-0 right-0 z-50 bg-white shadow-lg py-3' 
+              : 'relative py-4'
+          }`}
         >
-          <div className="flex justify-end items-center space-x-6 text-[12px] mt-2 select-none">
+          {/* Top Navigation Items - DMCC-style smooth collapse */}
+          <motion.div
+            className="flex justify-end items-center space-x-6 text-[12px] select-none"
+            initial={false}
+            animate={{
+              height: isScrolled ? 0 : 'auto',
+              opacity: isScrolled ? 0 : 1,
+              marginBottom: isScrolled ? 0 : '0.5rem',
+              transform: isScrolled ? 'translateY(-10px)' : 'translateY(0)'
+            }}
+            transition={{ 
+              duration: 0.3, 
+              ease: "easeOut",
+              height: { duration: 0.4 }
+            }}
+            style={{ overflow: 'hidden' }}
+          >
             <ul className="flex space-x-6 text-[11px] uppercase cursor-pointer">
-              <li className="text-black"><Link href="/v3/circulars">Circulars</Link></li>
-              <li className="text-black"><Link href="/v3/members-directory">Member's directory</Link></li>
-              <li className="text-black"><Link href="/v3/contact-us">Contact us</Link></li>
-              <li className="text-black"><Link href="/v3/careers">careers</Link></li>
+              {topNavItems.map((item) => (
+                <li key={item.href} className="text-black hover:text-[#05183A] transition-colors duration-200">
+                  <Link href={item.href}>{item.label}</Link>
+                </li>
+              ))}
             </ul>
             <div className="relative w-24 text-black">
               <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-black text-xs pointer-events-none" />
@@ -296,7 +327,7 @@ export default function HeaderWithHero() {
             <select
               value={selectedLang}
               onChange={(e) => setSelectedLang(e.target.value)}
-              className="bg-transparent border border-black border-opacity-50 rounded-sm text-black text-[12px] py-0.5 px-2 cursor-pointer focus:outline-none"
+              className="bg-transparent border border-black border-opacity-50 rounded-sm text-black text-[12px] py-0.5 px-2 cursor-pointer focus:outline-none hover:border-[#05183A] transition-colors duration-200"
             >
               {languages.map(({ code }) => (
                 <option key={code} value={code}>
@@ -304,10 +335,35 @@ export default function HeaderWithHero() {
                 </option>
               ))}
             </select>
-          </div>
-          <div className="flex items-center justify-between mt-1">
-            <div className="flex-shrink-0 mb-1">
-              <Image src="/bdb-logo-black-font.png" alt="BDB Logo" width={135} height={140} />
+          </motion.div>
+          
+          {/* Main Navigation Items - DMCC-style smooth transition */}
+          <motion.div 
+            className="flex items-center justify-between"
+            initial={false}
+            animate={{
+              paddingTop: isScrolled ? '0.5rem' : '0rem',
+              paddingBottom: isScrolled ? '0.5rem' : '0rem',
+              transform: isScrolled ? 'translateY(-8px)' : 'translateY(0)'
+            }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          >
+            <div className="flex-shrink-0">
+              <motion.div
+                initial={false}
+                animate={{
+                  scale: isScrolled ? 0.9 : 1
+                }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <Image 
+                  src="/bdb-logo-black-font.png" 
+                  alt="BDB Logo" 
+                  width={isScrolled ? 110 : 135} 
+                  height={isScrolled ? 45 : 60}
+                  className="transition-all duration-300"
+                />
+              </motion.div>
             </div>
             <ul className="flex space-x-8 text-[14px] font-normal cursor-pointer mx-auto">
               {navItems.map((item) => (
@@ -332,10 +388,10 @@ export default function HeaderWithHero() {
                 </li>
               ))}
             </ul>
-            <button
+            <motion.button
               className={[
                 'ml-6 group inline-flex items-center justify-between',
-                'rounded-[8px] px-5 py-3.5',
+                'rounded-[8px] px-5 py-3',
                 'bg-[#0E234E]',
                 `${sora.className} ${gotham.className}`,
                 'text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] uppercase text-[13px] font-[600] tracking-[0.5px]',
@@ -343,66 +399,28 @@ export default function HeaderWithHero() {
                 'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
               ].join(' ')}
               onClick={openModal}
+              initial={false}
+              animate={{
+                scale: isScrolled ? 0.95 : 1,
+                paddingTop: isScrolled ? '0.75rem' : '0.875rem',
+                paddingBottom: isScrolled ? '0.75rem' : '0.875rem'
+              }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               START YOUR BUSINESS
               <Arrow color="#FFFFFF" size={16} stroke={2} className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1" />
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </nav>
-
-        {/* Sticky Navbar after hero scroll */}
-        {showStickyNav && (
-          <nav
-            className={`hidden md:flex fixed top-0 left-0 w-full bg-white shadow-md py-2 px-12 z-50 ${sora.className}`}
-            style={{ transform: 'translateY(0)', transition: 'transform .4s ease-out' }}
-          >
-            <div className="flex items-center justify-between w-full">
-              <Image src="/bdb-logo-black-font.png" alt="BDB Logo" width={120} height={50} />
-              <ul className="flex space-x-8 text-[14px] font-medium">
-                {navItems.map((item) => (
-                  <li key={item.href}>
-                    <Link 
-                      href={item.href}
-                      className={`relative pb-1 transition-colors duration-200 ${
-                        isActive(item.href) 
-                          ? 'text-[#05183A] font-semibold' 
-                          : 'text-black hover:text-[#05183A]'
-                      }`}
-                    >
-                      {item.label}
-                      {isActive(item.href) && (
-                        <motion.div 
-                          className="absolute bottom-0 inset-x-0 mx-auto w-5 h-0.5 bg-[#05183A]"
-                          layoutId="sticky-navbar-underline"
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        />
-                      )}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <button
-                className={[
-                  'ml-6 group inline-flex items-center justify-between',
-                  'rounded-[8px] px-5 py-3.5',
-                  'bg-[#0E234E]',
-                  `${gotham.className}`,
-                  'text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] uppercase text-[13px] font-[600] tracking-[0.5px]',
-                  'transition-all duration-200 hover:-translate-y-px',
-                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
-                ].join(' ')}
-                onClick={openModal}
-              >
-                START YOUR BUSINESS
-                <Arrow color="#FFFFFF" size={16} stroke={2} className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1" />
-              </button>
-            </div>
-          </nav>
-        )}
       </header>
 
-      {/* HERO SECTION - NOW BELOW HEADER */}
-      <section className="relative w-full h-[720px] overflow-hidden">
+      {/* SPACER for when navbar is fixed - Matches DMCC style */}
+      {isScrolled && <div className="h-16" />}
+
+      {/* HERO SECTION */}
+      <section className="relative w-full h-screen overflow-hidden">
         {/* Background video */}
         <video
           ref={heroVideoRef}
@@ -414,12 +432,9 @@ export default function HeaderWithHero() {
           playsInline
           preload="metadata"
         />
-
-        {/* Bottom Gradient */}
-        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white/25 to-transparent pointer-events-none z-10" />
       </section>
 
-      {/* MODAL (unchanged) */}
+      {/* MODAL */}
       {showModal && (
         <div className="fixed inset-0 z-[70] flex items-center justify-center">
           <button aria-label="Close" className="absolute inset-0 bg-black/50" onClick={() => setShowModal(false)} />

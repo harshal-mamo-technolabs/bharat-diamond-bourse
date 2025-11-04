@@ -113,7 +113,7 @@ export default function BourseSection() {
                 transition={{ duration: timings.header, ease, delay: 0.1 }}
                 className="relative -mt-10 z-20"
             >
-                <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-5">
+                <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-6">
                     {/* OUTER CARD â€” rounded + #262626 border */}
                     <div
                         className={[

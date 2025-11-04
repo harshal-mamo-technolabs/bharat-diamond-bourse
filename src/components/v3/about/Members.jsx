@@ -146,7 +146,7 @@ export default function BoardOfDirectors() {
       </motion.div>
 
       {/* Directors Grid */}
-      <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         {directors.map((director, index) => (
           <motion.div
             key={index}

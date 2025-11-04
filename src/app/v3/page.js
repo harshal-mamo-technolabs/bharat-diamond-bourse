@@ -17,11 +17,11 @@ export default function Home() {
             <BannerWrapper />
             <Partners/>
             <AboutSection/>
+            <BourseSection/>
             <PillarOfProgress/>
             <MissionSection/>
             <AdSection/>
             {/* <Facility/> */}
-            <BourseSection/>
             <Insights/>
             <Footer/>
         </div>

@@ -102,45 +102,8 @@ export default function BourseSection() {
     };
 
     return (
-        <section className="bg-white pb-16">
-            {/* Full-bleed video */}
-            <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: timings.header, ease }}
-                className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]"
-            >
-                <div className="relative w-screen overflow-hidden h-[77vh] md:h-[72vh] lg:h-[67vh] min-h-[360px] max-h-[1000px]">
-                    {/* video */}
-                    <video
-                        ref={videoRef}
-                        src="/bourse-tour/bdb.mp4"
-                        className="absolute inset-0 h-full w-full object-cover z-0"
-                        playsInline
-                        preload="metadata"
-                    />
-
-                    {/* fog/fade overlays */}
-                    <div className="pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-[#0b152d]/30 via-transparent to-transparent z-10" />
-                    <div className="pointer-events-none absolute inset-x-0 -bottom-px h-[55%] bg-gradient-to-t from-white via-white/80 to-transparent z-10" />
-
-                    {/* click layer (pause if playing, play if paused) */}
-                    <button
-                        aria-hidden
-                        onClick={() => (isPlaying ? pauseVideo() : playVideo())}
-                        className="absolute inset-0 z-20 cursor-default"
-                        tabIndex={-1}
-                    />
-
-                    {/* show SAME pause image whenever NOT playing (initial & paused) */}
-                    {!isPlaying && (
-                        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 select-none pointer-events-none">
-                            <Image src="/bourse-tour/pause-button.png" alt="" width={64} height={64} priority />
-                        </div>
-                    )}
-                </div>
-            </motion.div>
+        <section className="bg-white py-5 pb-16">
+          
 
             {/* Overlapping stats card */}
             <motion.div
@@ -150,7 +113,7 @@ export default function BourseSection() {
                 transition={{ duration: timings.header, ease, delay: 0.1 }}
                 className="relative -mt-10 z-20"
             >
-                <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
                     {/* OUTER CARD â€” rounded + #262626 border */}
                     <div
                         className={[

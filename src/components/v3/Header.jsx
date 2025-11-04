@@ -482,17 +482,7 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* Title Overlay */}
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center z-20 px-4 md:bottom-[-29px]">
-          <motion.h1
-            initial="hidden"
-            animate="visible"
-            variants={slideFromRight}
-            className="text-white text-[clamp(28px,5vw,80px)] font-extrabold tracking-wide whitespace-nowrap drop-shadow-[0_3px_6px_rgba(0,0,0,0.8)]"
-          >
-            WORLD'S DIAMOND HUB
-          </motion.h1>
-        </div>
+        
       </div>
     </>
   );

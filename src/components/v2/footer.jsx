@@ -56,28 +56,22 @@ export default function Footer() {
     // Social media links
     const socialLinks = [
         { 
-            name: "X (Twitter)", 
-            href: "https://twitter.com/bdbindia", 
-            icon: "/footer/twitter-icon.png",
-            ariaLabel: "X (Twitter)"
+            name: "You Tube", 
+            href: "https://youtube.com/@bharatdiamondbourse?si=Gmf8Og-vbMyfJ6-o", 
+            icon: "/footer/you-tube.png",
+            ariaLabel: "You Tube"
         },
         { 
             name: "Instagram", 
-            href: "https://instagram.com/bdbindia", 
+            href: "https://www.instagram.com/bharatdiamondbourse/?hl=en", 
             icon: "/footer/instagram-icon.png",
             ariaLabel: "Instagram"
         },
         { 
             name: "LinkedIn", 
-            href: "https://linkedin.com/company/bdbindia", 
+            href: "https://in.linkedin.com/company/bharat-diamond-bourse", 
             icon: "/footer/linkedin-icon.png",
             ariaLabel: "LinkedIn"
-        },
-        { 
-            name: "Facebook", 
-            href: "https://facebook.com/bdbindia", 
-            icon: "/footer/facebook-icon.png",
-            ariaLabel: "Facebook"
         },
     ];
 

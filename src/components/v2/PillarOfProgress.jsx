@@ -203,116 +203,99 @@ export default function PillarOfProgress() {
 
   return (
     <section className="bg-white pt-10 pb-12 sm:pb-14">
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-6">
+      {/* Updated container with consistent max-w-7xl and padding */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
         <h2
           className={`text-[#CBD3DD] text-center leading-none select-none pointer-events-none mb-8 sm:mb-10 tracking-[0.035em] ${gotham.className}`}
           style={{ fontSize: "clamp(34px, 6.2vw, 66px)" }}
         >
           Our Facilities
         </h2>
-      </div>
 
-      <div className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-visible">
-        <div
-          ref={scrollerRef}
-          className={[
-            "overflow-x-auto pt-8",
-            "flex items-start gap-[3vw] lg:gap-[2vw] px-[3vw] lg:px-[2vw] pb-2",
-            "[-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
-          ].join(" ")}
-        >
-          {LOOP_ITEMS.map((item, i) => {
-            const rel = i - active;
-            const isActive = rel === 0;
+        {/* Scrollable carousel section - now contained within max-w-7xl */}
+        <div className="relative overflow-visible">
+          <div
+            ref={scrollerRef}
+            className={[
+              "overflow-x-auto pt-8",
+              "flex items-start gap-[3vw] lg:gap-[2vw] px-[3vw] lg:px-[2vw] pb-2",
+              "[-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
+            ].join(" ")}
+          >
+            {LOOP_ITEMS.map((item, i) => {
+              const rel = i - active;
+              const isActive = rel === 0;
 
-            return (
-              <div
-                key={`${item.src}-${i}`}
-                ref={(el) => {
-                  if (el) itemsRef.current[i] = el;
-                }}
-                onClick={() => scrollToIndex(i)}
-                className={[
-                  "shrink-0 relative transition-all duration-[900ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-transform",
-                  widthClass(rel),
-                  offsetClass(rel),
-                  isActive ? "z-10" : "z-0",
-                ].join(" ")}
-              >
-                {isActive ? (
-                  // Frame removed for active card
-                  <div className="relative">
-                    <div className="relative h-[64vw] sm:h-[48vw] lg:h-[360px] w-full overflow-hidden rounded-[8px]">
-                      <img
-                        src={item.src}
-                        alt={item.title.replace("\n", " ")}
-                        decoding="async"
-                        loading="eager"
-                        className="block w-full h-full object-cover"
-                      />
-                    </div>
+              return (
+                <div
+                  key={`${item.src}-${i}`}
+                  ref={(el) => {
+                    if (el) itemsRef.current[i] = el;
+                  }}
+                  onClick={() => scrollToIndex(i)}
+                  className={[
+                    "shrink-0 relative transition-all duration-[900ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-transform",
+                    widthClass(rel),
+                    offsetClass(rel),
+                    isActive ? "z-10" : "z-0",
+                  ].join(" ")}
+                >
+                  {isActive ? (
+                    // Frame removed for active card
+                    <div className="relative">
+                      <div className="relative h-[64vw] sm:h-[48vw] lg:h-[360px] w-full overflow-hidden rounded-[8px]">
+                        <img
+                          src={item.src}
+                          alt={item.title.replace("\n", " ")}
+                          decoding="async"
+                          loading="eager"
+                          className="block w-full h-full object-cover"
+                        />
+                      </div>
 
-                    <div className="mt-3 rounded-[14px] bg-[#0E234E] text-white px-4 py-3 flex items-center justify-between">
-                      <div className={`text-[13px] leading-tight whitespace-pre-line ${sora.className}`}>{item.title}</div>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-                        <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                      <div className="mt-3 rounded-[14px] bg-[#0E234E] text-white px-4 py-3 flex items-center justify-between">
+                        <div className={`text-[13px] leading-tight whitespace-pre-line ${sora.className}`}>{item.title}</div>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                          <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="relative">
-                    <div className="relative h-[64vw] sm:h-[48vw] lg:h-[360px] w-full overflow-hidden rounded-[8px]">
-                      <Image
-                        src={item.src}
-                        alt={item.title.replace("\n", " ")}
-                        fill
-                        className="object-cover brightness-[0.98] saturate-[0.9] contrast-[0.98]"
-                        sizes="100vw"
-                      />
+                  ) : (
+                    <div className="relative">
+                      <div className="relative h-[64vw] sm:h-[48vw] lg:h-[360px] w-full overflow-hidden rounded-[8px]">
+                        <Image
+                          src={item.src}
+                          alt={item.title.replace("\n", " ")}
+                          fill
+                          className="object-cover brightness-[0.98] saturate-[0.9] contrast-[0.98]"
+                          sizes="100vw"
+                        />
+                      </div>
+                      <div className="mt-3 text-[#0E234E]/90 flex items-start justify-between">
+                        <div className={`text-[13px] leading-snug whitespace-pre-line ${sora.className}`}>{item.title}</div>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="ml-3 mt-1 text-[#0E234E]/60 shrink-0" aria-hidden>
+                          <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
                     </div>
-                    <div className="mt-3 text-[#0E234E]/90 flex items-start justify-between">
-                      <div className={`text-[13px] leading-snug whitespace-pre-line ${sora.className}`}>{item.title}</div>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="ml-3 mt-1 text-[#0E234E]/60 shrink-0" aria-hidden>
-                        <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
 
-      {/* Single jointed underline indicator */}
-      <div className="mt-6 flex flex-col items-center justify-center">
-        {/* <div className="flex items-center justify-center gap-2 mb-2">
-          {ITEMS.map((_, i) => {
-            const isActiveDot = baseIndex(active) === i;
-            const targetIndex = MIDDLE_START + i;
-            return (
-              <button
-                key={i}
-                onClick={() => scrollToIndex(targetIndex)}
-                aria-label={`Go to slide ${i + 1}`}
-                className={[
-                  "h-1.5 rounded-full transition-all duration-300 relative",
-                  isActiveDot ? "w-8 bg-[#0E234E]" : "w-1.5 bg-[#0E234E]/30 hover:bg-[#0E234E]/50",
-                ].join(" ")}
-              />
-            );
-          })}
-        </div> */}
-        
-        {/* Single jointed underline */}
-        <div className="relative h-1 w-95 bg-[#0E234E]/20">
-          <div 
-            className="absolute top-0 left-0 h-full bg-[#0E234E] rounded-full transition-all duration-300 ease-in-out"
-            style={{
-              width: `${(100 / ITEMS.length)}%`,
-              transform: `translateX(${(baseIndex(active) * 100)}%)`
-            }}
-          />
+        {/* Single jointed underline indicator */}
+        <div className="mt-6 flex flex-col items-center justify-center">
+          <div className="relative h-1 w-95 bg-[#0E234E]/20">
+            <div 
+              className="absolute top-0 left-0 h-full bg-[#0E234E] rounded-full transition-all duration-300 ease-in-out"
+              style={{
+                width: `${(100 / ITEMS.length)}%`,
+                transform: `translateX(${(baseIndex(active) * 100)}%)`
+              }}
+            />
+          </div>
         </div>
       </div>
     </section>

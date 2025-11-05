@@ -28,7 +28,7 @@ export default function BDBInfoNote() {
           variants={containerVariants}
         >
           {/* Left Side - Small Info Icon */}
-          <div className="flex-shrink-0 flex justify-center sm:justify-start w-full sm:w-auto mb-2 sm:mb-0">
+          <div className="flex-shrink-0 flex justify-start md:justify-center sm:justify-start w-full sm:w-auto mb-2 sm:mb-0">
             <FaInfoCircle className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-[#030e21]" />
           </div>
 
@@ -40,7 +40,7 @@ export default function BDBInfoNote() {
           </div>
 
           {/* Bottom Right Button */}
-          <button className="absolute bottom-4 right-4 bg-white text-[#05183A] hover:bg-[#05183A] hover:text-white p-4 rounded-none">
+          <button className="absolute bottom-2 md:bottom-4 right-4 bg-white text-[#05183A] hover:bg-[#05183A] hover:text-white p-4 rounded-none">
             <FaArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </motion.div>

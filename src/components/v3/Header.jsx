@@ -49,6 +49,7 @@ export default function HeaderWithHero() {
   const closeTimerRef = useRef(null);
   const otpRefs = useRef([]);
   const heroVideoRef = useRef(null);
+  const lastScrollY = useRef(0);
 
   // Navigation items
   const navItems = [
@@ -94,7 +95,7 @@ export default function HeaderWithHero() {
     play();
   }, []);
 
-  // DMCC-style smooth scroll handler
+  // Simple scroll handler - fixed version
   useEffect(() => {
     let ticking = false;
     
@@ -102,7 +103,11 @@ export default function HeaderWithHero() {
       if (!ticking) {
         requestAnimationFrame(() => {
           const scrollY = window.scrollY;
-          setIsScrolled(scrollY > 20); // Lower threshold for earlier transition
+          const scrollingDown = scrollY > lastScrollY.current;
+          lastScrollY.current = scrollY;
+          
+          // Simple logic: show top nav only when at very top
+          setIsScrolled(scrollY > 10);
           ticking = false;
         });
         ticking = true;
@@ -219,8 +224,10 @@ export default function HeaderWithHero() {
     <>
       {/* HEADER COMPONENT */}
       <header className="relative z-50">
-        {/* Mobile Hamburger */}
-        <div className="md:hidden bg-white shadow-md">
+        {/* Mobile Hamburger - Fixed to prevent margin issues */}
+        <div className={`md:hidden bg-white shadow-md transition-all duration-300 ${
+          isScrolled ? 'fixed top-0 left-0 right-0 z-50' : 'relative'
+        }`}>
           <div className="flex items-center justify-between px-4 py-3">
             <Image src="/BDB-LOGO.png" alt="BDB Logo" width={100} height={40} />
             <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-2xl text-gray-800">
@@ -284,30 +291,21 @@ export default function HeaderWithHero() {
           )}
         </div>
 
-        {/* Desktop Navigation - DMCC Style */}
+        {/* Desktop Navigation - Simplified transitions */}
         <nav
           className={`hidden md:flex flex-col w-full px-12 bg-white text-white ${sora.className} select-none transition-all duration-300 ${
             isScrolled 
-              ? 'fixed top-0 left-0 right-0 z-50 bg-white shadow-lg py-3' 
+              ? 'fixed top-0 left-0 right-0 z-50 bg-white shadow-lg py-2' 
               : 'relative py-4'
           }`}
         >
-          {/* Top Navigation Items - DMCC-style smooth collapse */}
-          <motion.div
-            className="flex justify-end items-center space-x-6 text-[12px] select-none"
-            initial={false}
-            animate={{
-              height: isScrolled ? 0 : 'auto',
-              opacity: isScrolled ? 0 : 1,
-              marginBottom: isScrolled ? 0 : '0.5rem',
-              transform: isScrolled ? 'translateY(-10px)' : 'translateY(0)'
-            }}
-            transition={{ 
-              duration: 0.3, 
-              ease: "easeOut",
-              height: { duration: 0.4 }
-            }}
-            style={{ overflow: 'hidden' }}
+          {/* Top Navigation Items - Simple fade out/in */}
+          <div
+            className={`flex justify-end items-center space-x-6 text-[12px] select-none transition-all duration-300 ${
+              isScrolled 
+                ? 'h-0 opacity-0 overflow-hidden mb-0' 
+                : 'h-auto opacity-100 mb-2'
+            }`}
           >
             <ul className="flex space-x-6 text-[11px] uppercase cursor-pointer">
               {topNavItems.map((item) => (
@@ -335,35 +333,18 @@ export default function HeaderWithHero() {
                 </option>
               ))}
             </select>
-          </motion.div>
+          </div>
           
-          {/* Main Navigation Items - DMCC-style smooth transition */}
-          <motion.div 
-            className="flex items-center justify-between"
-            initial={false}
-            animate={{
-              paddingTop: isScrolled ? '0.5rem' : '0rem',
-              paddingBottom: isScrolled ? '0.5rem' : '0rem',
-              transform: isScrolled ? 'translateY(-8px)' : 'translateY(0)'
-            }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
+          {/* Main Navigation Items - Simple scale transition */}
+          <div className="flex items-center justify-between transition-all duration-300">
             <div className="flex-shrink-0">
-              <motion.div
-                initial={false}
-                animate={{
-                  scale: isScrolled ? 0.9 : 1
-                }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
-                <Image 
-                  src="/bdb-logo-black-font.png" 
-                  alt="BDB Logo" 
-                  width={isScrolled ? 110 : 135} 
-                  height={isScrolled ? 45 : 60}
-                  className="transition-all duration-300"
-                />
-              </motion.div>
+              <Image 
+                src="/bdb-logo-black-font.png" 
+                alt="BDB Logo" 
+                width={isScrolled ? 110 : 135} 
+                height={isScrolled ? 45 : 60}
+                className="transition-all duration-300"
+              />
             </div>
             <ul className="flex space-x-8 text-[14px] font-normal cursor-pointer mx-auto">
               {navItems.map((item) => (
@@ -399,25 +380,18 @@ export default function HeaderWithHero() {
                 'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
               ].join(' ')}
               onClick={openModal}
-              initial={false}
-              animate={{
-                scale: isScrolled ? 0.95 : 1,
-                paddingTop: isScrolled ? '0.75rem' : '0.875rem',
-                paddingBottom: isScrolled ? '0.75rem' : '0.875rem'
-              }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               START YOUR BUSINESS
               <Arrow color="#FFFFFF" size={16} stroke={2} className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1" />
             </motion.button>
-          </motion.div>
+          </div>
         </nav>
       </header>
 
-      {/* SPACER for when navbar is fixed - Matches DMCC style */}
-      {isScrolled && <div className="h-16" />}
+      {/* SPACER for when navbar is fixed - Only for desktop */}
+      {isScrolled && !isMobile && <div className="h-16" />}
 
       {/* HERO SECTION */}
       <section className="relative w-full h-screen overflow-hidden">

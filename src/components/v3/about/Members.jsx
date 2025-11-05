@@ -409,9 +409,9 @@ export default function BoardOfDirectors() {
               
               {/* White Card Container */}
               <div className="bg-white rounded-xl p-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {/* Left Side - Image */}
-                  <div className="relative h-64 lg:h-full min-h-[300px] rounded-lg overflow-hidden">
+                  <div className="relative h-64 md:h-full min-h-[300px] rounded-lg overflow-hidden">
                     <Image
                       src={selectedMember.image}
                       alt={selectedMember.name}
@@ -457,24 +457,6 @@ export default function BoardOfDirectors() {
                         </span>
                         <span className={`text-[#05183A] text-sm ${sora.className}`}>
                           {selectedMember.name}
-                        </span>
-                      </div>
-
-                      <div className="flex justify-between items-center pb-3">
-                        <span className={`text-[#05183A] text-sm font-semibold ${sora.className}`}>
-                          QBC-1:
-                        </span>
-                        <span className={`text-[#05183A] text-sm ${sora.className}`}>
-                          {selectedMember.QBC1}
-                        </span>
-                      </div>
-
-                      <div className="flex justify-between items-center pb-3">
-                        <span className={`text-[#05183A] text-sm font-semibold ${sora.className}`}>
-                          QBC-2:
-                        </span>
-                        <span className={`text-[#05183A] text-sm ${sora.className}`}>
-                          {selectedMember.QBC2}
                         </span>
                       </div>
 

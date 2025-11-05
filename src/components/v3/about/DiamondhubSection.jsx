@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import localFont from 'next/font/local';
 import { Sora } from 'next/font/google';
@@ -22,15 +22,38 @@ const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
 export default function DiamondHubSection() {
   const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    // Auto-play video with muted audio
-    if (videoRef.current) {
-      videoRef.current.play().catch(error => {
-        console.log('Video autoplay failed:', error);
-      });
-    }
+    // Removed auto-play functionality
+    // Video will not start by default
   }, []);
+
+  const togglePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        videoRef.current.play()
+          .then(() => setIsPlaying(true))
+          .catch(error => {
+            console.log('Video play failed:', error);
+          });
+      }
+    }
+  };
+
+  const handleVideoClick = () => {
+    if (isPlaying) {
+      // Only show play button when video is playing and user clicks on video
+      setIsPlaying(false);
+      if (videoRef.current) {
+        videoRef.current.pause();
+      }
+    }
+    // If video is paused, user needs to click the play button to resume
+  };
 
   // Animation variants
   const containerVariants = {
@@ -126,14 +149,14 @@ export default function DiamondHubSection() {
                   <div className="w-full h-[300px] xs:h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] lg:min-w-[800px] xl:min-w-[900px]">
                     <video
                       ref={videoRef}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover cursor-pointer"
                       muted
                       loop
                       playsInline
                       preload="metadata"
-                      poster="/About/diamond-hub-poster.jpg"
+                      onClick={handleVideoClick}
                     >
-                      <source src="/videos/diamond-hub-showcase.mp4" type="video/mp4" />
+                      <source src="/About/about-video.mp4" type="video/mp4" />
                       <source src="/videos/diamond-hub-showcase.webm" type="video/webm" />
                       {/* Fallback image if video doesn't load */}
                       <Image
@@ -145,33 +168,38 @@ export default function DiamondHubSection() {
                       />
                     </video>
                     
-                   {/* Video play overlay */}
-                   <div className="absolute inset-0 flex items-center justify-center">
-  <svg
-    width="80"
-    height="80"
-    viewBox="0 0 80 80"
-    className="sm:w-20 sm:h-20 w-16 h-16"
-  >
-    <defs>
-      <mask id="play-cutout">
-        {/* Full white circle = visible */}
-        <rect width="100%" height="100%" fill="white" />
-        {/* Black triangle = transparent hole */}
-        <polygon points="32,24 32,56 56,40" fill="black" />
-      </mask>
-    </defs>
+                    {/* Video play overlay - Always show by default since video doesn't auto-play */}
+                    {!isPlaying && (
+                      <div 
+                        className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                        onClick={togglePlayPause}
+                      >
+                        <svg
+                          width="80"
+                          height="80"
+                          viewBox="0 0 80 80"
+                          className="sm:w-20 sm:h-20 w-16 h-16"
+                        >
+                          <defs>
+                            <mask id="play-cutout">
+                              {/* Full white circle = visible */}
+                              <rect width="100%" height="100%" fill="white" />
+                              {/* Black triangle = transparent hole */}
+                              <polygon points="32,24 32,56 56,40" fill="black" />
+                            </mask>
+                          </defs>
 
-    {/* Circle with mask applied */}
-    <circle
-      cx="40"
-      cy="40"
-      r="38"
-      fill="white"
-      mask="url(#play-cutout)"
-    />
-  </svg>
-</div>
+                          {/* Circle with mask applied */}
+                          <circle
+                            cx="40"
+                            cy="40"
+                            r="38"
+                            fill="white"
+                            mask="url(#play-cutout)"
+                          />
+                        </svg>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

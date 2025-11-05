@@ -5,6 +5,7 @@ import MissionSection from "@/components/v2/MissionSection";
 import Footer from "@/components/v2/footer";
 import Insights from "@/components/v2/Insight";
 import BourseSection from "@/components/v2/BourseSection"
+import CorporateTaxSection from "@/components/v3/CorporateTaxSection";
 import AboutSection from "@/components/v2/AboutSection";
 import PillarOfProgress from "@/components/v2/PillarOfProgress";
 import BannerWrapper from "@/components/v3/BannerWrapper";
@@ -18,6 +19,7 @@ export default function Home() {
             <Partners/>
             <AboutSection/>
             <BourseSection/>
+            <CorporateTaxSection/>
             <PillarOfProgress/>
             <MissionSection/>
             <AdSection/>

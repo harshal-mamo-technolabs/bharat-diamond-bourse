@@ -34,7 +34,7 @@ function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
   );
 }
 
-export default function HeaderWithHero() {
+export default function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState(languages[0].code);

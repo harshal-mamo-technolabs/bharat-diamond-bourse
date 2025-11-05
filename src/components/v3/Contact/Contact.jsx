@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FaArrowRight, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaArrowRight, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import localFont from 'next/font/local';
@@ -124,13 +124,78 @@ export default function Contact() {
               variants={containerVariants}
               className="bg-white rounded-lg"
             >
-              {/* Title */}
-              <motion.h1
-                variants={itemVariants}
-                className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#05183A] text-left mb-8 md:mb-12 ${gothamLight.className}`}
-              >
-                Let&apos;s Connect
-              </motion.h1>
+              {/* Title and Follow Us Section */}
+              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 md:mb-12 gap-6">
+                {/* Let's Connect Title */}
+                <motion.h1
+                  variants={itemVariants}
+                  className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#05183A] ${gothamLight.className}`}
+                >
+                  Let&apos;s Connect
+                </motion.h1>
+
+                {/* Follow Us Section */}
+                <motion.div
+                  variants={itemVariants}
+                  className="flex flex-col items-start lg:items-end gap-3"
+                >
+                  <h3 className={`text-lg md:text-xl font-semibold text-[#05183A] ${gothamLight.className}`}>
+                    Follow Us
+                  </h3>
+                  <div className="flex items-center gap-4 text-[#0E234E]">
+                    {/* YouTube Icon */}
+                    <motion.a
+                      href="https://youtube.com/@bharatdiamondbourse?si=Gmf8Og-vbMyfJ6-o"
+                      aria-label="YouTube"
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="hover:opacity-80 transition-opacity duration-200"
+                    >
+                      <Image
+                        src="/footer/you-tube.png"
+                        alt="YouTube"
+                        width={24}
+                        height={24}
+                        className="w-6 h-6"
+                      />
+                    </motion.a>
+                    
+                    {/* LinkedIn Icon */}
+                    <motion.a
+                      href="https://in.linkedin.com/company/bharat-diamond-bourse"
+                      aria-label="LinkedIn"
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="hover:opacity-80 transition-opacity duration-200"
+                    >
+                      <Image
+                        src="/footer/linkedin-icon.png"
+                        alt="LinkedIn"
+                        width={24}
+                        height={24}
+                        className="w-6 h-6"
+                      />
+                    </motion.a>
+                    
+                    {/* Instagram Icon */}
+                    <motion.a
+                      href="https://www.instagram.com/bharatdiamondbourse/?hl=en"
+                      aria-label="Instagram"
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="hover:opacity-80 transition-opacity duration-200"
+                    >
+                      <Image
+                        src="/footer/instagram-icon.png"
+                        alt="Instagram"
+                        width={24}
+                        height={24}
+                        className="w-6 h-6"
+                      />
+                    </motion.a>
+                  </div>
+                </motion.div>
+              </div>
 
               {/* Contact Form Card */}
               <motion.div
@@ -300,149 +365,147 @@ export default function Contact() {
         </div>
 
         {/* Offices Section */}
-        {/* Offices Section */}
-<section className="w-full bg-[#EFF3F6] py-12 md:py-16 lg:py-20">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
-      variants={containerVariants}
-    >
-      {/* Section Title */}
-      <motion.h2
-        variants={itemVariants}
-        className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#05183A] text-center mb-8 md:mb-12 ${gothamLight.className}`}
-      >
-        Discover Our Office Locations
-      </motion.h2>
-
-      {/* Tabs Section - Made responsive */}
-     {/* Tabs Section - Made responsive and full width */}
-<motion.div
-  className="flex flex-col sm:flex-row border-b border-transparent mb-8 md:mb-12"
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true }}
-  variants={containerVariants}
->
-  {officeData.map((office) => (
-    <motion.button
-      key={office.id}
-      className={`flex-1 py-4 md:py-6 text-center font-semibold text-lg md:text-xl transition-all duration-300 ${gothamLight.className} ${
-        activeTab === office.id
-          ? 'text-[#0E234E] border-b-2 sm:border-b-4 border-[#0E234E]'
-          : 'text-gray-600 hover:text-gray-900'
-      }`}
-      onClick={() => setActiveTab(office.id)}
-      variants={itemVariants}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-    >
-      {office.title}
-    </motion.button>
-  ))}
-</motion.div>
-
-      {/* Office Card - Made fully responsive */}
-      <motion.div
-        key={activeTab}
-        variants={cardVariants}
-        initial="hidden"
-        animate="visible"
-        className="bg-[#F2F4F6] border border-[#D0D0D0] rounded-lg overflow-hidden h-auto lg:h-[400px]"
-      >
-        <div className="flex flex-col lg:grid lg:grid-cols-[3fr_2fr] h-full">
-          {/* Content Side */}
-          <div className="p-6 md:p-8 flex flex-col justify-center order-2 lg:order-1">
+        <section className="w-full bg-[#EFF3F6] py-12 md:py-16 lg:py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="space-y-4"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={containerVariants}
             >
-              <p className={`text-sm text-[#364153] font-medium ${sora.className}`}>
-                {officeData.find(office => office.id === activeTab)?.subtitle}
-              </p>
-              <h3 className={`text-xl md:text-2xl font-bold text-[#05183A] ${gothamLight.className}`}>
-                {officeData.find(office => office.id === activeTab)?.location}
-              </h3>
-              <p className={`text-[#364153] text-sm md:text-[12px] leading-relaxed ${sora.className}`}>
-                {officeData.find(office => office.id === activeTab)?.description}
-              </p>
-              
-              {/* Updated Contact Info - Made responsive */}
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-6">
-                <motion.div 
-                  className="flex items-center gap-2 bg-white rounded-full p-3 shadow-sm border border-gray-100 w-full sm:flex-1"
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9">
-                    <FaEnvelope className="text-[#05183A] text-sm" />
+              {/* Section Title */}
+              <motion.h2
+                variants={itemVariants}
+                className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#05183A] text-center mb-8 md:mb-12 ${gothamLight.className}`}
+              >
+                Discover Our Office Locations
+              </motion.h2>
+
+              {/* Tabs Section - Made responsive */}
+              <motion.div
+                className="flex flex-col sm:flex-row border-b border-transparent mb-8 md:mb-12"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={containerVariants}
+              >
+                {officeData.map((office) => (
+                  <motion.button
+                    key={office.id}
+                    className={`flex-1 py-4 md:py-6 text-center font-semibold text-lg md:text-xl transition-all duration-300 ${gothamLight.className} ${
+                      activeTab === office.id
+                        ? 'text-[#0E234E] border-b-2 sm:border-b-4 border-[#0E234E]'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                    onClick={() => setActiveTab(office.id)}
+                    variants={itemVariants}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {office.title}
+                  </motion.button>
+                ))}
+              </motion.div>
+
+              {/* Office Card - Made fully responsive */}
+              <motion.div
+                key={activeTab}
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                className="bg-[#F2F4F6] border border-[#D0D0D0] rounded-lg overflow-hidden h-auto lg:h-[400px]"
+              >
+                <div className="flex flex-col lg:grid lg:grid-cols-[3fr_2fr] h-full">
+                  {/* Content Side */}
+                  <div className="p-6 md:p-8 flex flex-col justify-center order-2 lg:order-1">
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.6 }}
+                      className="space-y-4"
+                    >
+                      <p className={`text-sm text-[#364153] font-medium ${sora.className}`}>
+                        {officeData.find(office => office.id === activeTab)?.subtitle}
+                      </p>
+                      <h3 className={`text-xl md:text-2xl font-bold text-[#05183A] ${gothamLight.className}`}>
+                        {officeData.find(office => office.id === activeTab)?.location}
+                      </h3>
+                      <p className={`text-[#364153] text-sm md:text-[12px] leading-relaxed ${sora.className}`}>
+                        {officeData.find(office => office.id === activeTab)?.description}
+                      </p>
+                      
+                      {/* Updated Contact Info - Made responsive */}
+                      <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-6">
+                        <motion.div 
+                          className="flex items-center gap-2 p-3 w-full sm:flex-1"
+                          whileHover={{ y: -2 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <div className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9">
+                            <FaEnvelope className="text-[#05183A] text-sm" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <span className={`text-xs md:text-[12px] font-medium text-[#364153] truncate ${sora.className}`}>
+                              {officeData.find(office => office.id === activeTab)?.email}
+                            </span>
+                          </div>
+                        </motion.div>
+                        
+                        <motion.div 
+                          className="flex items-center gap-2 p-3w-full sm:flex-1"
+                          whileHover={{ y: -2 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <div className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-full">
+                            <FaPhoneAlt className="text-[#05183A] text-sm" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <span className={`text-xs md:text-[12px] font-medium text-[#364153] truncate ${sora.className}`}>
+                              {officeData.find(office => office.id === activeTab)?.phone}
+                            </span>
+                          </div>
+                        </motion.div>
+                        
+                        <motion.div 
+                          className="flex items-center gap-2 p-3w-full sm:flex-1"
+                          whileHover={{ y: -2 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <div className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-full">
+                            <FaMapMarkerAlt className="text-[#05183A] text-sm" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <span className={`text-xs md:text-[12px] font-medium text-[#364153] truncate ${sora.className}`}>
+                              {officeData.find(office => office.id === activeTab)?.city}
+                            </span>
+                          </div>
+                        </motion.div>
+                      </div>
+                    </motion.div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <span className={`text-xs md:text-[12px] font-medium text-[#364153] truncate ${sora.className}`}>
-                      {officeData.find(office => office.id === activeTab)?.email}
-                    </span>
-                  </div>
-                </motion.div>
-                
-                <motion.div 
-                  className="flex items-center gap-2 bg-white rounded-full p-3 shadow-sm border border-gray-100 w-full sm:flex-1"
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-full">
-                    <FaPhone className="text-[#05183A] text-sm" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <span className={`text-xs md:text-[12px] font-medium text-[#364153] truncate ${sora.className}`}>
-                      {officeData.find(office => office.id === activeTab)?.phone}
-                    </span>
-                  </div>
-                </motion.div>
-                
-                <motion.div 
-                  className="flex items-center gap-2 bg-white rounded-full p-3 shadow-sm border border-gray-100 w-full sm:flex-1"
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-full">
-                    <FaMapMarkerAlt className="text-[#05183A] text-sm" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <span className={`text-xs md:text-[12px] font-medium text-[#364153] truncate ${sora.className}`}>
-                      {officeData.find(office => office.id === activeTab)?.city}
-                    </span>
-                  </div>
-                </motion.div>
-              </div>
+
+                  {/* Map Side - Made responsive */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="h-[300px] md:h-[350px] lg:h-full w-full order-1 lg:order-2"
+                  >
+                    <iframe
+                      src={officeData.find(office => office.id === activeTab)?.mapUrl}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                  </motion.div>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
-
-          {/* Map Side - Made responsive */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="h-[300px] md:h-[350px] lg:h-full w-full order-1 lg:order-2"
-          >
-            <iframe
-              src={officeData.find(office => office.id === activeTab)?.mapUrl}
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </motion.div>
-        </div>
-      </motion.div>
-    </motion.div>
-  </div>
-</section>
+        </section>
       </div>
     </section>
   );

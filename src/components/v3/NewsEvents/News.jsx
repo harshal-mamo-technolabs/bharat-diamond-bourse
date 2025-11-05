@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
+import { FaCalendarAlt, FaArrowRight, FaFilter } from 'react-icons/fa';
 import { BsCalendarDate } from "react-icons/bs";
 import { BiSort } from "react-icons/bi";
 import { motion } from 'framer-motion';
@@ -27,7 +27,7 @@ const cardData = [
   {
     id: 1,
     date: '25 SEP 2025',
-    eventRange: '21 SEP 2025-27 SEP 2025',
+    eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
     imageType: 'type1'
@@ -35,7 +35,7 @@ const cardData = [
   {
     id: 2,
     date: '25 SEP 2025',
-    eventRange: '21 SEP 2025-27 SEP 2025',
+    eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
     imageType: 'type2'
@@ -43,7 +43,7 @@ const cardData = [
   {
     id: 3,
     date: '25 SEP 2025',
-    eventRange: '21 SEP 2025-27 SEP 2025',
+    eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
     imageType: 'type3'
@@ -51,7 +51,7 @@ const cardData = [
   {
     id: 4,
     date: '25 SEP 2025',
-    eventRange: '21 SEP 2025-27 SEP 2025',
+    eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
     imageType: 'type1'
@@ -59,7 +59,7 @@ const cardData = [
   {
     id: 5,
     date: '25 SEP 2025',
-    eventRange: '21 SEP 2025-27 SEP 2025',
+    eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
     imageType: 'type2'
@@ -67,7 +67,7 @@ const cardData = [
   {
     id: 6,
     date: '25 SEP 2025',
-    eventRange: '21 SEP 2025-27 SEP 2025',
+    eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
     imageType: 'type3'
@@ -75,7 +75,7 @@ const cardData = [
   {
     id: 7,
     date: '25 SEP 2025',
-    eventRange: '21 SEP 2025-27 SEP 2025',
+    eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
     imageType: 'type1'
@@ -83,7 +83,7 @@ const cardData = [
   {
     id: 8,
     date: '25 SEP 2025',
-    eventRange: '21 SEP 2025-27 SEP 2025',
+    eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
     imageType: 'type2'
@@ -91,7 +91,7 @@ const cardData = [
   {
     id: 9,
     date: '25 SEP 2025',
-    eventRange: '21 SEP 2025-27 SEP 2025',
+    eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
     imageType: 'type3'
@@ -99,7 +99,7 @@ const cardData = [
   {
     id: 10,
     date: '25 SEP 2025',
-    eventRange: '21 SEP 2025-27 SEP 2025',
+    eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
     imageType: 'type1'
@@ -107,7 +107,7 @@ const cardData = [
   {
     id: 11,
     date: '25 SEP 2025',
-    eventRange: '21 SEP 2025-27 SEP 2025',
+    eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
     imageType: 'type2'
@@ -115,7 +115,7 @@ const cardData = [
   {
     id: 12,
     date: '25 SEP 2025',
-    eventRange: '21 SEP 2025-27 SEP 2025',
+    eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
     imageType: 'type3'
@@ -137,12 +137,12 @@ const getImageUrl = (type) => {
 };
 
 export default function News() {
-  const [activeFilter, setActiveFilter] = useState('All');
   const [selectedYear, setSelectedYear] = useState('');
   const [selectedSort, setSelectedSort] = useState('');
   const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All'); // Default to 'All'
 
-  const filters = ['All', 'News', 'Events', 'Obituary', 'Press Release'];
+  const categories = ['All', 'News', 'Events', 'Obituary', 'Press Release'];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -178,32 +178,29 @@ export default function News() {
           animate="visible"
           variants={containerVariants}
         >
-          {/* Top Filter Bar */}
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
-            {/* Filter Buttons */}
-            <div className="flex flex-wrap gap-6">
-              {filters.map((filter) => (
-                <motion.button
-                  key={filter}
-                  onClick={() => setActiveFilter(filter)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`px-6 py-3 rounded-lg text-sm font-medium transition-colors duration-200 ${sora.className} ${
-                    activeFilter === filter
-                      ? 'bg-[#05183A] text-white'
-                      : 'bg-gray-200 text-[#05183A] hover:bg-gray-300'
-                  }`}
-                >
-                  {filter}
-                </motion.button>
-              ))}
-            </div>
-
-            {/* Date Selectors - Updated for mobile responsiveness */}
-            <div className="w-full lg:w-auto">
-              <div className="flex flex-col sm:flex-row gap-3 w-full">
+          {/* Top Filter Bar - CENTERED */}
+          <div className="flex flex-col items-center gap-6 mb-8">
+            {/* Date Selectors - Centered */}
+            <div className="w-full max-w-4xl">
+              <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
+                {/* SELECT - Category filter with icon */}
+                <div className="relative flex-1 max-w-[200px]">
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className={`w-full px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
+                  >
+                    {categories.map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                  <FaFilter className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+                </div>
+                
                 {/* Sort Selector */}
-                <div className="relative flex-1 min-w-[150px]">
+                <div className="relative flex-1 max-w-[200px]">
                   <select
                     value={selectedSort}
                     onChange={(e) => setSelectedSort(e.target.value)}
@@ -217,7 +214,7 @@ export default function News() {
                 </div>
                 
                 {/* Year Selector */}
-                <div className="relative flex-1 min-w-[150px]">
+                <div className="relative flex-1 max-w-[200px]">
                   <select
                     value={selectedYear}
                     onChange={(e) => setSelectedYear(e.target.value)}
@@ -233,7 +230,7 @@ export default function News() {
                 </div>
 
                 {/* Month Selector */}
-                <div className="relative flex-1 min-w-[150px]">
+                <div className="relative flex-1 max-w-[200px]">
                   <select
                     value={selectedMonth}
                     onChange={(e) => setSelectedMonth(e.target.value)}
@@ -303,10 +300,10 @@ export default function News() {
                 </div>
 
                 {/* Card Content */}
-                <div className="p-4">
+                <div className="mt-4">
                   {/* Event Range */}
                   <p className={`text-xs text-gray-600 mb-2 font-medium ${gothamLight.className}`}>
-                    {card.title} - {card.eventRange}
+                   {card.eventRange}
                   </p>
 
                   {/* Title */}
@@ -318,10 +315,9 @@ export default function News() {
                   <motion.button
                     whileHover={{ 
                       scale: 1.05,
-                      backgroundColor: "#05183A"
                     }}
                     whileTap={{ scale: 0.95 }}
-                    className={`flex items-center gap-2 bg-[#05183A] text-white px-3 py-2 rounded-md text-[12px] font-medium transition-colors duration-200 ${sora.className}`}
+                    className={`flex items-center gap-2 bg-transparent text-[#05183A] px-1 py-2 rounded-md text-[12px] font-medium transition-colors duration-200 ${sora.className}`}
                   >
                     Read More
                     <FaArrowRight className="text-xs" />

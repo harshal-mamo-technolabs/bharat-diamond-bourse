@@ -41,11 +41,12 @@ function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
 }
 
 export default function Header({ 
-  backgroundImage = "/about/about-hero.png", // Default background video
-  backgroundType = "image", // "video" or "image"
-  title = "About Us", // Default title
-  description = "Bharat Diamond Bourse (BDB) is the world's largest and most prestigious diamond trading hub, bringing together thousands of members across 100+ countries.", // Default description
-  showDivider = true // Show the standing line divider
+  backgroundImage = "/about/about-hero.png",
+  backgroundType = "image",
+  title = "About Us",
+  breadcrumb = "Home/About us",
+  description = "Bharat Diamond Bourse (BDB) is the world's largest and most prestigious diamond trading hub, bringing together thousands of members across 100+ countries.",
+  showDivider = true
 }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -64,7 +65,6 @@ export default function Header({
 
   const HERO_HEIGHT = 720;
 
-  // Navigation items
   const navItems = [
     { href: '/v3', label: 'Home' },
     { href: '/v3/about', label: 'About Us' },
@@ -73,7 +73,6 @@ export default function Header({
     { href: '/v3/sustainability', label: 'Sustainability' },
   ];
 
-  // Top navigation items (Circulars, Member's directory, Contact us, Careers)
   const topNavItems = [
     { href: '/v3/circulars', label: 'Circulars' },
     { href: '/v3/members-directory', label: 'Member\'s directory' },
@@ -81,14 +80,12 @@ export default function Header({
     { href: '/v3/careers', label: 'Careers' },
   ];
 
-  // Check if current path matches nav item
   const isActive = (href) => {
     if (href === '/v3' && pathname === '/v3') return true;
     if (href !== '/v3' && pathname.startsWith(href)) return true;
     return false;
   };
 
-  // detect on load + resize
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
@@ -96,7 +93,6 @@ export default function Header({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // autoplay hero video on mount if video background
   useEffect(() => {
     if (backgroundType !== 'video') return;
     
@@ -109,14 +105,12 @@ export default function Header({
     play();
   }, [backgroundType]);
 
-  // sticky navbar after hero
   useEffect(() => {
     const onScroll = () => setShowStickyNav(window.scrollY >= HERO_HEIGHT);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close modal on ESC
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') setShowModal(false);
@@ -125,7 +119,6 @@ export default function Header({
     return () => document.removeEventListener('keydown', onKey);
   }, []);
 
-  // Lock body scroll when modal open
   useEffect(() => {
     if (showModal) {
       document.body.style.overflow = 'hidden';
@@ -143,7 +136,6 @@ export default function Header({
     setShowModal(true);
   };
 
-  // Auto-open when URL contains ?start=1
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const params = new URLSearchParams(window.location.search);
@@ -467,7 +459,7 @@ export default function Header({
         {/* Content Container */}
         <div className="relative z-20 flex flex-col justify-center h-full px-4 md:px-12 max-w-7xl mx-auto">
           {/* Divider and Title Row */}
-          <div className="flex items-start mb-4 md:mb-4">
+          <div className="flex items-start mb-2 md:mb-2">
             {/* Standing Line Divider */}
             {showDivider && (
               <div className="w-1 h-16 bg-white mr-4 md:mr-6 flex-shrink-0 mt-0"></div>
@@ -483,6 +475,22 @@ export default function Header({
               {title}
             </motion.h1>
           </div>
+
+          {/* Breadcrumb - aligned with title */}
+          <motion.div 
+            className="flex items-start mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            {/* Spacer to match the divider width */}
+            {showDivider && <div className="w-1 mr-4 md:mr-6 flex-shrink-0"></div>}
+            
+            {/* Breadcrumb text */}
+            <h6 className={`text-white text-[16px] ${gothamLight.className}`}>
+              {breadcrumb}
+            </h6>
+          </motion.div>
           
           {/* Description - aligned with title */}
           <motion.div 
@@ -491,6 +499,9 @@ export default function Header({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
+            {/* Spacer to match the divider width */}
+            {showDivider && <div className="w-1 mr-4 md:mr-6 flex-shrink-0"></div>}
+            
             {/* Description text */}
             <p className={`text-white text-base md:text-lg lg:text-xl max-w-4xl leading-relaxed ${sora.className}`}>
               {description}
@@ -498,7 +509,7 @@ export default function Header({
           </motion.div>
         </div>
 
-        {/* ORIGINAL NAVBAR OVER IMAGE - PREVIOUS CODE LAYOUT */}
+        {/* ORIGINAL NAVBAR OVER IMAGE */}
         <nav
           className={`hidden md:flex flex-col absolute top-0 left-0 w-full px-12 py-1 z-30 bg-white/80 text-white ${sora.className} select-none`}
         >

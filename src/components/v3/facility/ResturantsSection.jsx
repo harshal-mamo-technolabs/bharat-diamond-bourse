@@ -132,16 +132,18 @@ const RestaurantsSection = () => {
                 </motion.p>
               </motion.div>
 
-              {/* Read More Button */}
-              <motion.button
-                className="bg-[#05183A] text-white px-3 py-3 rounded-xl text-[12px] font-semibold flex items-center justify-center space-x-2 mt-4 w-full sm:w-auto"
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
-              >
-                <span>OUR RESTURANTS</span>
-                <FaArrowRight className='w-3 h-3'/>
-              </motion.button>
+              {/* Read More Button - DESKTOP VERSION */}
+              <Link href="/v3/resturants">
+                <motion.button
+                  className="bg-[#05183A] text-white px-3 py-3 rounded-xl text-[12px] font-semibold flex items-center justify-center space-x-2 mt-4 w-full sm:w-auto"
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
+                  <span>OUR RESTURANTS</span>
+                  <FaArrowRight className='w-3 h-3'/>
+                </motion.button>
+              </Link>
             </motion.div>
           </motion.div>
 
@@ -183,19 +185,18 @@ const RestaurantsSection = () => {
             </motion.p>
           </motion.div>
 
-          {/* Read More Button */}
+          {/* Read More Button - MOBILE/TABLET VERSION */}
           <Link href="/v3/resturants" className="w-full sm:w-auto">
-  <motion.button
-    className="bg-[#05183A] text-white px-3 py-3 rounded-xl text-[12px] font-semibold flex items-center justify-center space-x-2 mt-4 w-full sm:w-auto"
-    variants={buttonVariants}
-    whileHover="hover"
-    whileTap="tap"
-  >
-    <span>OUR RESTURANTS</span>
-    <FaArrowRight className="w-3 h-3" />
-  </motion.button>
-</Link>
-
+            <motion.button
+              className="bg-[#05183A] text-white px-3 py-3 rounded-xl text-[12px] font-semibold flex items-center justify-center space-x-2 mt-4 w-full sm:w-auto"
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
+            >
+              <span>OUR RESTURANTS</span>
+              <FaArrowRight className="w-3 h-3" />
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     </section>

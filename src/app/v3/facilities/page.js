@@ -11,7 +11,7 @@ import Footer from "@/components/v2/footer";
 export default function Facilities() {
     return (
           <div className="">
-              <Header backgroundImage="/facilities/facility-hero.png" backgroundType="image" title="Facilities" description="Bharat Diamond Bourse (BDB) is the world’s largest and most prestigious diamond trading hub, bringing together thousands of members across 100+ countries." showDivider={true}/>
+              <Header backgroundImage="/facilities/facility-hero.png" backgroundType="image" title="Facilities" breadcrumb="HOME / FACILITIES" description="Bharat Diamond Bourse (BDB) is the world’s largest and most prestigious diamond trading hub, bringing together thousands of members across 100+ countries." showDivider={true}/>
               <CustomsIDTC/>
               <FacilitiesSection/>
               <SportsFacilities/>

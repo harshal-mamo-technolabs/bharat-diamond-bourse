@@ -252,7 +252,7 @@ export default function Footer() {
                         </div>
 
                         <div className="mt-10 md:mt-auto flex justify-end">
-                            <Link href="/">
+                            <Link href="/v3">
                                 <Image
                                     src="/bdb-logo-black-font.png"
                                     alt="Bharat Diamond Bourse"

@@ -229,11 +229,13 @@ export default function Header() {
           isScrolled ? 'fixed top-0 left-0 right-0 z-50' : 'relative'
         }`}>
           <div className="flex items-center justify-between px-4 py-3">
-            <Image src="/BDB-LOGO.png" alt="BDB Logo" width={100} height={40} />
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-2xl text-gray-800">
-              {mobileMenuOpen ? <IoClose /> : <FiMenu />}
-            </button>
-          </div>
+  <Link href="/v3">
+    <Image src="/BDB-LOGO.png" alt="BDB Logo" width={100} height={40} />
+  </Link>
+  <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-2xl text-gray-800">
+    {mobileMenuOpen ? <IoClose /> : <FiMenu />}
+  </button>
+</div>
           {mobileMenuOpen && (
             <div className="px-4 pb-4 bg-white">
               {/* Top Navigation Items */}
@@ -337,15 +339,17 @@ export default function Header() {
           
           {/* Main Navigation Items - Simple scale transition */}
           <div className="flex items-center justify-between transition-all duration-300">
-            <div className="flex-shrink-0">
-              <Image 
-                src="/bdb-logo-black-font.png" 
-                alt="BDB Logo" 
-                width={isScrolled ? 110 : 135} 
-                height={isScrolled ? 45 : 60}
-                className="transition-all duration-300"
-              />
-            </div>
+          <div className="flex-shrink-0">
+  <Link href="/v3">
+    <Image 
+      src="/bdb-logo-black-font.png" 
+      alt="BDB Logo" 
+      width={isScrolled ? 110 : 135} 
+      height={isScrolled ? 45 : 60}
+      className="transition-all duration-300"
+    />
+  </Link>
+</div>
             <ul className="flex space-x-8 text-[14px] font-normal cursor-pointer mx-auto">
               {navItems.map((item) => (
                 <li key={item.href}>

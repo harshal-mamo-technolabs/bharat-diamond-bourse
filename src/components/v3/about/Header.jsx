@@ -218,7 +218,9 @@ export default function Header({
           style={{ transform: 'translateY(0)', transition: 'transform .4s ease-out' }}
         >
           <div className="flex items-center justify-between w-full">
+            <Link href="/v3">
             <Image src="/bdb-logo-black-font.png" alt="BDB Logo" width={120} height={50} />
+            </Link>
             <ul className="flex space-x-8 text-[14px] font-medium">
               {navItems.map((item) => (
                 <li key={item.href}>
@@ -264,7 +266,9 @@ export default function Header({
       {/* Mobile Hamburger */}
       <div className="absolute top-0 left-0 w-full bg-white shadow-md z-50 md:hidden">
         <div className="flex items-center justify-between px-4 py-3">
+          <Link href="/v3">
           <Image src="/BDB-LOGO.png" alt="BDB Logo" width={100} height={40} />
+          </Link>
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-2xl text-gray-800">
             {mobileMenuOpen ? <IoClose /> : <FiMenu />}
           </button>
@@ -559,7 +563,9 @@ export default function Header({
           </div>
           <div className="flex items-center justify-between mt-1">
             <div className="flex-shrink-0 mb-1">
+              <Link href="/v3">
               <Image src="/bdb-logo-black-font.png" alt="BDB Logo" width={135} height={140} />
+              </Link>
             </div>
             <ul className="flex space-x-8 text-[14px] font-normal cursor-pointer mx-auto">
               {navItems.map((item) => (

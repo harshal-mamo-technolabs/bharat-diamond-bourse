@@ -264,7 +264,7 @@ export default function Header({
       )}
 
       {/* Mobile Hamburger */}
-      <div className="absolute top-0 left-0 w-full bg-white shadow-md z-50 md:hidden">
+      <div className="fixed top-0 left-0 w-full bg-white shadow-md z-50 md:hidden">
         <div className="flex items-center justify-between px-4 py-3">
           <Link href="/v3">
           <Image src="/BDB-LOGO.png" alt="BDB Logo" width={100} height={40} />

@@ -96,10 +96,10 @@ export default function PromoBanner() {
               exit={{ opacity: 0, y: 20, scale: 0.98 }}
               transition={{ duration: 0.35, ease: [0.22, 0.61, 0.36, 1] }}
               className={[
-                // MOBILE — original size restored
+                // MOBILE & TABLET — same styling for screens below 1024px
                 'relative w-[94vw] max-h-[85vh] h-auto min-w-[300px] bg-white rounded-[16px] shadow-2xl overflow-hidden',
-                // DESKTOP/TABLET — unchanged
-                'sm:w-[48vw] sm:h-[70vh] sm:max-w-[900px] sm:max-h-[600px] sm:min-w-[320px] sm:rounded-[18px]',
+                // DESKTOP — only for large screens (1024px and above)
+                'lg:w-[48vw] lg:h-[70vh] lg:max-w-[900px] lg:max-h-[600px] lg:min-w-[320px] lg:rounded-[18px]',
                 sora.className,
               ].join(' ')}
             >
@@ -107,7 +107,7 @@ export default function PromoBanner() {
               <button
                 aria-label="Close"
                 onClick={() => setOpen(false)}
-                className="absolute top-3 right-3 p-2 hover:opacity-80 z-30"
+                className="absolute top-3 right-3 p-2 hover:opacity-80 z-30 lg:top-4 lg:right-4"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0E234E" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18" />
@@ -117,14 +117,14 @@ export default function PromoBanner() {
 
               {/* Content */}
               <div className="w-full h-full flex flex-col">
-                {/* Carousel — give mobile a real height using aspect ratio, not fixed vh */}
+                {/* Carousel */}
                 <div
                   className="
                     relative
-                    mt-3 mx-3 sm:mt-5 sm:mx-5
+                    mt-3 mx-3 lg:mt-5 lg:mx-5
                     rounded-[14px] overflow-hidden
-                    aspect-[16/9] min-h-[180px]      /* mobile height without changing modal size */
-                    sm:flex-1
+                    aspect-[16/9] min-h-[180px]      /* mobile & tablet height */
+                    lg:flex-1 lg:aspect-auto         /* desktop uses flex-1 */
                   "
                 >
                   {/* Track */}
@@ -150,7 +150,7 @@ export default function PromoBanner() {
                           alt={`Slide ${i + 1}`}
                           fill
                           className="object-contain"
-                          sizes="(max-width: 640px) 94vw, 48vw"
+                          sizes="(max-width: 1023px) 94vw, 48vw"
                           priority={i === 0}
                         />
                       </motion.div>
@@ -159,7 +159,7 @@ export default function PromoBanner() {
                 </div>
 
                 {/* Bottom button */}
-                <div className="px-4 pb-4 pt-3 flex items-center justify-center">
+                <div className="px-4 pb-4 pt-3 flex items-center justify-center lg:px-6 lg:pb-6">
                   <button
                     onClick={() => {
                       setOpen(false);
@@ -169,7 +169,7 @@ export default function PromoBanner() {
                       'group inline-flex items-center gap-3 rounded-[12px]',
                       'bg-[#0E234E] text-white uppercase tracking-[0.14em]',
                       gotham.className,
-                      'px-6 py-3 text-[12px] sm:px-8 sm:py-4 sm:text-[14px]',
+                      'px-6 py-3 text-[12px] lg:px-8 lg:py-4 lg:text-[14px]',
                       'shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_10px_20px_rgba(2,6,23,0.18)]',
                       'ring-1 ring-black/5 transition-all duration-300 ease-out',
                       'hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_16px_28px_rgba(2,6,23,0.22)]',

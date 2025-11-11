@@ -11,6 +11,7 @@ import AboutSection from "@/components/v2/AboutSection";
 import PillarOfProgress from "@/components/v2/PillarOfProgress";
 import BannerWrapper from "@/components/v3/BannerWrapper";
 import AdSection from "@/components/v3/AdSection";
+import ScrollToTop from "@/components/v3/ScrollToTop";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
             {/* <Facility/> */}
             <Insights/>
             <Footer/>
+            <ScrollToTop />
         </div>
   );
 }

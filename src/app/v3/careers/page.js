@@ -6,6 +6,7 @@ import EmployeeReview from "@/components/v3/careers/EmployeeReview";
 import OpenPosition from "@/components/v3/careers/OpenPosition";
 import Insights from "@/components/v2/Insight";
 import Footer from "@/components/v2/footer";
+import ScrollToTop from "@/components/v3/ScrollToTop";
 
 export default function Careers() {
     return (
@@ -16,8 +17,8 @@ export default function Careers() {
               <SportsFacilities/>
               <EmployeeReview/>
               <OpenPosition/>
-              <Insights/>
               <Footer/>
+              <ScrollToTop />
           </div>
     );
   }

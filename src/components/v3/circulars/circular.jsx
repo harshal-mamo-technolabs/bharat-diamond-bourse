@@ -282,7 +282,7 @@ export default function Circulars() {
       {/* White background with top border radius */}
       <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-white rounded-t-md -translate-y-6 md:-translate-y-8 z-10"></div>
       
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-2">
         {/* Breadcrumb */}
         <motion.div
           className="mb-6 sm:mb-8"

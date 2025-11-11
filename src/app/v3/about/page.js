@@ -7,6 +7,7 @@ import VicePresident from "@/components/v3/about/Vice-President";
 import SustainabilityInitiatives from "@/components/v3/about/SustainabilityInitiatives";
 import Members from "@/components/v3/about/Members";
 import Footer from "@/components/v2/footer";
+import ScrollToTop from "@/components/v3/ScrollToTop";
 
 export default function About() {
     return (
@@ -20,6 +21,7 @@ export default function About() {
               <SustainabilityInitiatives/>
               <Members/>
               <Footer/>
+              <ScrollToTop />
           </div>
     );
   }

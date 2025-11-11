@@ -38,7 +38,7 @@ export default function VicePresident() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         {/* Main Card with Gray Background */}
         <motion.div
-          className="relative bg-[#F2F4F6] overflow-hidden"
+          className="relative bg-[#F2F4F6] overflow-hidden rounded-md"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -59,20 +59,20 @@ export default function VicePresident() {
           </motion.div>
 
           {/* Grid */}
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[2.5fr_2fr] gap-2 md:gap-6">
+          <div className="rounded-md relative z-10 grid grid-cols-1 lg:grid-cols-[2.5fr_2fr] gap-2 md:gap-6">
 
             {/* Right Side - Image first in responsive */}
             <motion.div
               className="order-1 lg:order-2 relative flex items-center justify-center p-4 sm:p-6"
               variants={fadeUp}
             >
-              <div className="relative w-full h-full rounded-none overflow-hidden bg-gray-200">
+              <div className="relative w-full h-full rounded-md overflow-hidden bg-gray-200">
                 <Image
                   src="/About/mehul-shah.jpg"
                   alt="Mr. Anoop V. Mehta - President of Bharat Diamond Bourse"
                   width={800}
                   height={1000}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto object-contain rounded-md"
                   priority
                 />
               </div>
@@ -80,7 +80,7 @@ export default function VicePresident() {
 
             {/* Left Side - Content */}
             <motion.div
-              className="order-2 lg:order-1 bg-white rounded-none md:m-6 m-2 p-6 sm:p-8 md:p-16 relative flex flex-col"
+              className="order-2 lg:order-1 bg-white rounded-md md:m-6 m-2 p-6 sm:p-8 md:p-16 relative flex flex-col"
               variants={fadeUp}
             >
               <div className="space-y-6">

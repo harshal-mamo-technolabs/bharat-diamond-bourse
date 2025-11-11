@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sora } from "next/font/google";
 import { FaArrowRight } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 import Image from "next/image";
 import localFont from "next/font/local";
 
@@ -25,7 +26,8 @@ const directors = [
     id: 1,
     name: "Mr. Anoop V. Mehta",
     position: "PRESIDENT",
-    image: "/About/members/AnoopMehta-2.jpg.png",
+    image: "/About/members/AnoopMehta.png",
+
     officeNo: "+91 22 1234 5678",
     contactNo: "+91 98765 43210",
     email: "anoopmehta@bdb.com",
@@ -37,7 +39,7 @@ const directors = [
     id: 2,
     name: "Mr. Mehul N. Shah",
     position: "VICE-PRESIDENT",
-    image: "/About/members/MehulShah.jpg.png",
+    image: "/About/members/MehulShah.jpg",
     officeNo: "+91 22 1234 5679",
     contactNo: "+91 98765 43211",
     email: "mehulshah@bdb.com",
@@ -267,6 +269,33 @@ export default function BoardOfDirectors() {
   const [selectedMember, setSelectedMember] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { 
+      y: 30, 
+      opacity: 0,
+      scale: 0.9
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   const modalVariants = {
     hidden: { 
       opacity: 0,
@@ -299,6 +328,11 @@ export default function BoardOfDirectors() {
     }
   };
 
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+  };
+
   const handleViewDetails = (member) => {
     setSelectedMember(member);
     setIsModalOpen(true);
@@ -310,7 +344,7 @@ export default function BoardOfDirectors() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-6 py-8 md:py-12 bg-white">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12 bg-white">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -326,64 +360,72 @@ export default function BoardOfDirectors() {
       </motion.div>
 
       {/* Directors Grid */}
-      <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-        {directors.map((director, index) => (
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+      >
+        {directors.map((director) => (
           <motion.div
             key={director.id}
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{
-              duration: 1.2,
-              delay: index * 0.15,
-              ease: "easeOut",
+            variants={cardVariants}
+            whileHover={{ 
+              y: -8,
+              transition: { duration: 0.3, ease: "easeOut" }
             }}
-            viewport={{ once: true, amount: 0.2 }}
-            className="bg-[#F2F4F6] rounded-xl overflow-hidden shadow-sm p-4 flex flex-col items-center text-center hover:shadow-md transition border border-[#D9D9D9] cursor-pointer"
-            onClick={() => handleViewDetails(director)}
+            className="bg-[#F2F4F6] border border-[#D9D9D9] transition-all rounded-md duration-300 overflow-hidden"
           >
-            <motion.div
-              className="w-full aspect-[1/1] overflow-hidden rounded-lg mb-4"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.4 }}
-            >
-              <img
-                src={director.image}
-                alt={director.name}
-                className="w-full h-full object-cover rounded-lg"
-              />
-            </motion.div>
+            <div className='p-3'>
+              {/* Director Image */}
+              <div className="relative h-64 sm:h-80 w-full overflow-hidden p-5 sm:p-6 rounded-md">
+                <Image
+                  src={director.image}
+                  alt={director.name}
+                  fill
+                  className="object-cover rounded-md"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+                {/* Arrow Button - Bottom Right Corner */}
+                <motion.button
+                  className="absolute bottom-0 right-0 bg-[#05183A] text-white p-2.5 sm:p-4 md:p-5 rounded-br-md flex items-center justify-center hover:bg-[#0b214f] transition-all z-10"
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
+                  <FaArrowRight className='w-3 sm:w-4 md:w-5 h-3 sm:h-4 md:h-5'/>
+                </motion.button>
+              </div>
 
-            <motion.h3
-              className={`text-base sm:text-lg font-semibold mb-1 sm:mb-2 text-gray-800 ${gothamLight.className}`}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 + 0.4 }}
-              viewport={{ once: true }}
-            >
-              {director.name}
-            </motion.h3>
+              {/* Director Details */}
+              <div className="mt-4 space-y-1.5">
+                {/* Name */}
+                <h3 className={`text-[#05183A] text-xl sm:text-[20px] font-bold leading-tight ${gothamLight.className}`}>
+                  {director.name}
+                </h3>
 
-            <motion.p
-              className={`text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6 ${gothamLight.className}`}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 1, delay: index * 0.1 + 0.6 }}
-              viewport={{ once: true }}
-            >
-              {director.position}
-            </motion.p>
+                {/* Position */}
+                <p className={`text-[#05183A] text-base uppercase sm:text-[13px] font-medium ${sora.className}`}>
+                  {director.position}
+                </p>
 
-            {/* <motion.button
-              className={`bg-[#05183A] text-white text-xs sm:text-sm font-medium py-2 sm:py-3 w-full rounded-lg 
-                         flex justify-center items-center gap-2 hover:bg-[#05183A] transition ${sora.className}`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              View Details <FaArrowRight className="text-white" />
-            </motion.button> */}
+                {/* View Details Button */}
+                <motion.button
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                  onClick={() => handleViewDetails(director)}
+                  className={`flex items-center gap-2 bg-[#05183A] text-white px-5 py-3 rounded-lg text-sm sm:text-[14px] font-semibold transition-colors duration-200 hover:bg-[#0a2a5a] w-full justify-center mt-4 ${sora.className}`}
+                >
+                  View Details
+                  <FaArrowRight className="text-sm" />
+                </motion.button>
+              </div>
+            </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Modal */}
       <AnimatePresence>
@@ -398,101 +440,104 @@ export default function BoardOfDirectors() {
               onClick={closeModal}
             />
             
-            {/* Modal Content */}
+            {/* Modal Content - Vice-President Style Card */}
             <motion.div
               variants={modalVariants}
               initial="hidden"
               animate="visible"
               exit="hidden"
-              className="relative bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              className="relative bg-[#F2F4F6] overflow-hidden max-w-6xl w-full max-h-[90vh] overflow-y-auto rounded-md"
             >
-              
-              {/* White Card Container */}
-              <div className="bg-white rounded-xl p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {/* Left Side - Image */}
-                  <div className="relative h-64 md:h-full min-h-[300px] rounded-lg overflow-hidden">
+              {/* Close Button - Top Right */}
+              <motion.button
+                onClick={closeModal}
+                className="absolute top-4 right-4 z-20 text-[#05183A] hover:text-[#0a2a5a] transition-colors duration-200 p-2"
+                initial="hidden"
+                animate="visible"
+                variants={fadeUp}
+                aria-label="Close"
+              >
+                <IoClose className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" />
+              </motion.button>
+
+              {/* Abstract Design - Left on mobile, Top Right on desktop */}
+              <motion.div
+                className="absolute top-0 left-0 lg:top-0 lg:right-0 lg:left-auto z-0"
+                initial="hidden"
+                animate="visible"
+                variants={fadeUp}
+              >
+                <Image
+                  src="/About/AbstractDesign.png"
+                  alt="Decorative Pattern"
+                  width={300}
+                  height={300}
+                  className="opacity-70 max-w-[80%] sm:max-w-[60%] md:max-w-[100%] h-auto"
+                />
+              </motion.div>
+
+              {/* Grid */}
+              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[2.5fr_2fr] gap-2 md:gap-6 items-stretch">
+                {/* Right Side - Image first in responsive */}
+                <motion.div
+                  className="order-1 lg:order-2 relative flex items-center justify-center p-4 sm:p-6 h-full"
+                  initial="hidden"
+                  animate="visible"
+                  variants={fadeUp}
+                >
+                  <div className="relative w-full h-full rounded-md overflow-hidden">
                     <Image
                       src={selectedMember.image}
                       alt={selectedMember.name}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      width={800}
+                      height={1000}
+                      className="w-full h-full rounded-md"
+                      // style={{ objectFit: 'contain' }}
                     />
                   </div>
+                </motion.div>
 
-                  {/* Right Side - Content */}
-                  <div className="flex flex-col justify-center p-4 lg:p-6">
-                    {/* Name */}
-                    <h2 className={`text-[#05183A] text-2xl lg:text-3xl font-bold mb-4 ${gothamLight.className}`}>
-                      {selectedMember.name}
-                    </h2>
-
-                    {/* Position */}
-                    <div className="flex justify-between items-center pb-3 mb-4 border-b border-gray-200">
-                      <span className={`text-[#05183A] text-sm font-semibold ${sora.className}`}>
-                        Position:
-                      </span>
-                      <span className={`text-[#05183A] text-sm ${sora.className}`}>
-                        {selectedMember.position}
-                      </span>
+                {/* Left Side - Content */}
+                <motion.div
+                  className="order-2 lg:order-1 bg-white rounded-md md:m-6 m-2 p-6 sm:p-8 md:p-12 relative flex flex-col"
+                  initial="hidden"
+                  animate="visible"
+                  variants={fadeUp}
+                >
+                  <div className="space-y-6">
+                    {/* Title */}
+                    <div>
+                      <h2 className={`${gothamLight.className} text-xl sm:text-2xl md:text-3xl font-bold text-[#05183A]`}>
+                        {selectedMember.name}
+                      </h2>
+                      <p className={`${sora.className} text-[12px] sm:text-[13px] md:text-[14px] text-gray-600 mt-2`}>
+                        {selectedMember.position} Of Bharat Diamond Bourse
+                      </p>
                     </div>
 
-                    {/* Details Grid */}
-                    <div className="space-y-3">
-                      {/* Office No */}
-                      <div className="flex justify-between items-center pb-3">
-                        <span className={`text-[#05183A] text-sm font-semibold ${sora.className}`}>
-                          Office No:
-                        </span>
-                        <span className={`text-[#05183A] text-sm ${sora.className}`}>
-                          {selectedMember.officeNo}
-                        </span>
-                      </div>
-
-                      {/* Contact No */}
-                      <div className="flex justify-between items-center pb-3">
-                        <span className={`text-[#05183A] text-sm font-semibold ${sora.className}`}>
-                          Contact Person:
-                        </span>
-                        <span className={`text-[#05183A] text-sm ${sora.className}`}>
-                          {selectedMember.name}
-                        </span>
-                      </div>
-
-                      {/* Email */}
-                      <div className="flex justify-between items-center pb-3">
-                        <span className={`text-[#05183A] text-sm font-semibold ${sora.className}`}>
-                          Email:
-                        </span>
-                        <span className={`flex items-start text-[#05183A] text-sm ${sora.className}`}>
-                          {selectedMember.email}
-                        </span>
-                      </div>
-
-                      {/* Location */}
-                      <div className="flex justify-between items-start pb-3">
-                        <span className={`text-[#05183A] text-sm font-semibold ${sora.className}`}>
-                          Address:
-                        </span>
-                        <div className="flex items-start max-w-[70%]">
-                          <span className={`text-[#05183A] text-sm ${sora.className}`}>
-                            {selectedMember.location}
-                          </span>
-                        </div>
-                      </div>
+                    {/* Content */}
+                    <div className={`${sora.className} space-y-4 text-gray-700 leading-relaxed text-justify text-[12px] sm:text-[13px] md:text-[14px]`}>
+                      <p>
+                        It is a privilege and an honour to serve as the {selectedMember.position} of the 
+                        Bharat Diamond Bourse — the pride of India&apos;s gem and 
+                        jewellery industry and a shining symbol of our nation&apos;s 
+                        craftsmanship, trust, and global leadership.
+                      </p>
+                      <p>
+                        BDB is not merely an exchange; it is a vision brought to life — a 
+                        community built on transparency, excellence, and innovation. 
+                        Our commitment remains firm to uphold the highest 
+                        standards of integrity, foster sustainable growth, and create 
+                        opportunities that empower every stakeholder in our 
+                        ecosystem.
+                      </p>
+                      <p>
+                        Together, we continue to illuminate the world with the 
+                        brilliance of Indian diamonds and the values that define us.
+                      </p>
                     </div>
-                    <motion.button
-                      variants={buttonVariants}
-                      whileHover="hover"
-                      whileTap="tap"
-                      onClick={closeModal}
-                      className={`flex items-center gap-2 bg-[#05183A] text-white px-5 py-3 rounded-lg text-sm sm:text-[14px] font-semibold transition-colors duration-200 hover:bg-[#0a2a5a] w-full justify-center mt-4 ${sora.className}`}
-                    >
-                      Close
-                    </motion.button>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>

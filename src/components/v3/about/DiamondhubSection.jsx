@@ -5,6 +5,7 @@ import Image from 'next/image';
 import localFont from 'next/font/local';
 import { Sora } from 'next/font/google';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const gotham = localFont({
   src: '../../../../public/fonts/Gotham.otf',
@@ -97,10 +98,26 @@ export default function DiamondHubSection() {
       {/* White background with top border radius */}
       <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-white rounded-t-[30px] md:rounded-t-[40px] -translate-y-6 md:-translate-y-8 z-10"></div>
       
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-2">
+        {/* Breadcrumb */}
+        <motion.div
+  className="mb-6 sm:mb-8"
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6 }}
+>
+  <h6 className={`text-[#36465e] text-[14px] sm:text-[16px] ${gothamLight.className}`}>
+    <Link href="/v3" className="hover:underline focus:underline">
+      HOME
+    </Link>{' '} / ABOUT
+  </h6>
+</motion.div>
+
+
         {/* Main content card */}
         <motion.div 
-          className="bg-[#F2F4F6] rounded-2xl p-6 sm:p-8 md:p-12"
+          className="bg-[#F2F4F6] rounded-md p-6 sm:p-8 md:p-12"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
@@ -142,14 +159,14 @@ export default function DiamondHubSection() {
               className="relative lg:col-start-2 lg:-mr-6 lg:ml-0 order-2 lg:order-2"
               variants={videoVariants}
             >
-              <div className="relative overflow-hidden rounded-sm lg:rounded-none">
+              <div className="relative overflow-hidden rounded-md">
                 {/* Video container with responsive sizing */}
-                <div className="relative bg-gray-900 overflow-hidden w-full h-full">
+                <div className="relative bg-gray-900 overflow-hidden w-full h-full rounded-md">
                   {/* Responsive container */}
-                  <div className="w-full h-[300px] xs:h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] lg:min-w-[800px] xl:min-w-[900px]">
+                  <div className="w-full h-[300px] xs:h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] lg:min-w-[800px] xl:min-w-[900px] rounded-md overflow-hidden">
                     <video
                       ref={videoRef}
-                      className="w-full h-full object-cover cursor-pointer"
+                      className="w-full h-full object-cover cursor-pointer rounded-md"
                       muted
                       loop
                       playsInline
@@ -163,7 +180,7 @@ export default function DiamondHubSection() {
                         src="/diamond-hub-fallback.jpg"
                         alt="Bharat Diamond Bourse Campus"
                         fill
-                        className="object-cover"
+                        className="object-cover rounded-md"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 50vw"
                       />
                     </video>

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import localFont from 'next/font/local';
 import { Sora } from 'next/font/google';
+import Link from 'next/link';
 
 const gotham = localFont({
     src: '../../../../public/fonts/Gotham.otf',
@@ -212,6 +213,21 @@ export default function Resturant() {
       <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-white rounded-t-[30px] md:rounded-t-[40px] -translate-y-6 md:-translate-y-8 z-10"></div>
       
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 md:px-2">
+        {/* Breadcrumb */}
+        <motion.div
+          className="mb-6 sm:mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h6 className={`text-[#36465e] text-[14px] sm:text-[16px] ${gothamLight.className}`}>
+            <Link href="/v3" className="">
+              HOME
+            </Link>{' '} / <Link href="/v3/facilities" className="">FACILITIES</Link> / RESTURANTS
+          </h6>
+        </motion.div>
+
         {/* Main content container */}
         <motion.div 
           className="bg-white"

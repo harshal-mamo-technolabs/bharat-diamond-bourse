@@ -18,10 +18,10 @@ export default function BDBInfoNote() {
   };
 
   return (
-    <section className="relative w-full py-4 sm:py-6">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
+    <section className="relative w-full py-10 sm:py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-2 lg:px-2">
         <motion.div 
-          className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 lg:gap-10 bg-[#EFF3F6] p-4 sm:p-6 lg:p-8 rounded-none relative"
+          className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 lg:gap-10 bg-[#EFF3F6] p-4 sm:p-6 lg:p-8 rounded-md relative"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}

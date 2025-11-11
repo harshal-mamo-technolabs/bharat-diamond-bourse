@@ -16,6 +16,12 @@ const gotham = localFont({
   style: 'normal',
 });
 
+const gothamLight = localFont({
+    src: "../../../public/fonts/Gotham Medium.otf",
+    weight: "400",
+    style: "normal",
+  });
+
 export default function Insights() {
     const insightCards = [
         {
@@ -71,11 +77,11 @@ export default function Insights() {
     }, []);
 
     return (
-        <section className=" sm:py-15 py-10 bg-[#EFF3F6]">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-6">
+        <section className=" sm:py-10 py-10 bg-[#EFF3F6]">
+            <div className="mx-auto max-w-7xl px-4 sm:px-2 lg:px-2">
                 {/* Header */}
                 <div className="mb-12 text-center">
-                    <h2 className={`text-[#0E234E] text-[32px] md:text-[42px] lg:text-[48px] leading-tight ${gotham.className}`}>
+                    <h2 className={`text-[#0E234E] text-[32px] md:text-[42px] lg:text-[48px] leading-tight ${gothamLight.className}`}>
                         Insights From The Diamond Trade
                     </h2>
                     <p className={`mx-auto mt-4 max-w-5xl text-[16px] md:text-[16px] leading-relaxed text-[#0E1425]/70 ${sora.className}`}>
@@ -120,8 +126,8 @@ export default function Insights() {
                                     type="button"
                                     aria-label="Open"
                                     className="
-                    absolute -right-px -top-px z-20 grid h-9 w-9 place-items-center
-                    rounded-bl-[12px]
+                    absolute -right-px -bottom-px z-20 grid h-9 w-9 place-items-center
+                    rounded-tl-[12px]
                     transition-colors duration-300
                     hover:bg-[#0E234E]
                     focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E234E] focus-visible:ring-offset-2

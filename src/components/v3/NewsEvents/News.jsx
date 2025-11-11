@@ -23,7 +23,7 @@ const gotham = localFont({
   
   const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
-// Mock data for the cards
+// Mock data for the cards with multiple images for slideshow
 const cardData = [
   {
     id: 1,
@@ -31,111 +31,97 @@ const cardData = [
     eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
-    imageType: 'type1'
+    images: ['/events/image-1.jpg']
   },
   {
     id: 2,
     date: '25 SEP 2025',
     eventRange: 'BDB | Diamond | Future of Trade',
-    title: 'Fragslip Event',
-    description: 'Innovation hubs are transforming traditional business models',
-    imageType: 'type2'
+    title: 'Diamond Exhibition',
+    description: 'Showcasing the latest trends in diamond industry and technology',
+    images: ['/events/image-2.jpg', '/events/image-3.jpg', '/events/image-1.jpg']
   },
   {
     id: 3,
     date: '25 SEP 2025',
     eventRange: 'BDB | Diamond | Future of Trade',
-    title: 'Fragslip Event',
-    description: 'Innovation hubs are transforming traditional business models',
-    imageType: 'type3'
+    title: 'Trade Conference',
+    description: 'Global leaders discuss the future of diamond trading and markets',
+    images: ['/events/image-3.jpg', '/events/image-1.jpg', '/events/image-2.jpg']
   },
   {
     id: 4,
     date: '25 SEP 2025',
     eventRange: 'BDB | Diamond | Future of Trade',
-    title: 'Fragslip Event',
-    description: 'Innovation hubs are transforming traditional business models',
-    imageType: 'type1'
+    title: 'Networking Gala',
+    description: 'Annual networking event bringing together industry professionals',
+    images: ['/events/image-1.jpg', '/events/image-3.jpg', '/events/image-2.jpg']
   },
   {
     id: 5,
     date: '25 SEP 2025',
     eventRange: 'BDB | Diamond | Future of Trade',
-    title: 'Fragslip Event',
-    description: 'Innovation hubs are transforming traditional business models',
-    imageType: 'type2'
+    title: 'Technology Summit',
+    description: 'Exploring cutting-edge technology in diamond processing and trading',
+    images: ['/events/image-2.jpg', '/events/image-1.jpg', '/events/image-3.jpg']
   },
   {
     id: 6,
     date: '25 SEP 2025',
     eventRange: 'BDB | Diamond | Future of Trade',
-    title: 'Fragslip Event',
-    description: 'Innovation hubs are transforming traditional business models',
-    imageType: 'type3'
+    title: 'Awards Ceremony',
+    description: 'Celebrating excellence and innovation in the diamond industry',
+    images: ['/events/image-3.jpg', '/events/image-2.jpg', '/events/image-1.jpg']
   },
   {
     id: 7,
     date: '25 SEP 2025',
     eventRange: 'BDB | Diamond | Future of Trade',
-    title: 'Fragslip Event',
-    description: 'Innovation hubs are transforming traditional business models',
-    imageType: 'type1'
+    title: 'Workshop Series',
+    description: 'Educational workshops on diamond grading and certification',
+    images: ['/events/image-1.jpg', '/events/image-2.jpg', '/events/image-3.jpg']
   },
   {
     id: 8,
     date: '25 SEP 2025',
     eventRange: 'BDB | Diamond | Future of Trade',
-    title: 'Fragslip Event',
-    description: 'Innovation hubs are transforming traditional business models',
-    imageType: 'type2'
+    title: 'Market Analysis',
+    description: 'Deep dive into current market trends and future predictions',
+    images: ['/events/image-2.jpg', '/events/image-3.jpg', '/events/image-1.jpg']
   },
   {
     id: 9,
     date: '25 SEP 2025',
     eventRange: 'BDB | Diamond | Future of Trade',
-    title: 'Fragslip Event',
-    description: 'Innovation hubs are transforming traditional business models',
-    imageType: 'type3'
+    title: 'Sustainability Forum',
+    description: 'Discussing sustainable practices in diamond mining and trading',
+    images: ['/events/image-3.jpg', '/events/image-1.jpg', '/events/image-2.jpg']
   },
   {
     id: 10,
     date: '25 SEP 2025',
     eventRange: 'BDB | Diamond | Future of Trade',
-    title: 'Fragslip Event',
-    description: 'Innovation hubs are transforming traditional business models',
-    imageType: 'type1'
+    title: 'Investment Seminar',
+    description: 'Understanding diamond investment opportunities and market dynamics',
+    images: ['/events/image-1.jpg', '/events/image-3.jpg', '/events/image-2.jpg']
   },
   {
     id: 11,
     date: '25 SEP 2025',
     eventRange: 'BDB | Diamond | Future of Trade',
-    title: 'Fragslip Event',
-    description: 'Innovation hubs are transforming traditional business models',
-    imageType: 'type2'
+    title: 'Design Showcase',
+    description: 'Showcasing innovative diamond jewelry designs and craftsmanship',
+    images: ['/events/image-2.jpg', '/events/image-1.jpg', '/events/image-3.jpg']
   },
   {
     id: 12,
     date: '25 SEP 2025',
     eventRange: 'BDB | Diamond | Future of Trade',
-    title: 'Fragslip Event',
-    description: 'Innovation hubs are transforming traditional business models',
-    imageType: 'type3'
+    title: 'Industry Meetup',
+    description: 'Monthly meetup for diamond industry professionals and enthusiasts',
+    images: ['/events/image-3.jpg', '/events/image-2.jpg', '/events/image-1.jpg']
   }
 ];
-
-// Local images from public/events directory
-const getImageUrl = (type) => {
-  switch (type) {
-    case 'type1':
-      return '/events/image-1.jpg';
-    case 'type2':
-      return '/events/image-2.jpg';
-    case 'type3':
-      return '/events/image-3.jpg';
-    default:
-      return '/events/image-1.jpg';
-  }
-};
 
 // Custom Dropdown Component
 function CustomDropdown({ 
@@ -223,6 +209,8 @@ export default function News() {
   const [selectedMonth, setSelectedMonth] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All'); // Default to 'All'
   const [currentPage, setCurrentPage] = useState(1);
+  const [hoveredCardId, setHoveredCardId] = useState(null);
+  const [imageIndices, setImageIndices] = useState({});
   
   const cardsPerPage = 6;
 
@@ -287,14 +275,65 @@ export default function News() {
     setCurrentPage(1);
   }, [selectedYear, selectedMonth, selectedCategory]);
 
+  // Auto-play slideshow on hover
+  useEffect(() => {
+    if (hoveredCardId === null) return;
+
+    // Immediately advance to next image on hover
+    const advanceImage = () => {
+      setImageIndices((prev) => {
+        const card = cardData.find(c => c.id === hoveredCardId);
+        if (!card) return prev;
+        
+        const currentIndex = prev[hoveredCardId] || 0;
+        const nextIndex = (currentIndex + 1) % card.images.length;
+        
+        return {
+          ...prev,
+          [hoveredCardId]: nextIndex
+        };
+      });
+    };
+
+    // Start with immediate first transition after a short delay
+    const immediateTimeout = setTimeout(() => {
+      advanceImage();
+    }, 1000); // First transition after 1 second
+
+    // Then continue with regular interval
+    const interval = setInterval(() => {
+      advanceImage();
+    }, 2000); // Change image every 2 seconds
+
+    return () => {
+      clearTimeout(immediateTimeout);
+      clearInterval(interval);
+    };
+  }, [hoveredCardId]);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const handleCardHover = (cardId) => {
+    setHoveredCardId(cardId);
+    // Initialize image index if not set
+    if (imageIndices[cardId] === undefined) {
+      setImageIndices((prev) => ({
+        ...prev,
+        [cardId]: 0
+      }));
+    }
+  };
+
+  const handleCardLeave = () => {
+    setHoveredCardId(null);
   };
 
   return (
     <section className="relative w-full bg-white pt-8 md:pt-10 pb-16 md:pb-20">
       {/* White background with top border radius */}
-      <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-white rounded-t-[30px] md:rounded-t-[40px] -translate-y-6 md:-translate-y-8 z-10"></div>
+      <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-white rounded-t-md -translate-y-6 md:-translate-y-8 z-10"></div>
       
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         {/* Breadcrumb */}
@@ -306,7 +345,7 @@ export default function News() {
           transition={{ duration: 0.6 }}
         >
           <h6 className={`text-[#36465e] text-[14px] sm:text-[16px] ${gothamLight.className}`}>
-            <Link href="/v3" className="hover:underline focus:underline">
+            <Link href="/v3" className="">
               HOME
             </Link>{' '} / NEWS & EVENTS
           </h6>
@@ -373,43 +412,59 @@ export default function News() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             style={{ minHeight: '600px' }}
           >
-            {currentCards.map((card) => (
-              <motion.div
-                key={card.id}
-                variants={cardVariants}
-                whileHover={{ 
-                  y: -5, 
-                  transition: { duration: 0.2 } 
-                }}
-                className="rounded-md overflow-hidden transition-all duration-300 "
-              >
-                {/* Image Container */}
-                <div className="relative">
-                  <div className="w-full h-48 bg-gray-200 relative overflow-hidden">
-                    <img
-                      src={getImageUrl(card.imageType)}
-                      alt={card.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        // Fallback if image doesn't exist
-                        const target = e.target;
-                        target.style.display = 'none';
-                        if (target.nextElementSibling) {
-                          target.nextElementSibling.classList.remove('hidden');
-                        }
-                      }}
-                    />
-                    {/* Fallback div if image doesn't load */}
-                    <div className="hidden absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                      <span className="text-white font-semibold">Event Image</span>
+            {currentCards.map((card) => {
+              const currentImageIndex = imageIndices[card.id] || 0;
+              const currentImage = card.images[currentImageIndex] || card.images[0];
+              
+              return (
+                <motion.div
+                  key={card.id}
+                  variants={cardVariants}
+                  whileHover={{ 
+                    y: -5, 
+                    transition: { duration: 0.2 } 
+                  }}
+                  onMouseEnter={() => handleCardHover(card.id)}
+                  onMouseLeave={handleCardLeave}
+                  className="rounded-md overflow-hidden transition-all duration-300"
+                >
+                  {/* Image Container with Slideshow */}
+                  <div className="relative">
+                    <div className="w-full h-48 bg-gray-200 relative overflow-hidden">
+                      <AnimatePresence initial={false}>
+                        <motion.img
+                          key={`${card.id}-${currentImageIndex}`}
+                          src={currentImage}
+                          alt={card.title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ 
+                            duration: 0.6,
+                            ease: [0.4, 0, 0.2, 1]
+                          }}
+                          onError={(e) => {
+                            // Fallback if image doesn't exist
+                            const target = e.target;
+                            target.style.display = 'none';
+                            if (target.nextElementSibling) {
+                              target.nextElementSibling.classList.remove('hidden');
+                            }
+                          }}
+                        />
+                      </AnimatePresence>
+                      {/* Fallback div if image doesn't load */}
+                      <div className="hidden absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                        <span className="text-white font-semibold">Event Image</span>
+                      </div>
+                    </div>
+                    
+                    {/* Date Label */}
+                    <div className="absolute top-3 right-3 bg-gray-100 px-3 py-1 rounded-md shadow-sm z-10">
+                      <span className={`text-black text-xs font-semibold ${sora.className}`}>{card.date}</span>
                     </div>
                   </div>
-                  
-                  {/* Date Label */}
-                  <div className="absolute top-3 right-3 bg-gray-100 px-3 py-1 rounded-md shadow-sm">
-                    <span className={`text-black text-xs font-semibold ${sora.className}`}>{card.date}</span>
-                  </div>
-                </div>
 
                 {/* Card Content */}
                 <div className="mt-4">
@@ -436,7 +491,8 @@ export default function News() {
                   </motion.button>
                 </div>
               </motion.div>
-            ))}
+            );
+            })}
           </motion.div>
 
           {/* Pagination */}

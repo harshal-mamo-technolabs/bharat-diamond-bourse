@@ -108,7 +108,7 @@ export default function DiamondHubSection() {
   transition={{ duration: 0.6 }}
 >
   <h6 className={`text-[#36465e] text-[14px] sm:text-[16px] ${gothamLight.className}`}>
-    <Link href="/v3" className="hover:underline focus:underline">
+    <Link href="/v3" className="">
       HOME
     </Link>{' '} / ABOUT
   </h6>

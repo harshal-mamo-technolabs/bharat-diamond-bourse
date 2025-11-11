@@ -59,8 +59,8 @@ export default function AboutSection() {
   };
 
   return (
-    <section className="w-full bg-white py-14 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
+    <section className="w-full bg-white py-10 sm:py-15">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-2">
         {/* Main heading */}
         <div className="text-left mb-8">
           <h1
@@ -72,7 +72,7 @@ export default function AboutSection() {
 
         {/* Card container */}
         <div className="relative mb-10">
-          <div className="bg-[#F2F4F6] rounded-3xl p-6 sm:p-10 sm:pt-10 relative mb-20 overflow-visible">
+          <div className="bg-[#EFF3F6] rounded-3xl p-6 sm:p-10 sm:pt-10 relative mb-20 overflow-visible">
             {/* Grid for lg+ screens, stacked for mobile and tablet */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-y-0 lg:gap-x-10 items-start">
               {/* WHO WE ARE */}

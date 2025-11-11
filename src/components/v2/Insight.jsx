@@ -44,7 +44,7 @@ export default function Insights() {
         },
     ];
 
-    const cardBg = "#F2F4F6";
+    const cardBg = "white";
 
     // Fade/slide-in on enter view with stagger (no TS)
     const refs = useRef([]);
@@ -71,7 +71,7 @@ export default function Insights() {
     }, []);
 
     return (
-        <section className=" py-16 ">
+        <section className=" sm:py-15 py-10 bg-[#EFF3F6]">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-6">
                 {/* Header */}
                 <div className="mb-12 text-center">
@@ -91,7 +91,7 @@ export default function Insights() {
                             key={card.id}
                             ref={(el) => (refs.current[i] = el)}
                             className="
-                group relative rounded-[20px] bg-[#F2F4F6]
+                group relative rounded-[20px] bg-white
                 ring-1 ring-black/5 shadow-[0_1px_2px_rgba(0,0,0,0.04)]
                 transition-all duration-500 ease-out
                 opacity-0 translate-y-4

@@ -25,6 +25,19 @@ const languages = [
   { code: 'HI', label: 'Hindi' },
 ];
 
+// Subnav items for Facilities
+const facilitiesSubnavItems = [
+  'Banks',
+  'Internet Telecom',
+  'Restaurants',
+  'Online Trading',
+  'Bus Services',
+  'Testing Laboratories',
+  'Diamond Equipments',
+  'Trading Hall',
+  'Travel Agents',
+];
+
 function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
   return (
     <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -33,6 +46,36 @@ function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
     </svg>
   );
 }
+
+// Animated Link Component with Underline
+const AnimatedLink = ({ href, label, isActive, onClick, className = '' }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <Link 
+      href={href}
+      className={`relative inline-block pb-1 transition-colors duration-200 ${className} ${
+        isActive 
+          ? 'text-[#05183A] font-semibold' 
+          : 'text-gray-800 hover:text-[#05183A]'
+      }`}
+      onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {label}
+      {/* Animated underline - full width from left to right */}
+      <motion.div 
+        className="absolute bottom-0 left-0 h-0.5 bg-[#05183A]"
+        initial={false}
+        animate={{ 
+          width: isActive || isHovered ? '100%' : '0%'
+        }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      />
+    </Link>
+  );
+};
 
 export default function Header() {
   const pathname = usePathname();
@@ -46,16 +89,26 @@ export default function Header() {
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [error, setError] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showFacilitiesSubnav, setShowFacilitiesSubnav] = useState(false);
   const closeTimerRef = useRef(null);
   const otpRefs = useRef([]);
   const heroVideoRef = useRef(null);
   const lastScrollY = useRef(0);
+  const searchInputRef = useRef(null);
+  const facilitiesRef = useRef(null);
+  const facilitiesTimeoutRef = useRef(null);
 
   // Navigation items
   const navItems = [
     { href: '/v3', label: 'Home' },
     { href: '/v3/about', label: 'About Us' },
-    { href: '/v3/facilities', label: 'Facilities' },
+    { 
+      href: '/v3/facilities', 
+      label: 'Facilities',
+      hasSubnav: true 
+    },
     { href: '/v3/news&events', label: 'News & Events' },
     { href: '/v3/sustainability', label: 'Sustainability' },
   ];
@@ -75,12 +128,31 @@ export default function Header() {
     return false;
   };
 
+  // Handle facilities hover with delay
+  const handleFacilitiesMouseEnter = () => {
+    if (facilitiesTimeoutRef.current) {
+      clearTimeout(facilitiesTimeoutRef.current);
+    }
+    setShowFacilitiesSubnav(true);
+  };
+
+  const handleFacilitiesMouseLeave = () => {
+    facilitiesTimeoutRef.current = setTimeout(() => {
+      setShowFacilitiesSubnav(false);
+    }, 300);
+  };
+
   // detect on load + resize
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (facilitiesTimeoutRef.current) {
+        clearTimeout(facilitiesTimeoutRef.current);
+      }
+    };
   }, []);
 
   // autoplay hero video on mount
@@ -94,6 +166,13 @@ export default function Header() {
     };
     play();
   }, []);
+
+  // Focus search input when opened
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [searchOpen]);
 
   // Simple scroll handler - fixed version
   useEffect(() => {
@@ -118,14 +197,30 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close facilities subnav on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowFacilitiesSubnav(false);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Close modal on ESC
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === 'Escape') setShowModal(false);
+      if (e.key === 'Escape') {
+        if (searchOpen) {
+          setSearchOpen(false);
+          setSearchQuery('');
+        } else {
+          setShowModal(false);
+        }
+      }
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, []);
+  }, [searchOpen]);
 
   // Lock body scroll when modal open
   useEffect(() => {
@@ -220,6 +315,28 @@ export default function Header() {
     }
   }, [showModal, modalStep]);
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      // Handle search functionality here
+      console.log('Searching for:', searchQuery);
+      // You can add your search logic here
+    }
+  };
+
+  const handleSearchToggle = () => {
+    setSearchOpen(!searchOpen);
+    if (searchOpen) {
+      setSearchQuery('');
+    }
+  };
+
+  // Group facilities items into columns (2 columns with max 4 items each)
+  const groupedFacilitiesItems = [];
+  for (let i = 0; i < facilitiesSubnavItems.length; i += 4) {
+    groupedFacilitiesItems.push(facilitiesSubnavItems.slice(i, i + 4));
+  }
+
   return (
     <>
       {/* HEADER COMPONENT */}
@@ -229,37 +346,26 @@ export default function Header() {
           isScrolled ? 'fixed top-0 left-0 right-0 z-50' : 'relative'
         }`}>
           <div className="flex items-center justify-between px-4 py-3">
-  <Link href="/v3">
-    <Image src="/BDB-LOGO.png" alt="BDB Logo" width={100} height={40} />
-  </Link>
-  <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-2xl text-gray-800">
-    {mobileMenuOpen ? <IoClose /> : <FiMenu />}
-  </button>
-</div>
+            <Link href="/v3">
+              <Image src="/BDB-LOGO.png" alt="BDB Logo" width={100} height={40} />
+            </Link>
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-2xl text-gray-800">
+              {mobileMenuOpen ? <IoClose /> : <FiMenu />}
+            </button>
+          </div>
           {mobileMenuOpen && (
             <div className="px-4 pb-4 bg-white">
               {/* Top Navigation Items */}
               <ul className="space-y-2 text-[14px] mb-4">
                 {topNavItems.map((item) => (
                   <li key={item.href}>
-                    <Link 
+                    <AnimatedLink
                       href={item.href}
-                      className={`relative pb-1 transition-colors duration-200 ${
-                        isActive(item.href) 
-                          ? 'text-[#05183A] font-semibold' 
-                          : 'text-gray-800 hover:text-[#05183A]'
-                      }`}
+                      label={item.label}
+                      isActive={isActive(item.href)}
                       onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.label}
-                      {isActive(item.href) && (
-                        <motion.div 
-                          className="absolute bottom-0 inset-x-0 mx-auto w-5 h-0.5 bg-[#05183A]"
-                          layoutId="mobile-topnav-underline"
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        />
-                      )}
-                    </Link>
+                      className="text-[14px]"
+                    />
                   </li>
                 ))}
               </ul>
@@ -268,24 +374,13 @@ export default function Header() {
               <ul className="space-y-3 text-[15px] font-semibold">
                 {navItems.map((item) => (
                   <li key={item.href}>
-                    <Link 
+                    <AnimatedLink
                       href={item.href}
-                      className={`relative pb-1 transition-colors duration-200 ${
-                        isActive(item.href) 
-                          ? 'text-[#05183A] font-semibold' 
-                          : 'text-gray-800 hover:text-[#05183A]'
-                      }`}
+                      label={item.label}
+                      isActive={isActive(item.href)}
                       onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.label}
-                      {isActive(item.href) && (
-                        <motion.div 
-                          className="absolute bottom-0 inset-x-0 mx-auto w-5 h-0.5 bg-[#05183A]"
-                          layoutId="mobile-navbar-underline"
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        />
-                      )}
-                    </Link>
+                      className="text-[15px]"
+                    />
                   </li>
                 ))}
               </ul>
@@ -295,102 +390,155 @@ export default function Header() {
 
         {/* Desktop Navigation - Simplified transitions */}
         <nav
-          className={`hidden md:flex flex-col w-full px-12 bg-white text-white ${sora.className} select-none transition-all duration-300 ${
+          className={`hidden md:flex flex-col w-full px-28 bg-white text-white ${sora.className} select-none transition-all duration-300 ${
             isScrolled 
-              ? 'fixed top-0 left-0 right-0 z-50 bg-white shadow-lg py-2' 
-              : 'relative py-4'
+              ? 'fixed top-0 left-0 right-0 z-50 bg-white shadow-lg py-2.5' 
+              : 'relative py-2.5'
           }`}
         >
-          {/* Top Navigation Items - Simple fade out/in */}
-          <div
-            className={`flex justify-end items-center space-x-6 text-[12px] select-none transition-all duration-300 ${
+          {/* Top Navigation Items with Search Overlay */}
+          <div className="relative">
+            {/* Top Navigation Items */}
+            <div className={`flex justify-end items-center space-x-6 text-[12px] select-none ${
               isScrolled 
                 ? 'h-0 opacity-0 overflow-hidden mb-0' 
                 : 'h-auto opacity-100 mb-2'
-            }`}
-          >
-            <ul className="flex space-x-6 text-[11px] uppercase cursor-pointer">
-              {topNavItems.map((item) => (
-                <li key={item.href} className="text-black hover:text-[#05183A] transition-colors duration-200">
-                  <Link href={item.href}>{item.label}</Link>
-                </li>
-              ))}
-            </ul>
-            <div className="relative w-24 text-black">
-              <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-black text-xs pointer-events-none" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="w-full pl-6 text-[11px] rounded-sm border-b border-black border-opacity-50 bg-transparent py-0.5 text-black placeholder-black focus:outline-none focus:ring-1 focus:ring-black"
-              />
+            }`}>
+              <ul className="flex space-x-6 text-[11px] uppercase cursor-pointer">
+                {topNavItems.map((item) => (
+                  <li key={item.href} className="relative">
+                    <AnimatedLink
+                      href={item.href}
+                      label={item.label}
+                      isActive={isActive(item.href)}
+                      className="text-black hover:text-[#05183A] text-[11px]"
+                    />
+                  </li>
+                ))}
+              </ul>
+              
+              {/* Search Icon - Only visible when search is closed */}
+              {!searchOpen && (
+                <button 
+                  onClick={handleSearchToggle}
+                  className="relative w-10 text-black hover:text-[#05183A] transition-colors duration-200"
+                >
+                  <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-black text-[16px]" />
+                </button>
+              )}
             </div>
-            <select
-              value={selectedLang}
-              onChange={(e) => setSelectedLang(e.target.value)}
-              className="bg-transparent border border-black border-opacity-50 rounded-sm text-black text-[12px] py-0.5 px-2 cursor-pointer focus:outline-none hover:border-[#05183A] transition-colors duration-200"
-            >
-              {languages.map(({ code }) => (
-                <option key={code} value={code}>
-                  {code}
-                </option>
-              ))}
-            </select>
+
+            {/* Search Bar - Slides from search icon position to left side */}
+            <AnimatePresence>
+              {searchOpen && (
+                <motion.div
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: "auto", opacity: 1 }}
+                  exit={{ width: 0, opacity: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="absolute top-0 right-0 z-10 overflow-hidden"
+                >
+                  <form onSubmit={handleSearch} className="relative">
+                    <input
+                      ref={searchInputRef}
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search..."
+                      className="w-105 bg-[#EFF3F6] rounded-md px-4 py-1 pr-10 text-black placeholder-gray-500 focus:outline-none focus:ring-0 focus:ring-[#05183A]/30 transition-all duration-300"
+                    />
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
+                      <FaSearch className="text-gray-500 text-[16px]" />
+                      <button
+                        type="button"
+                        onClick={handleSearchToggle}
+                        className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                      >
+                        <IoClose className="text-[20px]" />
+                      </button>
+                    </div>
+                  </form>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
           
-          {/* Main Navigation Items - Simple scale transition */}
+          {/* Main Navigation Items - Logo vertically centered and larger */}
           <div className="flex items-center justify-between transition-all duration-300">
-          <div className="flex-shrink-0">
-  <Link href="/v3">
-    <Image 
-      src="/bdb-logo-black-font.png" 
-      alt="BDB Logo" 
-      width={isScrolled ? 110 : 135} 
-      height={isScrolled ? 45 : 60}
-      className="transition-all duration-300"
-    />
-  </Link>
-</div>
-            <ul className="flex space-x-8 text-[14px] font-normal cursor-pointer mx-auto">
+            {/* Logo - Moved slightly upward but still on left side */}
+            <div className={`flex items-center justify-center ${isScrolled ? 'mt-0' : '-mt-4'}`}>
+              <Link href="/v3">
+                <Image 
+                  src="/bdb-logo-black-font.png" 
+                  alt="BDB Logo" 
+                  width={isScrolled ? 150 : 190} 
+                  height={isScrolled ? 60 : 85}
+                  className="transition-all duration-300"
+                />
+              </Link>
+            </div>
+            
+            {/* Centered Navigation Items - Position unchanged */}
+            <ul className="flex space-x-8 text-[16px] font-medium cursor-pointer relative">
               {navItems.map((item) => (
-                <li key={item.href}>
-                  <Link 
+                <li 
+                  key={item.href}
+                  className="relative"
+                  onMouseEnter={item.hasSubnav ? handleFacilitiesMouseEnter : undefined}
+                  onMouseLeave={item.hasSubnav ? handleFacilitiesMouseLeave : undefined}
+                  ref={item.hasSubnav ? facilitiesRef : null}
+                >
+                  <AnimatedLink
                     href={item.href}
-                    className={`relative pb-1 transition-colors duration-200 ${
+                    label={item.label}
+                    isActive={isActive(item.href)}
+                    className={`${
                       isActive(item.href) 
                         ? 'text-[#05183A] font-semibold' 
                         : 'text-black hover:text-[#05183A]'
-                    }`}
-                  >
-                    {item.label}
-                    {isActive(item.href) && (
-                      <motion.div 
-                        className="absolute bottom-0 inset-x-0 mx-auto w-5 h-0.5 bg-[#05183A]"
-                        layoutId="main-navbar-underline"
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                      />
-                    )}
-                  </Link>
+                    } text-[16px]`}
+                  />
                 </li>
               ))}
             </ul>
-            <motion.button
-              className={[
-                'ml-6 group inline-flex items-center justify-between',
-                'rounded-[8px] px-5 py-3',
-                'bg-[#0E234E]',
-                `${sora.className} ${gotham.className}`,
-                'text-white hover:text-[#EAF0FA] active:text-[#DDE6F5] uppercase text-[13px] font-[600] tracking-[0.5px]',
-                'transition-all duration-200 hover:-translate-y-px',
-                'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
-              ].join(' ')}
-              onClick={openModal}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              START YOUR BUSINESS
-              <Arrow color="#FFFFFF" size={16} stroke={2} className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1" />
-            </motion.button>
+            
+            {/* Empty space where the button was */}
+            <div className="w-40"></div>
           </div>
+
+          {/* Facilities Subnav Dropdown */}
+          <AnimatePresence>
+            {showFacilitiesSubnav && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 300 }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="absolute top-full left-0 right-0 bg-white shadow-lg overflow-hidden z-40"
+                onMouseEnter={handleFacilitiesMouseEnter}
+                onMouseLeave={handleFacilitiesMouseLeave}
+              >
+                <div className="container mx-auto px-8 py-8 h-full">
+                  <div className="grid grid-cols-2 gap-8 h-full max-w-4xl mx-auto">
+                    {groupedFacilitiesItems.map((column, columnIndex) => (
+                      <div key={columnIndex} className="space-y-4">
+                        {column.map((item, itemIndex) => (
+                          <div key={itemIndex} className="relative">
+                            <AnimatedLink
+                              href={`/v3/facilities/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                              label={item}
+                              isActive={false}
+                              className="text-gray-800 hover:text-[#05183A] text-[15px] font-medium py-1"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </nav>
       </header>
 

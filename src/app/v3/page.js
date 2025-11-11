@@ -4,7 +4,8 @@ import Facility from "@/components/v2/Facility";
 import MissionSection from "@/components/v2/MissionSection";
 import Footer from "@/components/v2/footer";
 import Insights from "@/components/v2/Insight";
-import BourseSection from "@/components/v2/BourseSection"
+import BourseSection from "@/components/v2/BourseSection";
+import StatsCard from "@/components/v3/StatCards";
 import CorporateTaxSection from "@/components/v3/CorporateTaxSection";
 import AboutSection from "@/components/v2/AboutSection";
 import PillarOfProgress from "@/components/v2/PillarOfProgress";
@@ -18,7 +19,8 @@ export default function Home() {
             <BannerWrapper />
             <Partners/>
             <AboutSection/>
-            <BourseSection/>
+            <StatsCard/>
+            {/* <BourseSection/> */}
             <CorporateTaxSection/>
             <PillarOfProgress/>
             <MissionSection/>

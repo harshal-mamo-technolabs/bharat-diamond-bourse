@@ -12,6 +12,12 @@ const gotham = localFont({
   style: "normal",
 });
 
+const gothamLight = localFont({
+  src: "../../../public/fonts/Gotham Medium.otf",
+  weight: "400",
+  style: "normal",
+})
+
 // Load Sora font
 const sora = Sora({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
@@ -28,22 +34,22 @@ function widthClass(rel) {
   const a = Math.abs(rel);
   if (a === 0) {
     return [
-      "w-[72vw] sm:w-[54vw] lg:w-[19vw]", // match largest width
-      "min-w-[260px] lg:min-w-[19vw]", // prevent shrink
-      "max-w-[600px]",
+      "w-[80vw] sm:w-[60vw] lg:w-[24vw]", // Increased from 72vw/54vw/19vw
+      "min-w-[280px] lg:min-w-[24vw]", // Increased from 260px/19vw
+      "max-w-[680px]", // Increased from 600px
     ].join(" ");
   }
   if (a === 1) {
     return [
-      "w-[68vw] sm:w-[50vw] lg:w-[17vw]",
-      "min-w-[240px] lg:min-w-[17vw]",
-      "max-w-[560px]",
+      "w-[76vw] sm:w-[56vw] lg:w-[22vw]", // Increased from 68vw/50vw/17vw
+      "min-w-[260px] lg:min-w-[22vw]", // Increased from 240px/17vw
+      "max-w-[640px]", // Increased from 560px
     ].join(" ");
   }
   return [
-    "w-[68vw] sm:w-[50vw] lg:w-[17vw]",
-    "min-w-[240px] lg:min-w-[17vw]",
-    "max-w-[560px]",
+    "w-[76vw] sm:w-[56vw] lg:w-[22vw]", // Increased from 68vw/50vw/17vw
+    "min-w-[260px] lg:min-w-[22vw]", // Increased from 240px/17vw
+    "max-w-[640px]", // Increased from 560px
   ].join(" ");
 }
 
@@ -62,6 +68,17 @@ function offsetClass(rel) {
     default:
       return "";
   }
+}
+
+// Function to determine visibility
+function visibilityClass(rel) {
+  const absRel = Math.abs(rel);
+  // Show only 3 cards: -1, 0, +1 positions
+  if (absRel <= 1) {
+    return "opacity-100 visible";
+  }
+  // Hide cards beyond the 3 visible ones but keep them in DOM for scrolling
+  return "opacity-0 invisible pointer-events-none";
 }
 
 export default function PillarOfProgress() {
@@ -206,7 +223,7 @@ export default function PillarOfProgress() {
       {/* Updated container with consistent max-w-7xl and padding */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
         <h2
-          className={`text-[#CBD3DD] text-center leading-none select-none pointer-events-none mb-8 sm:mb-10 tracking-[0.035em] ${gotham.className}`}
+          className={`text-[#CBD3DD] text-center leading-none select-none pointer-events-none mb-8 sm:mb-10 tracking-[0.035em] ${gothamLight.className}`}
           style={{ fontSize: "clamp(34px, 6.2vw, 66px)" }}
         >
           Our Facilities
@@ -218,7 +235,7 @@ export default function PillarOfProgress() {
             ref={scrollerRef}
             className={[
               "overflow-x-auto pt-8",
-              "flex items-start gap-[3vw] lg:gap-[2vw] px-[3vw] lg:px-[2vw] pb-2",
+              "flex items-start gap-[3vw] lg:gap-[1.5vw] px-[3vw] lg:px-[2vw] pb-2",
               "[-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
             ].join(" ")}
           >
@@ -237,13 +254,14 @@ export default function PillarOfProgress() {
                     "shrink-0 relative transition-all duration-[900ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-transform",
                     widthClass(rel),
                     offsetClass(rel),
+                    visibilityClass(rel), // Add visibility control
                     isActive ? "z-10" : "z-0",
                   ].join(" ")}
                 >
                   {isActive ? (
                     // Frame removed for active card
                     <div className="relative">
-                      <div className="relative h-[64vw] sm:h-[48vw] lg:h-[360px] w-full overflow-hidden rounded-[8px]">
+                      <div className="relative h-[72vw] sm:h-[54vw] lg:h-[420px] w-full overflow-hidden rounded-md">
                         <img
                           src={item.src}
                           alt={item.title.replace("\n", " ")}
@@ -253,16 +271,16 @@ export default function PillarOfProgress() {
                         />
                       </div>
 
-                      <div className="mt-3 rounded-[14px] bg-[#0E234E] text-white px-4 py-3 flex items-center justify-between">
-                        <div className={`text-[13px] leading-tight whitespace-pre-line ${sora.className}`}>{item.title}</div>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                      <div className="mt-4 rounded-md bg-[#0E234E] text-white px-5 py-4 flex items-center justify-between">
+                        <div className={`text-[14px] leading-tight whitespace-pre-line ${sora.className}`}>{item.title}</div>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
                           <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </div>
                     </div>
                   ) : (
                     <div className="relative">
-                      <div className="relative h-[64vw] sm:h-[48vw] lg:h-[360px] w-full overflow-hidden rounded-[8px]">
+                      <div className="relative h-[72vw] sm:h-[54vw] lg:h-[420px] w-full overflow-hidden rounded-md">
                         <Image
                           src={item.src}
                           alt={item.title.replace("\n", " ")}
@@ -271,9 +289,9 @@ export default function PillarOfProgress() {
                           sizes="100vw"
                         />
                       </div>
-                      <div className="mt-3 text-[#0E234E]/90 flex items-start justify-between">
-                        <div className={`text-[13px] leading-snug whitespace-pre-line ${sora.className}`}>{item.title}</div>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="ml-3 mt-1 text-[#0E234E]/60 shrink-0" aria-hidden>
+                      <div className="mt-4 text-[#0E234E]/90 flex items-start justify-between">
+                        <div className={`text-[14px] leading-snug whitespace-pre-line ${sora.className}`}>{item.title}</div>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="ml-3 mt-1 text-[#0E234E]/60 shrink-0" aria-hidden>
                           <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </div>
@@ -286,7 +304,7 @@ export default function PillarOfProgress() {
         </div>
 
         {/* Single jointed underline indicator */}
-        <div className="mt-6 flex flex-col items-center justify-center">
+        <div className="mt-8 flex flex-col items-center justify-center">
           <div className="relative h-1 w-95 bg-[#0E234E]/20">
             <div 
               className="absolute top-0 left-0 h-full bg-[#0E234E] rounded-full transition-all duration-300 ease-in-out"

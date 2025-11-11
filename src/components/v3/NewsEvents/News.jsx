@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { FaCalendarAlt, FaArrowRight, FaFilter } from 'react-icons/fa';
+import { useState, useEffect, useRef } from 'react';
+import { FaCalendarAlt, FaArrowRight, FaFilter, FaChevronDown } from 'react-icons/fa';
 import { BsCalendarDate } from "react-icons/bs";
 import { BiSort } from "react-icons/bi";
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import localFont from 'next/font/local';
 import { Sora } from 'next/font/google';
+import Link from 'next/link';
 
 const gotham = localFont({
     src: '../../../../public/fonts/Gotham.otf',
@@ -26,7 +27,7 @@ const gotham = localFont({
 const cardData = [
   {
     id: 1,
-    date: '25 SEP 2025',
+    date: '25 SEP 2024',
     eventRange: 'BDB | Diamond | Future of Trade',
     title: 'Fragslip Event',
     description: 'Innovation hubs are transforming traditional business models',
@@ -136,13 +137,123 @@ const getImageUrl = (type) => {
   }
 };
 
+// Custom Dropdown Component
+function CustomDropdown({ 
+  options, 
+  value, 
+  onChange, 
+  placeholder, 
+  icon: Icon, 
+  className = '' 
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
+  const selectedLabel = value 
+    ? options.find(opt => opt.value === value)?.label || value
+    : placeholder;
+
+  return (
+    <div className={`relative ${className}`} ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className={`w-full px-2 sm:px-4 py-2 sm:py-3 border border-[#878787] rounded-md text-xs sm:text-sm text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent flex items-center justify-between ${sora.className}`}
+      >
+        <span className="truncate">{selectedLabel}</span>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          {Icon && <Icon className="text-gray-400 text-xs sm:text-sm" />}
+          <FaChevronDown 
+            className={`text-gray-400 text-xs sm:text-sm transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+          />
+        </div>
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute z-50 w-full mt-1 bg-white border border-[#878787] rounded-md shadow-lg max-h-60 overflow-auto"
+          >
+            {options.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => {
+                  onChange(option.value);
+                  setIsOpen(false);
+                }}
+                className={`w-full px-4 py-2.5 sm:py-3 text-left text-xs sm:text-sm hover:bg-[#F2F4F6] transition-colors duration-150 ${
+                  value === option.value 
+                    ? 'bg-[#F2F4F6] text-[#05183A] font-medium' 
+                    : 'text-[#666666]'
+                } ${sora.className} first:rounded-t-md last:rounded-b-md`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export default function News() {
   const [selectedYear, setSelectedYear] = useState('');
-  const [selectedSort, setSelectedSort] = useState('');
   const [selectedMonth, setSelectedMonth] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All'); // Default to 'All'
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const cardsPerPage = 6;
 
-  const categories = ['All', 'News', 'Events', 'Obituary', 'Press Release'];
+  const categories = [
+    { value: 'News', label: 'News' },
+    { value: 'Events', label: 'Events' },
+    { value: 'Obituary', label: 'Obituary' },
+    { value: 'Press Release', label: 'Press Release' }
+  ];
+
+  const years = [
+    { value: '2025', label: '2025' },
+    { value: '2024', label: '2024' },
+    { value: '2023', label: '2023' },
+    { value: '2022', label: '2022' }
+  ];
+
+  const months = [
+    { value: '01', label: 'January' },
+    { value: '02', label: 'February' },
+    { value: '03', label: 'March' },
+    { value: '04', label: 'April' },
+    { value: '05', label: 'May' },
+    { value: '06', label: 'June' },
+    { value: '07', label: 'July' },
+    { value: '08', label: 'August' },
+    { value: '09', label: 'September' },
+    { value: '10', label: 'October' },
+    { value: '11', label: 'November' },
+    { value: '12', label: 'December' }
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -165,12 +276,42 @@ export default function News() {
     }
   };
 
+  // Calculate pagination
+  const totalPages = Math.ceil(cardData.length / cardsPerPage);
+  const startIndex = (currentPage - 1) * cardsPerPage;
+  const endIndex = startIndex + cardsPerPage;
+  const currentCards = cardData.slice(startIndex, endIndex);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedYear, selectedMonth, selectedCategory]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <section className="relative w-full bg-white pt-8 md:pt-10 pb-16 md:pb-20">
       {/* White background with top border radius */}
       <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-white rounded-t-[30px] md:rounded-t-[40px] -translate-y-6 md:-translate-y-8 z-10"></div>
       
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        {/* Breadcrumb */}
+        <motion.div
+          className="mb-6 sm:mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h6 className={`text-[#36465e] text-[14px] sm:text-[16px] ${gothamLight.className}`}>
+            <Link href="/v3" className="hover:underline focus:underline">
+              HOME
+            </Link>{' '} / NEWS & EVENTS
+          </h6>
+        </motion.div>
+
         {/* Main content container */}
         <motion.div 
           className="bg-white"
@@ -182,86 +323,57 @@ export default function News() {
           <div className="flex flex-col items-center gap-6 mb-8">
             {/* Date Selectors - Centered */}
             <div className="w-full max-w-4xl">
-              <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
+              <div className="flex flex-row gap-2 sm:gap-10 w-full justify-center">
                 {/* SELECT - Category filter with icon */}
-                <div className="relative flex-1 max-w-[200px]">
-                  <select
+                <div className="flex-[0.9] sm:flex-none sm:w-[200px] min-w-0">
+                  <CustomDropdown
+                    options={categories}
                     value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className={`w-full px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
-                  >
-                    {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                  <FaFilter className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+                    onChange={setSelectedCategory}
+                    placeholder="All"
+                    icon={FaFilter}
+                  />
                 </div>
                 
-                {/* Sort Selector */}
-                <div className="relative flex-1 max-w-[200px]">
-                  <select
-                    value={selectedSort}
-                    onChange={(e) => setSelectedSort(e.target.value)}
-                    className={`w-full px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
-                  >
-                    <option value="">Sort</option>
-                    <option value="latest">By latest</option>
-                    <option value="old">By old</option>
-                  </select>
-                  <BiSort className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+                {/* Month Selector */}
+                <div className="flex-[1.1] sm:flex-none sm:w-[200px] min-w-0">
+                  <CustomDropdown
+                    options={months}
+                    value={selectedMonth}
+                    onChange={setSelectedMonth}
+                    placeholder="Month"
+                    icon={BsCalendarDate}
+                  />
                 </div>
+                
                 
                 {/* Year Selector */}
-                <div className="relative flex-1 max-w-[200px]">
-                  <select
+                <div className="flex-1 sm:flex-none sm:w-[200px] min-w-0">
+                  <CustomDropdown
+                    options={years}
                     value={selectedYear}
-                    onChange={(e) => setSelectedYear(e.target.value)}
-                    className={`w-full px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
-                  >
-                    <option value="">Select Year</option>
-                    <option value="2025">2025</option>
-                    <option value="2024">2024</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                  </select>
-                  <BsCalendarDate className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+                    onChange={setSelectedYear}
+                    placeholder="Year"
+                    icon={BsCalendarDate}
+                  />
                 </div>
 
-                {/* Month Selector */}
-                <div className="relative flex-1 max-w-[200px]">
-                  <select
-                    value={selectedMonth}
-                    onChange={(e) => setSelectedMonth(e.target.value)}
-                    className={`w-full px-4 py-3 border border-[#878787] rounded-lg text-sm appearance-none text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent ${sora.className}`}
-                  >
-                    <option value="">Select Month</option>
-                    <option value="01">January</option>
-                    <option value="02">February</option>
-                    <option value="03">March</option>
-                    <option value="04">April</option>
-                    <option value="05">May</option>
-                    <option value="06">June</option>
-                    <option value="07">July</option>
-                    <option value="08">August</option>
-                    <option value="09">September</option>
-                    <option value="10">October</option>
-                    <option value="11">November</option>
-                    <option value="12">December</option>
-                  </select>
-                  <BsCalendarDate className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
-                </div>
+                
               </div>
             </div>
           </div>
 
           {/* Cards Grid */}
           <motion.div
+            data-cards-section
+            key={currentPage}
             variants={containerVariants}
+            initial="hidden"
+            animate="visible"
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            style={{ minHeight: '600px' }}
           >
-            {cardData.map((card) => (
+            {currentCards.map((card) => (
               <motion.div
                 key={card.id}
                 variants={cardVariants}
@@ -269,7 +381,7 @@ export default function News() {
                   y: -5, 
                   transition: { duration: 0.2 } 
                 }}
-                className="rounded-lg overflow-hidden transition-all duration-300 "
+                className="rounded-md overflow-hidden transition-all duration-300 "
               >
                 {/* Image Container */}
                 <div className="relative">
@@ -294,7 +406,7 @@ export default function News() {
                   </div>
                   
                   {/* Date Label */}
-                  <div className="absolute top-3 right-3 bg-gray-100 px-3 py-1 rounded shadow-sm">
+                  <div className="absolute top-3 right-3 bg-gray-100 px-3 py-1 rounded-md shadow-sm">
                     <span className={`text-black text-xs font-semibold ${sora.className}`}>{card.date}</span>
                   </div>
                 </div>
@@ -326,6 +438,60 @@ export default function News() {
               </motion.div>
             ))}
           </motion.div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-8 sm:mt-12">
+              {/* Previous Button */}
+              <motion.button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`px-3 sm:px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  currentPage === 1
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-white border border-[#878787] text-[#666666] hover:bg-[#F2F4F6] hover:text-[#05183A]'
+                } ${sora.className}`}
+                whileHover={currentPage !== 1 ? { scale: 1.05 } : {}}
+                whileTap={currentPage !== 1 ? { scale: 0.95 } : {}}
+              >
+                Previous
+              </motion.button>
+
+              {/* Page Numbers */}
+              <div className="flex items-center gap-1 sm:gap-2">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <motion.button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={`w-8 h-8 sm:w-10 sm:h-10 rounded-md text-sm font-medium transition-all duration-200 ${
+                      currentPage === page
+                        ? 'bg-[#05183A] text-white'
+                        : 'bg-white border border-[#878787] text-[#666666] hover:bg-[#F2F4F6] hover:text-[#05183A]'
+                    } ${sora.className}`}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    {page}
+                  </motion.button>
+                ))}
+              </div>
+
+              {/* Next Button */}
+              <motion.button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={`px-3 sm:px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  currentPage === totalPages
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-white border border-[#878787] text-[#666666] hover:bg-[#F2F4F6] hover:text-[#05183A]'
+                } ${sora.className}`}
+                whileHover={currentPage !== totalPages ? { scale: 1.05 } : {}}
+                whileTap={currentPage !== totalPages ? { scale: 0.95 } : {}}
+              >
+                Next
+              </motion.button>
+            </div>
+          )}
         </motion.div>
       </div>
     </section>

@@ -480,22 +480,6 @@ export default function Header({
             </motion.h1>
           </div>
 
-          {/* Breadcrumb - aligned with title */}
-          <motion.div 
-            className="flex items-start mb-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            {/* Spacer to match the divider width */}
-            {showDivider && <div className="w-1 mr-4 md:mr-6 flex-shrink-0"></div>}
-            
-            {/* Breadcrumb text */}
-            <h6 className={`text-white text-[16px] ${gothamLight.className}`}>
-              {breadcrumb}
-            </h6>
-          </motion.div>
-          
           {/* Description - aligned with title */}
           <motion.div 
             className="flex"

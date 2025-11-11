@@ -59,8 +59,8 @@ export default function AboutSection() {
   };
 
   return (
-    <section className="w-full bg-white py-10 sm:py-15">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-2">
+    <section className="w-full bg-white py-10 sm:py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-2 lg:px-2">
         {/* Main heading */}
         <div className="text-left mb-8">
           <h1
@@ -72,7 +72,7 @@ export default function AboutSection() {
 
         {/* Card container */}
         <div className="relative mb-10">
-          <div className="bg-[#EFF3F6] rounded-3xl p-6 sm:p-10 sm:pt-10 relative mb-20 overflow-visible">
+          <div className="bg-[#EFF3F6] rounded-md p-6 sm:p-10 sm:pt-10 relative mb-10 overflow-visible">
             {/* Grid for lg+ screens, stacked for mobile and tablet */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-y-0 lg:gap-x-10 items-start">
               {/* WHO WE ARE */}
@@ -118,11 +118,11 @@ export default function AboutSection() {
                 variants={building1Variants}
               >
                 <div
-                  className="relative rounded-[8px] overflow-hidden transform-gpu transition-transform duration-300 group-hover:-translate-y-2"
+                  className="relative rounded-[6px] overflow-hidden transform-gpu transition-transform duration-300 group-hover:-translate-y-2"
                   style={{
                     width: 450,
                     height: 450,
-                    borderRadius: '8px', // ✅ border removed
+                    borderRadius: '6px', // ✅ border removed
                   }}
                 >
                   <Image

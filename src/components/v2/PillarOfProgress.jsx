@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import localFont from "next/font/local";
 import { Sora } from "next/font/google";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
 // Load Gotham from OTF (replaces Carentro)
 const gotham = localFont({
@@ -154,6 +155,17 @@ export default function PillarOfProgress() {
     }
   };
 
+  // Navigation functions
+  const goToNext = () => {
+    const nextIndex = activeRef.current + 1;
+    scrollToIndex(nextIndex);
+  };
+
+  const goToPrev = () => {
+    const prevIndex = activeRef.current - 1;
+    scrollToIndex(prevIndex);
+  };
+
   useEffect(() => {
     activeRef.current = active;
   }, [active]);
@@ -221,7 +233,7 @@ export default function PillarOfProgress() {
   return (
     <section className="bg-white pt-10 pb-12 sm:pb-14">
       {/* Updated container with consistent max-w-7xl and padding */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-2 lg:px-2">
         <h2
           className={`text-[#CBD3DD] text-center leading-none select-none pointer-events-none mb-8 sm:mb-10 tracking-[0.035em] ${gothamLight.className}`}
           style={{ fontSize: "clamp(34px, 6.2vw, 66px)" }}
@@ -314,6 +326,24 @@ export default function PillarOfProgress() {
               }}
             />
           </div>
+        </div>
+
+        {/* Navigation buttons */}
+        <div className="mt-6 flex justify-center items-center gap-2">
+          <button
+            onClick={goToPrev}
+            className="bg-gray-200 text-[#0E234E] rounded-md p-4 hover:bg-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0E234E] focus:ring-opacity-50"
+            aria-label="Previous card"
+          >
+            <FaArrowLeftLong height={25} width={25} />
+          </button>
+          <button
+            onClick={goToNext}
+            className="bg-gray-200 text-[#0E234E] rounded-md p-4 hover:bg-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0E234E] focus:ring-opacity-50"
+            aria-label="Next card"
+          >
+           <FaArrowRightLong width={25} height={25}/>
+          </button>
         </div>
       </div>
     </section>

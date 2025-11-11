@@ -144,7 +144,13 @@ export default function Header() {
 
   // detect on load + resize
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    const handleResize = () => {
+      const width = window.innerWidth;
+      // Mobile: < 768px
+      // Medium: 768px - 1162px  
+      // Large: > 1162px
+      setIsMobile(width < 768);
+    };
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => {
@@ -186,7 +192,15 @@ export default function Header() {
           lastScrollY.current = scrollY;
           
           // Simple logic: show top nav only when at very top
-          setIsScrolled(scrollY > 10);
+          const newIsScrolled = scrollY > 10;
+          setIsScrolled(newIsScrolled);
+          
+          // Close search when scrolled
+          if (newIsScrolled && searchOpen) {
+            setSearchOpen(false);
+            setSearchQuery('');
+          }
+          
           ticking = false;
         });
         ticking = true;
@@ -195,16 +209,21 @@ export default function Header() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [searchOpen]); // Added searchOpen dependency
 
   // Close facilities subnav on scroll
   useEffect(() => {
     const handleScroll = () => {
       setShowFacilitiesSubnav(false);
+      // Also close search on scroll
+      if (searchOpen) {
+        setSearchOpen(false);
+        setSearchQuery('');
+      }
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [searchOpen]); // Added searchOpen dependency
 
   // Close modal on ESC
   useEffect(() => {
@@ -341,169 +360,263 @@ export default function Header() {
     <>
       {/* HEADER COMPONENT */}
       <header className="relative z-50">
-        {/* Mobile Hamburger - Fixed to prevent margin issues */}
+        {/* Mobile Hamburger - Improved for md, sm, and below screens */}
         <div className={`md:hidden bg-white shadow-md transition-all duration-300 ${
           isScrolled ? 'fixed top-0 left-0 right-0 z-50' : 'relative'
         }`}>
           <div className="flex items-center justify-between px-4 py-3">
             <Link href="/v3">
-              <Image src="/BDB-LOGO.png" alt="BDB Logo" width={100} height={40} />
+              <Image 
+                src="/BDB-LOGO.png" 
+                alt="BDB Logo" 
+                width={120} 
+                height={48}
+                className="object-contain"
+              />
             </Link>
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-2xl text-gray-800">
-              {mobileMenuOpen ? <IoClose /> : <FiMenu />}
-            </button>
-          </div>
-          {mobileMenuOpen && (
-            <div className="px-4 pb-4 bg-white">
-              {/* Top Navigation Items */}
-              <ul className="space-y-2 text-[14px] mb-4">
-                {topNavItems.map((item) => (
-                  <li key={item.href}>
-                    <AnimatedLink
-                      href={item.href}
-                      label={item.label}
-                      isActive={isActive(item.href)}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="text-[14px]"
-                    />
-                  </li>
-                ))}
-              </ul>
-
-              {/* Main Navigation Items */}
-              <ul className="space-y-3 text-[15px] font-semibold">
-                {navItems.map((item) => (
-                  <li key={item.href}>
-                    <AnimatedLink
-                      href={item.href}
-                      label={item.label}
-                      isActive={isActive(item.href)}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="text-[15px]"
-                    />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {/* Desktop Navigation - Simplified transitions */}
-        <nav
-          className={`hidden md:flex flex-col w-full px-28 bg-white text-white ${sora.className} select-none transition-all duration-300 ${
-            isScrolled 
-              ? 'fixed top-0 left-0 right-0 z-50 bg-white shadow-lg py-2.5' 
-              : 'relative py-2.5'
-          }`}
-        >
-          {/* Top Navigation Items with Search Overlay */}
-          <div className="relative">
-            {/* Top Navigation Items */}
-            <div className={`flex justify-end items-center space-x-6 text-[12px] select-none ${
-              isScrolled 
-                ? 'h-0 opacity-0 overflow-hidden mb-0' 
-                : 'h-auto opacity-100 mb-2'
-            }`}>
-              <ul className="flex space-x-6 text-[11px] uppercase cursor-pointer">
-                {topNavItems.map((item) => (
-                  <li key={item.href} className="relative">
-                    <AnimatedLink
-                      href={item.href}
-                      label={item.label}
-                      isActive={isActive(item.href)}
-                      className="text-black hover:text-[#05183A] text-[11px]"
-                    />
-                  </li>
-                ))}
-              </ul>
+            
+            <div className="flex items-center space-x-4">
+              {/* Mobile Search Icon */}
+              <button 
+                onClick={handleSearchToggle}
+                className="text-gray-800 hover:text-[#05183A] transition-colors duration-200 p-2"
+              >
+                <FaSearch className="text-xl" />
+              </button>
               
-              {/* Search Icon - Only visible when search is closed */}
-              {!searchOpen && (
-                <button 
-                  onClick={handleSearchToggle}
-                  className="relative w-10 text-black hover:text-[#05183A] transition-colors duration-200"
-                >
-                  <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-black text-[16px]" />
-                </button>
-              )}
+              <button 
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+                className="text-2xl text-gray-800 p-1"
+              >
+                {mobileMenuOpen ? <IoClose /> : <FiMenu />}
+              </button>
             </div>
+          </div>
 
-            {/* Search Bar - Slides from search icon position to left side */}
-            <AnimatePresence>
-              {searchOpen && (
-                <motion.div
-                  initial={{ width: 0, opacity: 0 }}
-                  animate={{ width: "auto", opacity: 1 }}
-                  exit={{ width: 0, opacity: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="absolute top-0 right-0 z-10 overflow-hidden"
-                >
-                  <form onSubmit={handleSearch} className="relative">
+          {/* Mobile Search Bar */}
+          <AnimatePresence>
+            {searchOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="px-4 bg-white border-t border-gray-200 overflow-hidden"
+              >
+                <form onSubmit={handleSearch} className="py-3">
+                  <div className="relative">
                     <input
                       ref={searchInputRef}
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search..."
-                      className="w-105 bg-[#EFF3F6] rounded-md px-4 py-1 pr-10 text-black placeholder-gray-500 focus:outline-none focus:ring-0 focus:ring-[#05183A]/30 transition-all duration-300"
+                      className="w-full bg-[#EFF3F6] rounded-lg px-4 py-3 pr-12 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#05183A]/30 transition-all duration-300"
                     />
                     <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
-                      <FaSearch className="text-gray-500 text-[16px]" />
                       <button
                         type="button"
                         onClick={handleSearchToggle}
-                        className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                        className="text-gray-500 hover:text-gray-700 transition-colors duration-200 p-1"
                       >
-                        <IoClose className="text-[20px]" />
+                        <IoClose className="text-xl" />
                       </button>
                     </div>
-                  </form>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-          
-          {/* Main Navigation Items - Logo vertically centered and larger */}
-          <div className="flex items-center justify-between transition-all duration-300">
-            {/* Logo - Moved slightly upward but still on left side */}
-            <div className={`flex items-center justify-center ${isScrolled ? 'mt-0' : '-mt-4'}`}>
-              <Link href="/v3">
-                <Image 
-                  src="/bdb-logo-black-font.png" 
-                  alt="BDB Logo" 
-                  width={isScrolled ? 150 : 190} 
-                  height={isScrolled ? 60 : 85}
-                  className="transition-all duration-300"
-                />
-              </Link>
+                  </div>
+                </form>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Mobile Navigation Menu */}
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="px-4 pb-6 bg-white border-t border-gray-200 overflow-hidden"
+            >
+              {/* Top Navigation Items */}
+              <div className="mb-6 pt-4">
+                <h3 className="text-[13px] font-semibold text-gray-500 uppercase mb-3">Quick Links</h3>
+                <ul className="space-y-3">
+                  {topNavItems.map((item) => (
+                    <li key={item.href}>
+                      <AnimatedLink
+                        href={item.href}
+                        label={item.label}
+                        isActive={isActive(item.href)}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-[15px] font-medium"
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Main Navigation Items */}
+              <div>
+                <h3 className="text-[13px] font-semibold text-gray-500 uppercase mb-3">Main Navigation</h3>
+                <ul className="space-y-4">
+                  {navItems.map((item) => (
+                    <li key={item.href}>
+                      <AnimatedLink
+                        href={item.href}
+                        label={item.label}
+                        isActive={isActive(item.href)}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-[16px] font-semibold"
+                      />
+                      {/* Mobile Subnav for Facilities */}
+                      {item.hasSubnav && isActive(item.href) && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          transition={{ duration: 0.3 }}
+                          className="ml-4 mt-3 space-y-2 border-l-2 border-[#05183A] pl-4"
+                        >
+                          {facilitiesSubnavItems.map((subItem, index) => (
+                            <Link
+                              key={index}
+                              href={`/v3/facilities/${subItem.toLowerCase().replace(/\s+/g, '-')}`}
+                              className="block text-[14px] text-gray-600 hover:text-[#05183A] py-1 transition-colors duration-200"
+                              onClick={() => setMobileMenuOpen(false)}
+                            >
+                              {subItem}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          )}
+        </div>
+
+        {/* Desktop Navigation - Improved responsive design */}
+        <nav
+          className={`hidden md:flex flex-col w-full bg-white text-white ${sora.className} select-none transition-all duration-300 ${
+            isScrolled 
+              ? 'fixed top-0 left-0 right-0 z-50 bg-white shadow-lg py-2.5' 
+              : 'relative py-4'
+          }`}
+        >
+          {/* Container with responsive padding */}
+          <div className={`w-full mx-auto ${
+            isScrolled 
+              ? 'px-4 md:px-8 lg:px-16 xl:px-32' 
+              : 'px-4 md:px-8 lg:px-16 xl:px-32'
+          }`}>
+            {/* Top Navigation Items with Search Overlay */}
+            <div className="relative">
+              {/* Top Navigation Items */}
+              <div className={`flex justify-end items-center space-x-4 md:space-x-6 text-[12px] select-none ${
+                isScrolled 
+                  ? 'h-0 opacity-0 overflow-hidden mb-0' 
+                  : 'h-auto opacity-100 -mb-4'
+              }`}>
+                <ul className="flex space-x-4 md:space-x-6 text-[11px] uppercase cursor-pointer">
+                  {topNavItems.map((item) => (
+                    <li key={item.href} className="relative">
+                      <AnimatedLink
+                        href={item.href}
+                        label={item.label}
+                        isActive={isActive(item.href)}
+                        className="text-black hover:text-[#05183A] font-semibold text-[11px] md:text-[12px]"
+                      />
+                    </li>
+                  ))}
+                </ul>
+                
+                {/* Search Icon */}
+                <button 
+                  onClick={handleSearchToggle}
+                  className="relative w-8 md:w-10 text-black hover:text-[#05183A] transition-colors duration-200"
+                >
+                  <FaSearch className="absolute left-1 top-1/2 -translate-y-1/2 text-black text-[16px] md:text-[18px]" />
+                </button>
+              </div>
+
+              {/* Search Bar */}
+              <AnimatePresence>
+                {searchOpen && !isScrolled && (
+                  <motion.div
+                    initial={{ width: 0, opacity: 0 }}
+                    animate={{ width: "auto", opacity: 1 }}
+                    exit={{ width: 0, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="absolute -top-1 right-0 z-10 overflow-hidden"
+                  >
+                    <form onSubmit={handleSearch} className="relative">
+                      <input
+                        ref={searchInputRef}
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Search..."
+                        className="w-80 md:w-96 lg:w-130 bg-[#EFF3F6] rounded-md px-4 py-1.5 pr-10 text-black placeholder-gray-500 focus:outline-none focus:ring-0 focus:ring-[#05183A]/30 transition-all duration-300"
+                      />
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
+                        <FaSearch className="text-gray-500 text-[16px]" />
+                        <button
+                          type="button"
+                          onClick={handleSearchToggle}
+                          className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                        >
+                          <IoClose className="text-[20px]" />
+                        </button>
+                      </div>
+                    </form>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
             
-            {/* Centered Navigation Items - Position unchanged */}
-            <ul className="flex space-x-8 text-[16px] font-medium cursor-pointer relative">
-              {navItems.map((item) => (
-                <li 
-                  key={item.href}
-                  className="relative"
-                  onMouseEnter={item.hasSubnav ? handleFacilitiesMouseEnter : undefined}
-                  onMouseLeave={item.hasSubnav ? handleFacilitiesMouseLeave : undefined}
-                  ref={item.hasSubnav ? facilitiesRef : null}
-                >
-                  <AnimatedLink
-                    href={item.href}
-                    label={item.label}
-                    isActive={isActive(item.href)}
-                    className={`${
-                      isActive(item.href) 
-                        ? 'text-[#05183A] font-semibold' 
-                        : 'text-black hover:text-[#05183A]'
-                    } text-[16px]`}
+            {/* Main Navigation Items */}
+            <div className={`flex ${isScrolled ? 'items-center' : 'items-end'} justify-between transition-all duration-300`}>
+              {/* Logo */}
+              <div className={`flex items-center justify-center ${isScrolled ? 'mt-0' : '-mt-2 md:-mt-4'}`}>
+                <Link href="/v3">
+                  <Image 
+                    src="/bdb-logo-black-font.png" 
+                    alt="BDB Logo" 
+                    width={isScrolled ? 120 : 150} 
+                    height={isScrolled ? 48 : 60}
+                    className="transition-all duration-300"
                   />
-                </li>
-              ))}
-            </ul>
-            
-            {/* Empty space where the button was */}
-            <div className="w-40"></div>
+                </Link>
+              </div>
+              
+              {/* Centered Navigation Items */}
+              <ul className="flex space-x-4 md:space-x-6 lg:space-x-8 text-[14px] md:text-[16px] font-medium cursor-pointer relative">
+                {navItems.map((item) => (
+                  <li 
+                    key={item.href}
+                    className="relative"
+                    onMouseEnter={item.hasSubnav ? handleFacilitiesMouseEnter : undefined}
+                    onMouseLeave={item.hasSubnav ? handleFacilitiesMouseLeave : undefined}
+                    ref={item.hasSubnav ? facilitiesRef : null}
+                  >
+                    <AnimatedLink
+                      href={item.href}
+                      label={item.label}
+                      isActive={isActive(item.href)}
+                      className={`${
+                        isActive(item.href) 
+                          ? 'text-[#05183A] font-semibold' 
+                          : 'text-black hover:text-[#05183A]'
+                      }`}
+                    />
+                  </li>
+                ))}
+              </ul>
+              
+              {/* Empty space where the button was */}
+              <div className="w-20 md:w-32 lg:w-40"></div>
+            </div>
           </div>
 
           {/* Facilities Subnav Dropdown */}
@@ -518,17 +631,17 @@ export default function Header() {
                 onMouseEnter={handleFacilitiesMouseEnter}
                 onMouseLeave={handleFacilitiesMouseLeave}
               >
-                <div className="container mx-auto px-8 py-8 h-full">
-                  <div className="grid grid-cols-2 gap-8 h-full max-w-4xl mx-auto">
+                <div className="container mx-auto px-4 md:px-8 py-6 md:py-8 h-full">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 h-full max-w-4xl mx-auto">
                     {groupedFacilitiesItems.map((column, columnIndex) => (
-                      <div key={columnIndex} className="space-y-4">
+                      <div key={columnIndex} className="space-y-3 md:space-y-4">
                         {column.map((item, itemIndex) => (
                           <div key={itemIndex} className="relative">
                             <AnimatedLink
                               href={`/v3/facilities/${item.toLowerCase().replace(/\s+/g, '-')}`}
                               label={item}
                               isActive={false}
-                              className="text-gray-800 hover:text-[#05183A] text-[15px] font-medium py-1"
+                              className="text-gray-800 hover:text-[#05183A] text-[14px] md:text-[15px] font-medium py-1"
                             />
                           </div>
                         ))}

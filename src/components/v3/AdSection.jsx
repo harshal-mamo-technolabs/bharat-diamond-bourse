@@ -5,6 +5,11 @@ import localFont from 'next/font/local';
 import { Sora } from 'next/font/google';
 
 const gotham = localFont({ src: '../../../public/fonts/Gotham.otf', weight: '400', style: 'normal' });
+const gothamLight = localFont({
+  src: "../../../public/fonts/Gotham Medium.otf",
+  weight: "400",
+  style: "normal",
+});
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
 function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
@@ -18,13 +23,13 @@ function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
 
 export default function AdSection() {
   return (
-    <section className="w-full bg-white py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6 grid grid-cols-12 gap-8 items-center">
+    <section className="w-full bg-white py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-2 lg:px-2 grid grid-cols-12 gap-8 items-center">
         {/* Left text */}
         <div className="col-span-12 md:col-span-6">
           <p className={`text-sm text-[#6B7280] mb-2 ${sora.className}`}>Our Advertising Partners</p>
-          <h3 className={`text-[40px] md:text-[64px] leading-[1.1] text-[#0E234E] font-bold mb-6 ${gotham.className}`}>Daimond co.</h3>
-          <div className={`space-y-5 text-[#364153] ${sora.className}`}>
+          <h3 className={`text-[40px] md:text-[64px] leading-[1.1] text-[#0E234E] font-bold mb-6 ${gothamLight.className}`}>Daimond co.</h3>
+          <div className={`space-y-5 text-[#364153] text-justify ${sora.className}`}>
             <p>
               A diamond ring is more than just jewelry — it is a timeless symbol of love, commitment, and elegance.
               Crafted with precision and brilliance, each diamond captures the light in a way that reflects your most

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FaTrophy, FaBuilding, FaChartLine, FaAward } from 'react-icons/fa';
+import { FaCrown, FaBuilding, FaRulerCombined, FaLink } from 'react-icons/fa';
 import localFont from 'next/font/local';
 import { Sora } from 'next/font/google';
 
@@ -20,7 +20,7 @@ const StatsCard = () => {
       number: "#1",
       title: "Largest Diamond Bourse",
       description: "",
-      icon: FaTrophy,
+      icon: FaCrown,
     },
     {
       id: 2,
@@ -34,14 +34,14 @@ const StatsCard = () => {
       number: "2 M+",
       title: "sq. ft. of Office Space",
       description: "",
-      icon: FaChartLine,
+      icon: FaRulerCombined,
     },
     {
       id: 4,
       number: "9",
       title: "Interconnected Towers",
       description: "",
-      icon: FaAward,
+      icon: FaLink,
     }
   ];
 
@@ -92,7 +92,7 @@ const StatsCard = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-8 sm:mb-12 lg:mb-16"
         >
-          <h2 className={`${gothamLight.className} text-[#0E234E] leading-tight text-center text-xl sm:text-2xl lg:text-4xl mb-4 sm:mb-6 lg:mb-8 px-4`}>
+          <h2 className={`${gothamLight.className} text-[#0E234E] leading-tight text-center text-xl sm:text-[40px] lg:text-[50px] mb-2 sm:mb-2 lg:mb-2 px-4`}>
             Take A Look At Our Bourse
           </h2>
         </motion.div>
@@ -120,7 +120,7 @@ const StatsCard = () => {
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className={`text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0E234E] mb-2 ${gothamLight.className}`}
+                  className={`text-xl sm:text-2xl lg:text-3xl font-bold text-[#0E234E] mb-2 ${gothamLight.className}`}
                 >
                   {stat.number}
                 </motion.div>

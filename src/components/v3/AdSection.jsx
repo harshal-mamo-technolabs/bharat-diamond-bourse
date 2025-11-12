@@ -61,7 +61,7 @@ export default function AdSection() {
 
         {/* Right image card */}
         <div className="col-span-12 md:col-span-6">
-          <div className="relative w-full rounded-[24px] overflow-hidden shadow-lg bg-[#0E1A31]">
+          <div className="relative w-full rounded-[6px] overflow-hidden bg-[#0E1A31]">
             <Image src="/ad.png" alt="Ad banner" width={1200} height={900} className="w-full h-auto object-cover" />
           </div>
         </div>

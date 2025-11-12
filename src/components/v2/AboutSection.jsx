@@ -71,8 +71,8 @@ export default function AboutSection() {
         </div>
 
         {/* Card container */}
-        <div className="relative mb-10">
-          <div className="bg-[#EFF3F6] rounded-md p-6 sm:p-10 sm:pt-10 relative mb-10 overflow-visible">
+        <div className="relative mb-0">
+          <div className="bg-[#EFF3F6] rounded-md p-6 sm:p-10 sm:pt-10 relative mb-0 overflow-visible">
             {/* Grid for lg+ screens, stacked for mobile and tablet */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-y-0 lg:gap-x-10 items-start">
               {/* WHO WE ARE */}
@@ -129,7 +129,7 @@ export default function AboutSection() {
                     src="/bdb-image-1.png"
                     alt="Modern skyscrapers viewed from below"
                     fill
-                    style={{ objectFit: 'cover', borderRadius: '8px' }}
+                    style={{ objectFit: 'cover', borderRadius: '6px' }}
                   />
                 </div>
               </motion.div>              

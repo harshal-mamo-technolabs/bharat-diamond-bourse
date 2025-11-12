@@ -97,7 +97,7 @@ export default function Insights() {
                             key={card.id}
                             ref={(el) => (refs.current[i] = el)}
                             className="
-                group relative rounded-[20px] bg-white
+                group relative rounded-[6px] bg-white
                 ring-1 ring-black/5 shadow-[0_1px_2px_rgba(0,0,0,0.04)]
                 transition-all duration-500 ease-out
                 opacity-0 translate-y-4
@@ -110,7 +110,7 @@ export default function Insights() {
                         >
                             {/* Image wrapper */}
                             <div className="relative mx-5 mt-5">
-                                <div className="relative h-[240px] w-full overflow-hidden rounded-[12px] bg-gray-100">
+                                <div className="relative h-[240px] w-full overflow-hidden rounded-[6px] bg-gray-100">
                                     <Image
                                         src={card.image}
                                         alt={card.title}
@@ -127,7 +127,7 @@ export default function Insights() {
                                     aria-label="Open"
                                     className="
                     absolute -right-px -bottom-px z-20 grid h-9 w-9 place-items-center
-                    rounded-tl-[12px]
+                    rounded-tl-[6px]
                     transition-colors duration-300
                     hover:bg-[#0E234E]
                     focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E234E] focus-visible:ring-offset-2

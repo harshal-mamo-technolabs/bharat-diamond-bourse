@@ -124,7 +124,7 @@ export default function MissionSection() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -60 }}
                 transition={{ duration: DURATION, ease: easing, delay: IMAGE_DELAY }}
-                className="relative w-full md:w-[400px] h-[400px] rounded-lg overflow-hidden shadow-md"
+                className="relative w-full md:w-[400px] h-[400px] rounded-md overflow-hidden"
               >
                 <Image
                   src={activeContent.img}

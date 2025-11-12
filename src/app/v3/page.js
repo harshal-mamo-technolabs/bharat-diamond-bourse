@@ -1,5 +1,3 @@
-'use client';
-
 import Header from "@/components/v3/Header";
 import Partners from "@/components/v2/Partners";
 import MissionSection from "@/components/v2/MissionSection";
@@ -16,20 +14,20 @@ import ScrollToTop from "@/components/v3/ScrollToTop";
 
 export default function Home() {
   return (
-    <div className="">
-      <Header/>
-      <BannerWrapper />
-      <Partners/>
-      <AboutSection/>
-      <StatsCard/>
-      <CorporateTaxSection/>
-      <PillarOfProgress/>
-      <MissionSection/>
-      <AdSection/>
-      <Insights/>
-      <Footer/>
-      
-      <ScrollToTop />
-    </div>
+        <div className="">
+            <Header/>
+            <BannerWrapper />
+            <Partners/>
+            <AboutSection/>
+            <StatsCard/>
+            {/* <BourseSection/>  */}
+            <CorporateTaxSection/>
+            <PillarOfProgress/>
+            <MissionSection/>
+            <AdSection/>
+            {/* <Facility/> */}
+            <Insights/>
+            <Footer/>
+        </div>
   );
 }

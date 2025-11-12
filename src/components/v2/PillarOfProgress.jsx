@@ -379,7 +379,7 @@ export default function PillarOfProgress() {
 
         {/* Single jointed underline indicator */}
         <div className="mt-8 flex flex-col items-center justify-center">
-          <div className="relative h-1 w-95 bg-[#0E234E]/20">
+          <div className="relative h-1 w-70 md:w-95 bg-[#0E234E]/20">
             <div 
               className="absolute top-0 left-0 h-full bg-[#0E234E] rounded-full transition-all duration-300 ease-in-out"
               style={{
@@ -393,7 +393,7 @@ export default function PillarOfProgress() {
         {/* Navigation buttons */}
         <div className="mt-6 flex justify-center items-center gap-2">
         <motion.div 
-              className="hidden lg:flex space-x-3"
+              className="flex space-x-3"
               variants={itemVariants}
             >
               <motion.button

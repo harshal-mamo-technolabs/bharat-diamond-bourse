@@ -9,7 +9,7 @@ import { FiMenu } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
@@ -35,7 +35,7 @@ const languages = [
 const facilitiesSubnavItems = [
   'Banks',
   'Internet Telecom',
-  'Restaurants',
+  'Resturants',
   'Online Trading',
   'Bus Services',
   'Testing Laboratories',
@@ -83,6 +83,87 @@ const AnimatedLink = ({ href, label, isActive, onClick, className = '' }) => {
   );
 };
 
+// Mobile Animated Link Component with Double Tap Logic
+const MobileAnimatedLink = ({ 
+  href, 
+  label, 
+  isActive, 
+  onClick, 
+  className = '', 
+  hasSubnav = false,
+  isSubnavOpen = false,
+  onSubnavToggle = () => {}
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const lastTapRef = useRef(0);
+  const tapTimeoutRef = useRef(null);
+  const router = useRouter();
+
+  const handleClick = (e) => {
+    if (!hasSubnav) {
+      // Navigate to the page AND close mobile menu
+      router.push(href);
+      onClick();
+      return;
+    }
+  
+    e.preventDefault();
+    
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - lastTapRef.current;
+    
+    if (tapLength < 300 && tapLength > 0) {
+      // Double tap detected - navigate to main page
+      if (tapTimeoutRef.current) {
+        clearTimeout(tapTimeoutRef.current);
+      }
+      router.push(href);
+      onClick(); // Close mobile menu
+    } else {
+      // Single tap - toggle subnav
+      lastTapRef.current = currentTime;
+      
+      // Set a timeout to clear the double tap if no second tap comes
+      if (tapTimeoutRef.current) {
+        clearTimeout(tapTimeoutRef.current);
+      }
+      tapTimeoutRef.current = setTimeout(() => {
+        lastTapRef.current = 0;
+      }, 300);
+      
+      onSubnavToggle();
+    }
+  };
+
+  return (
+    <div 
+      className="relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div 
+        onClick={handleClick}
+        className={`relative inline-block pb-1 transition-colors duration-200 ${className} ${
+          isActive || isSubnavOpen
+            ? 'text-[#05183A] font-semibold' 
+            : 'text-gray-800 hover:text-[#05183A]'
+        } cursor-pointer select-none`}
+      >
+        {label}
+        {/* Animated underline - full width from left to right */}
+        <motion.div 
+          className="absolute bottom-0 left-0 h-0.5 bg-[#05183A]"
+          initial={false}
+          animate={{ 
+            width: isActive || isHovered || isSubnavOpen ? '100%' : '0%'
+          }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        />
+      </div>
+    </div>
+  );
+};
+
 export default function Header({ 
   backgroundImage = "/about/about-hero.png",
   backgroundType = "image",
@@ -92,6 +173,7 @@ export default function Header({
   showDivider = true
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState(languages[0].code);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -99,6 +181,7 @@ export default function Header({
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showFacilitiesSubnav, setShowFacilitiesSubnav] = useState(false);
+  const [mobileFacilitiesOpen, setMobileFacilitiesOpen] = useState(false);
   const facilitiesTimeoutRef = useRef(null);
   const searchInputRef = useRef(null);
   const facilitiesRef = useRef(null);
@@ -127,6 +210,18 @@ export default function Header({
     { href: '/v3/careers', label: 'Careers' },
   ];
 
+  // Group facilities items for mobile 2x2 grid
+  const groupedMobileFacilitiesItems = [];
+  for (let i = 0; i < facilitiesSubnavItems.length; i += 2) {
+    groupedMobileFacilitiesItems.push(facilitiesSubnavItems.slice(i, i + 2));
+  }
+
+  // Group facilities items for desktop (existing logic)
+  const groupedFacilitiesItems = [];
+  for (let i = 0; i < facilitiesSubnavItems.length; i += 4) {
+    groupedFacilitiesItems.push(facilitiesSubnavItems.slice(i, i + 4));
+  }
+
   // Check if current path matches nav item
   const isActive = (href) => {
     if (href === '/v3' && pathname === '/v3') return true;
@@ -146,6 +241,17 @@ export default function Header({
     facilitiesTimeoutRef.current = setTimeout(() => {
       setShowFacilitiesSubnav(false);
     }, 300);
+  };
+
+  // Handle mobile facilities toggle
+  const handleMobileFacilitiesToggle = () => {
+    setMobileFacilitiesOpen(!mobileFacilitiesOpen);
+  };
+
+  // Close mobile menu
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+    setMobileFacilitiesOpen(false);
   };
 
   // detect on load + resize
@@ -244,12 +350,6 @@ export default function Header({
     }
   };
 
-  // Group facilities items into columns (2 columns with max 4 items each)
-  const groupedFacilitiesItems = [];
-  for (let i = 0; i < facilitiesSubnavItems.length; i += 4) {
-    groupedFacilitiesItems.push(facilitiesSubnavItems.slice(i, i + 4));
-  }
-
   return (
     <>
       {/* HEADER COMPONENT */}
@@ -323,71 +423,83 @@ export default function Header({
           </AnimatePresence>
 
           {/* Mobile Navigation Menu */}
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="px-4 pb-6 bg-white border-t border-gray-200 overflow-hidden"
-            >
-              {/* Top Navigation Items */}
-              <div className="mb-6 pt-4">
-                <h3 className="text-[13px] font-semibold text-gray-500 uppercase mb-3">Quick Links</h3>
-                <ul className="space-y-3">
-                  {topNavItems.map((item) => (
-                    <li key={item.href}>
-                      <AnimatedLink
-                        href={item.href}
-                        label={item.label}
-                        isActive={isActive(item.href)}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="text-[15px] font-medium"
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="px-4 pb-6 bg-white border-t border-gray-200 overflow-hidden"
+              >
+                {/* Top Navigation Items */}
+                <div className="mb-6 pt-4">
+                  <h3 className="text-[13px] font-semibold text-gray-500 uppercase mb-3">Quick Links</h3>
+                  <ul className="space-y-3">
+                    {topNavItems.map((item) => (
+                      <li key={item.href}>
+                        <AnimatedLink
+                          href={item.href}
+                          label={item.label}
+                          isActive={isActive(item.href)}
+                          onClick={closeMobileMenu}
+                          className="text-[15px] font-medium"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-              {/* Main Navigation Items */}
-              <div>
-                <h3 className="text-[13px] font-semibold text-gray-500 uppercase mb-3">Main Navigation</h3>
-                <ul className="space-y-4">
-                  {navItems.map((item) => (
-                    <li key={item.href}>
-                      <AnimatedLink
-                        href={item.href}
-                        label={item.label}
-                        isActive={isActive(item.href)}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="text-[16px] font-semibold"
-                      />
-                      {/* Mobile Subnav for Facilities */}
-                      {item.hasSubnav && isActive(item.href) && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          transition={{ duration: 0.3 }}
-                          className="ml-4 mt-3 space-y-2 border-l-2 border-[#05183A] pl-4"
-                        >
-                          {facilitiesSubnavItems.map((subItem, index) => (
-                            <Link
-                              key={index}
-                              href={`/v3/facilities/${subItem.toLowerCase().replace(/\s+/g, '-')}`}
-                              className="block text-[14px] text-gray-600 hover:text-[#05183A] py-1 transition-colors duration-200"
-                              onClick={() => setMobileMenuOpen(false)}
-                            >
-                              {subItem}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          )}
+                {/* Main Navigation Items */}
+                <div>
+                  <h3 className="text-[13px] font-semibold text-gray-500 uppercase mb-3">Main Navigation</h3>
+                  <ul className="space-y-4">
+                    {navItems.map((item) => (
+                      <li key={item.href}>
+                        <MobileAnimatedLink
+                          href={item.href}
+                          label={item.label}
+                          isActive={isActive(item.href)}
+                          onClick={closeMobileMenu}
+                          hasSubnav={item.hasSubnav}
+                          isSubnavOpen={item.hasSubnav && mobileFacilitiesOpen}
+                          onSubnavToggle={handleMobileFacilitiesToggle}
+                          className="text-[16px] font-semibold"
+                        />
+                        
+                        {/* Mobile Subnav for Facilities - 2x2 Grid Layout */}
+                        {item.hasSubnav && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ 
+                              opacity: mobileFacilitiesOpen ? 1 : 0, 
+                              height: mobileFacilitiesOpen ? "auto" : 0 
+                            }}
+                            transition={{ duration: 0.3 }}
+                            className="ml-4 mt-3 overflow-hidden"
+                          >
+                            {/* 2x2 Grid Layout */}
+                            <div className="grid grid-cols-2 gap-2 border-l-2 border-[#05183A] pl-4">
+                              {facilitiesSubnavItems.map((subItem, index) => (
+                                <Link
+                                  key={index}
+                                  href={`/v3/${subItem.toLowerCase().replace(/\s+/g, '-')}`}
+                                  className="block text-[14px] text-gray-600 hover:text-[#05183A] py-2 px-3 rounded-lg hover:bg-gray-50 transition-all duration-200 border border-transparent hover:border-gray-200"
+                                  onClick={closeMobileMenu}
+                                >
+                                  {subItem}
+                                </Link>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Desktop Navigation */}
@@ -532,7 +644,7 @@ export default function Header({
                         {column.map((item, itemIndex) => (
                           <div key={itemIndex} className="relative">
                             <AnimatedLink
-                              href={`/v3/facilities/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                              href={`/v3/${item.toLowerCase().replace(/\s+/g, '-')}`}
                               label={item}
                               isActive={false}
                               className="text-gray-800 hover:text-[#05183A] text-[14px] md:text-[15px] font-medium py-1"

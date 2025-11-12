@@ -4,7 +4,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import localFont from "next/font/local";
 import { Sora } from "next/font/google";
-import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 // Load Gotham from OTF (replaces Carentro)
 const gotham = localFont({
@@ -219,21 +220,82 @@ export default function PillarOfProgress() {
     }
   }, [active, ready]);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const nextIndex = activeRef.current + 1;
-      scrollToIndex(nextIndex);
-    }, 5000);
-    return () => clearInterval(intervalId);
-  }, []);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     const nextIndex = activeRef.current + 1;
+  //     scrollToIndex(nextIndex);
+  //   }, 5000);
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   const LOOP_ITEMS = Array.from({ length: LOOPS }, () => ITEMS).flat();
   const baseIndex = (idx) => ((idx % ITEMS.length) + ITEMS.length) % ITEMS.length;
 
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  // Slide animation variants for cards
+  const cardVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0,
+      scale: 0.8
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1
+    },
+    exit: (direction) => ({
+      x: direction > 0 ? -300 : 300,
+      opacity: 0,
+      scale: 0.8
+    })
+  };
+
+  // Professional button animation variants
+  const buttonVariants = {
+    initial: { 
+      scale: 1,
+      backgroundColor: "#F2F4F6",
+      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+    },
+    hover: { 
+      scale: 1.05,
+      backgroundColor: "#E5E7EB",
+      boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 25
+      }
+    },
+    tap: { 
+      scale: 0.95,
+      backgroundColor: "#D1D5DB",
+      boxShadow: "0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06)",
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 25
+      }
+    }
+  };
+
+
   return (
-    <section className="bg-white pt-10 pb-12 sm:pb-14">
+    <section className="bg-white">
       {/* Updated container with consistent max-w-7xl and padding */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-2 lg:px-2">
+      <div className="max-w-7xl py-10 mx-auto px-4 sm:px-2 lg:px-2">
         <h2
           className={`text-[#CBD3DD] text-center leading-none select-none pointer-events-none mb-8 sm:mb-10 tracking-[0.035em] ${gothamLight.className}`}
           style={{ fontSize: "clamp(34px, 6.2vw, 66px)" }}
@@ -330,20 +392,32 @@ export default function PillarOfProgress() {
 
         {/* Navigation buttons */}
         <div className="mt-6 flex justify-center items-center gap-2">
-          <button
-            onClick={goToPrev}
-            className="bg-gray-200 text-[#0E234E] rounded-md p-4 hover:bg-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0E234E] focus:ring-opacity-50"
-            aria-label="Previous card"
-          >
-            <FaArrowLeftLong height={25} width={25} />
-          </button>
-          <button
-            onClick={goToNext}
-            className="bg-gray-200 text-[#0E234E] rounded-md p-4 hover:bg-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0E234E] focus:ring-opacity-50"
-            aria-label="Next card"
-          >
-           <FaArrowRightLong width={25} height={25}/>
-          </button>
+        <motion.div 
+              className="hidden lg:flex space-x-3"
+              variants={itemVariants}
+            >
+              <motion.button
+                onClick={goToPrev}
+                className="w-12 h-12 bg-[#F2F4F6] text-[#05183A] rounded-md flex items-center justify-center shadow-lg"
+                variants={buttonVariants}
+                initial="initial"
+                whileHover="hover"
+                whileTap="tap"
+              >
+                 <FaArrowLeft className='w-3 h-3 justify-center'/>
+              </motion.button>
+              
+              <motion.button
+                onClick={goToNext}
+                className="w-12 h-12 bg-[#F2F4F6] text-[#05183A] rounded-md flex items-center justify-center shadow-lg"
+                variants={buttonVariants}
+                initial="initial"
+                whileHover="hover"
+                whileTap="tap"
+              >
+                 <FaArrowRight className='w-3 h-3 justify-center'/>
+              </motion.button>
+            </motion.div>
         </div>
       </div>
     </section>

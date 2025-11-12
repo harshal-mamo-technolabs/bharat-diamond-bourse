@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import { FaMapMarkerAlt, FaEye, FaArrowRight } from 'react-icons/fa';
+import { IoClose } from 'react-icons/io5';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import localFont from 'next/font/local';
 import { Sora } from 'next/font/google';
+import Link from 'next/link';
 
 const gotham = localFont({
     src: '../../../../public/fonts/Gotham.otf',
@@ -139,7 +141,21 @@ export default function MembersDirectory() {
       {/* White background with top border radius */}
       <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-white rounded-t-[30px] md:rounded-t-[40px] -translate-y-6 md:-translate-y-8 z-10"></div>
       
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 md:px-2">
+        {/* Breadcrumb */}
+        <motion.div
+          className="mb-6 sm:mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h6 className={`text-[#36465e] text-[14px] sm:text-[16px] ${gothamLight.className}`}>
+            <Link href="/v3" className="">
+              HOME
+            </Link>{' '} / MEMBERS DIRECTORY
+          </h6>
+        </motion.div>
         {/* Main content container */}
         <motion.div 
           className="bg-white"
@@ -235,6 +251,14 @@ export default function MembersDirectory() {
               exit="hidden"
               className="relative bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
             >
+              {/* Close Button - Top Right */}
+              <button
+                onClick={closeModal}
+                className="absolute top-4 right-4 z-50 bg-[#05183A] text-white p-2 rounded-md hover:bg-[#0a2a5a] transition-colors duration-200 flex items-center justify-center"
+                aria-label="Close modal"
+              >
+                <IoClose className="text-xl sm:text-2xl" />
+              </button>
               
               {/* White Card Container */}
               <div className="bg-white rounded-xl p-6">
@@ -329,15 +353,6 @@ export default function MembersDirectory() {
                         </div>
                       </div>
                     </div>
-                    <motion.button
-                    variants={buttonVariants}
-                    whileHover="hover"
-                    whileTap="tap"
-                    onClick={closeModal}
-                    className={`flex items-center gap-2 bg-[#05183A] text-white px-5 py-3 rounded-lg text-sm sm:text-[14px] font-semibold transition-colors duration-200 hover:bg-[#0a2a5a] w-full justify-center mt-4 ${sora.className}`}
-                  >
-                    Close
-                  </motion.button>
                   </div>
                 </div>
               </div>

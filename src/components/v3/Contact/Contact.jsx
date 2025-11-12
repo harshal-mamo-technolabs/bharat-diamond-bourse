@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
-import { FaArrowRight, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { FaArrowRight, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaChevronDown } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import localFont from 'next/font/local';
 import { Sora } from 'next/font/google';
+import Link from 'next/link';
 
 const gotham = localFont({
     src: '../../../../public/fonts/Gotham.otf',
@@ -20,6 +21,87 @@ const gothamLight = localFont({
 });
 
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
+
+// Custom Dropdown Component
+function CustomDropdown({ 
+  options, 
+  value, 
+  onChange, 
+  placeholder, 
+  icon: Icon, 
+  className = '' 
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
+  const selectedLabel = value 
+    ? options.find(opt => opt.value === value)?.label || value
+    : placeholder;
+
+  return (
+    <div className={`relative ${className}`} ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className={`w-full px-4 py-3 border border-[#878787] rounded-md text-sm text-[#666666] bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#05183A] focus:border-transparent flex items-center justify-between ${sora.className}`}
+      >
+        <span className="truncate">{selectedLabel}</span>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          {Icon && <Icon className="text-gray-400 text-sm" />}
+          <FaChevronDown 
+            className={`text-gray-400 text-sm transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+          />
+        </div>
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute z-50 w-full mt-1 bg-white border border-[#878787] rounded-md shadow-lg max-h-60 overflow-auto"
+          >
+            {options.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => {
+                  onChange(option.value);
+                  setIsOpen(false);
+                }}
+                className={`w-full px-4 py-2.5 sm:py-3 text-left text-sm hover:bg-[#F2F4F6] transition-colors duration-150 ${
+                  value === option.value 
+                    ? 'bg-[#F2F4F6] text-[#05183A] font-medium' 
+                    : 'text-[#666666]'
+                } ${sora.className} first:rounded-t-md last:rounded-b-md`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 // BDB Office data
 const officeData = [
@@ -59,6 +141,14 @@ export default function Contact() {
     address: '',
     agree: false
   });
+
+  const inquiryTypeOptions = [
+    { value: 'general', label: 'General Inquiry' },
+    { value: 'membership', label: 'Membership Information' },
+    { value: 'trading', label: 'Trading & Operations' },
+    { value: 'facilities', label: 'Facilities & Services' },
+    { value: 'partnership', label: 'Partnership Opportunities' }
+  ];
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -111,18 +201,32 @@ export default function Contact() {
   return (
     <section className="relative w-full bg-white pt-8 md:pt-10 pb-16 md:pb-20">
       {/* White background with top border radius - ADDED BACK FROM OLD CODE */}
-      <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-white rounded-t-[30px] md:rounded-t-[40px] -translate-y-6 md:-translate-y-8 z-10"></div>
+      <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-white rounded-t-md -translate-y-6 md:-translate-y-8 z-10"></div>
       
       <div className="relative z-20">
         {/* Contact Form Section */}
         <div className="w-full bg-white py-12 md:py-16 lg:py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-2">
+            {/* Breadcrumb */}
+            <motion.div
+              className="mb-6 sm:mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h6 className={`text-[#36465e] text-[14px] sm:text-[16px] ${gothamLight.className}`}>
+                <Link href="/v3" className="">
+                  HOME
+                </Link>{' '} / CONTACT
+              </h6>
+            </motion.div>
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
               variants={containerVariants}
-              className="bg-white rounded-lg"
+              className="bg-white rounded-md"
             >
               {/* Title and Follow Us Section */}
               <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 md:mb-12 gap-6">
@@ -200,7 +304,7 @@ export default function Contact() {
               {/* Contact Form Card */}
               <motion.div
                 variants={cardVariants}
-                className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 md:p-8"
+                className="bg-white border border-gray-200 rounded-md shadow-sm p-6 md:p-8"
               >
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Grid layout for medium+ screens */}
@@ -216,7 +320,7 @@ export default function Contact() {
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05183A] focus:border-transparent transition-all duration-200"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#05183A] focus:border-transparent transition-all duration-200"
                         required
                       />
                     </motion.div>
@@ -232,7 +336,7 @@ export default function Contact() {
                         name="lastName"
                         value={formData.lastName}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05183A] focus:border-transparent transition-all duration-200"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#05183A] focus:border-transparent transition-all duration-200"
                         required
                       />
                     </motion.div>
@@ -248,7 +352,7 @@ export default function Contact() {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05183A] focus:border-transparent transition-all duration-200"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#05183A] focus:border-transparent transition-all duration-200"
                         required
                       />
                     </motion.div>
@@ -264,7 +368,7 @@ export default function Contact() {
                         name="phone"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05183A] focus:border-transparent transition-all duration-200"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#05183A] focus:border-transparent transition-all duration-200"
                         required
                       />
                     </motion.div>
@@ -274,44 +378,12 @@ export default function Contact() {
                       <label htmlFor="inquiryType" className={`block text-sm font-medium text-[#364153] mb-2 ${sora.className}`}>
                         Inquiry Type
                       </label>
-                      <select
-                        id="inquiryType"
-                        name="inquiryType"
+                      <CustomDropdown
+                        options={inquiryTypeOptions}
                         value={formData.inquiryType}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05183A] focus:border-transparent transition-all duration-200"
-                        required
-                      >
-                        <option value="">Select an option</option>
-                        <option value="general">General Inquiry</option>
-                        <option value="membership">Membership Information</option>
-                        <option value="trading">Trading & Operations</option>
-                        <option value="facilities">Facilities & Services</option>
-                        <option value="partnership">Partnership Opportunities</option>
-                      </select>
-                    </motion.div>
-
-                    {/* How did you hear about us */}
-                    <motion.div variants={itemVariants} className="md:col-span-1">
-                      <label htmlFor="hearAboutUs" className={`block text-sm font-medium text-[#364153] mb-2 ${sora.className}`}>
-                        How did you hear about us?
-                      </label>
-                      <select
-                        id="hearAboutUs"
-                        name="hearAboutUs"
-                        value={formData.hearAboutUs}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05183A] focus:border-transparent transition-all duration-200"
-                        required
-                      >
-                        <option value="">Select an option</option>
-                        <option value="referral">Industry Referral</option>
-                        <option value="website">BDB Website</option>
-                        <option value="event">Industry Event</option>
-                        <option value="existing-member">Existing Member</option>
-                        <option value="media">News & Media</option>
-                        <option value="other">Other</option>
-                      </select>
+                        onChange={(value) => setFormData(prev => ({ ...prev, inquiryType: value }))}
+                        placeholder="Select an option"
+                      />
                     </motion.div>
 
                     {/* Address - Full width */}
@@ -325,7 +397,7 @@ export default function Contact() {
                         value={formData.address}
                         onChange={handleInputChange}
                         rows={3}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05183A] focus:border-transparent transition-all duration-200 resize-none"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#05183A] focus:border-transparent transition-all duration-200 resize-none"
                         required
                       />
                     </motion.div>
@@ -352,7 +424,7 @@ export default function Contact() {
                       type="submit"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="bg-[#05183A] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#0a2a5a] transition-colors duration-200 flex items-center gap-2"
+                      className="bg-[#05183A] text-white px-8 py-3 rounded-md font-medium hover:bg-[#0a2a5a] transition-colors duration-200 flex items-center gap-2"
                     >
                       Submit Inquiry
                       <FaArrowRight className="text-sm" />
@@ -413,7 +485,7 @@ export default function Contact() {
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
-                className="bg-[#F2F4F6] border border-[#D0D0D0] rounded-lg overflow-hidden h-auto lg:h-[400px]"
+                className="bg-[#F2F4F6] border border-[#D0D0D0] rounded-md overflow-hidden h-auto lg:h-[400px]"
               >
                 <div className="flex flex-col lg:grid lg:grid-cols-[3fr_2fr] h-full">
                   {/* Content Side */}
@@ -456,7 +528,7 @@ export default function Contact() {
                           whileHover={{ y: -2 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-full">
+                          <div className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-md">
                             <FaPhoneAlt className="text-[#05183A] text-sm" />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -471,7 +543,7 @@ export default function Contact() {
                           whileHover={{ y: -2 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-full">
+                          <div className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-md">
                             <FaMapMarkerAlt className="text-[#05183A] text-sm" />
                           </div>
                           <div className="flex-1 min-w-0">

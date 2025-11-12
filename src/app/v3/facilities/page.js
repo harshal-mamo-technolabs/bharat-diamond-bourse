@@ -7,6 +7,7 @@ import BankingSection from "@/components/v3/facility/BankingSection";
 import WorldClassSection from "@/components/v3/facility/WorldClassSection";
 import AncillariesSection from "@/components/v3/facility/AncillariesSection";
 import Footer from "@/components/v2/footer";
+import ScrollToTop from "@/components/v3/ScrollToTop";
 
 export default function Facilities() {
     return (
@@ -20,6 +21,7 @@ export default function Facilities() {
               <WorldClassSection/>
               <AncillariesSection/>
               <Footer/>
+              <ScrollToTop />
           </div>
     );
   }

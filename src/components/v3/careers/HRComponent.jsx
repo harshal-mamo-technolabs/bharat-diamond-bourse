@@ -4,6 +4,8 @@ import { useRef, useState, useEffect } from 'react';
 import localFont from 'next/font/local';
 import { Sora } from 'next/font/google';
 import { FaArrowRight } from "react-icons/fa";
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const gotham = localFont({
   src: '../../../../public/fonts/Gotham.otf',
@@ -118,7 +120,21 @@ export default function HRComponent() {
 
   return (
     <section className="relative w-full bg-white py-12 md:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-2">
+        {/* Breadcrumb */}
+        <motion.div
+          className="mb-6 sm:mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h6 className={`text-[#36465e] text-[14px] sm:text-[16px] ${gothamLight.className}`}>
+            <Link href="/v3" className="">
+              HOME
+            </Link>{' '} / CAREERS
+          </h6>
+        </motion.div>
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           
           {/* Left Side */}

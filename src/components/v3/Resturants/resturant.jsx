@@ -208,7 +208,7 @@ export default function Resturant() {
   };
 
   return (
-    <section className="relative w-full bg-white pt-8 md:pt-10 pb-16 md:pb-20">
+    <section className="relative w-full bg-white py-10">
       {/* White background with top border radius */}
       <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-white rounded-t-[30px] md:rounded-t-[40px] -translate-y-6 md:-translate-y-8 z-10"></div>
       

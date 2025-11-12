@@ -76,10 +76,10 @@ export default function Footer() {
     ];
 
     return (
-        <footer className={`px-0 md:px-0 lg:px-0 xl:px-0 pb-10 ${sora.className}`}>
+        <footer className={`px-4 md:px-8 lg:px-16 xl:px-32 pb-10 ${sora.className}`}>
             <div className="mx-auto rounded-[22px] border border-[#E1E6EF] bg-white overflow-hidden">
                 {/* Top banner */}
-                <div className="bg-[linear-gradient(180deg,#112C58_0%,#0E234E_100%)] px-4 md:px-8 lg:px-16 xl:px-32 py-5 md:py-6 rounded-t-[22px] rounded-b-[22px]">
+                <div className="bg-[linear-gradient(180deg,#112C58_0%,#0E234E_100%)] px-4 md:px-8 lg:px-16 xl:px-16 py-5 md:py-6 rounded-t-[22px] rounded-b-[22px]">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <h3 className={`${gotham.className} text-white text-[26px] md:text-[34px] leading-tight`}>
                             Join the World of Diamond Trade

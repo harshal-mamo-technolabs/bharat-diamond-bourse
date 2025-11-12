@@ -304,13 +304,13 @@ export default function Contact() {
   };
 
   return (
-    <section className="relative w-full bg-white pt-8 md:pt-10 pb-16 md:pb-20">
+    <section className="relative w-full bg-white">
       {/* White background with top border radius - ADDED BACK FROM OLD CODE */}
       <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-white rounded-t-md -translate-y-6 md:-translate-y-8 z-10"></div>
       
       <div className="relative z-20">
         {/* Contact Form Section */}
-        <div className="w-full bg-white py-12 md:py-16 lg:py-20">
+        <div className="w-full bg-white py-0 md:py-10 lg:py-10">
           <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
             {/* Breadcrumb */}
             <motion.div
@@ -542,7 +542,7 @@ export default function Contact() {
         </div>
 
         {/* Offices Section */}
-        <section className="w-full bg-[#EFF3F6] py-12 md:py-16 lg:py-20">
+        <section className="w-full bg-[#EFF3F6] py-12 md:py-10 lg:py-10">
           <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
             <motion.div
               initial="hidden"

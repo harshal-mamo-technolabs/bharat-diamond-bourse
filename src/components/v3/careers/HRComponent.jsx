@@ -119,7 +119,7 @@ export default function HRComponent() {
   }, []);
 
   return (
-    <section className="relative w-full bg-white py-12 md:py-20">
+    <section className="relative w-full bg-white py-10">
       <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
         {/* Breadcrumb */}
         <motion.div

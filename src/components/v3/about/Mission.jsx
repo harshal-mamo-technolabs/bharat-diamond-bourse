@@ -29,7 +29,7 @@ export default function Mission() {
   };
 
   return (
-    <section className="w-full py-8 bg-white">
+    <section className="w-full py-10 bg-white">
       <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 mb-10"

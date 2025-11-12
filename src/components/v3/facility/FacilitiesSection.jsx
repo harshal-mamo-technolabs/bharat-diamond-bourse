@@ -84,7 +84,7 @@ const FacilitiesSection = () => {
   const currentContent = tabContent[activeTab];
 
   return (
-    <section className="w-full bg-[#F2F4F6] py-12 md:py-16 lg:py-20">
+    <section className="w-full bg-[#F2F4F6] py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Tabs Section */}
         <motion.div

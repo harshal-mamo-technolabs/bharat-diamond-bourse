@@ -34,7 +34,7 @@ export default function President() {
   };
 
   return (
-    <section className="relative w-full bg-white py-20">
+    <section className="relative w-full bg-white py-10">
       <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
         {/* Main Card with Gray Background */}
         <motion.div

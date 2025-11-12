@@ -85,7 +85,7 @@ const RestaurantsSection = () => {
 
   return (
     <section
-    className="w-full py-12 md:py-16 lg:py-20 relative overflow-hidden bg-gray-100"
+    className="w-full py-10 relative overflow-hidden bg-gray-100"
     style={{
       backgroundImage: "url('/facilities/design.png')",
       backgroundRepeat: "no-repeat",

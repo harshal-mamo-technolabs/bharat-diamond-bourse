@@ -344,7 +344,7 @@ export default function BoardOfDirectors() {
   };
 
   return (
-    <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32 py-8 md:py-12 bg-white">
+    <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32 py-10 bg-white">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}

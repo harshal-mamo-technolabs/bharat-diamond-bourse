@@ -78,7 +78,7 @@ export default function Insights() {
 
     return (
         <section className=" sm:py-10 py-10 bg-[#EFF3F6]">
-            <div className="mx-auto max-w-7xl px-4 sm:px-2 lg:px-2">
+            <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
                 {/* Header */}
                 <div className="mb-12 text-center">
                     <h2 className={`text-[#0E234E] text-[32px] md:text-[42px] lg:text-[48px] leading-tight ${gothamLight.className}`}>

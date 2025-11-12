@@ -367,7 +367,7 @@ export default function Header() {
           <div className="flex items-center justify-between px-4 py-3">
             <Link href="/v3">
               <Image 
-                src="/BDB-LOGO.png" 
+                src="/bdb-logo-black-font.png" 
                 alt="BDB Logo" 
                 width={120} 
                 height={48}

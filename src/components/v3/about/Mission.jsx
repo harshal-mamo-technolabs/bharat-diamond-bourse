@@ -30,13 +30,14 @@ export default function Mission() {
 
   return (
     <section className="w-full py-8 bg-white">
-      <motion.div
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-2  grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 mb-10"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={containerVariants}
-      >
+      <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 mb-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={containerVariants}
+        >
 
         {/* LEFT side */}
         <motion.div className="relative pl-6 md:pl-6" variants={fadeUp}>
@@ -89,6 +90,7 @@ export default function Mission() {
         </motion.div>
 
       </motion.div>
+      </div>
     </section>
   );
 };

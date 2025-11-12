@@ -36,3 +36,17 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Leaflet Map Custom Styles */
+.leaflet-container {
+  font-family: inherit;
+}
+
+.leaflet-control-zoom {
+  margin-top: 10px !important;
+  margin-right: 10px !important;
+}
+
+.leaflet-popup {
+  margin-bottom: 30px !important;
+}
+

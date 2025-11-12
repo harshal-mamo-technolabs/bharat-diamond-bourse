@@ -129,7 +129,7 @@ export default function HistoryTimeline() {
 
   return (
     <section className="relative w-full bg-white py-8 xs:py-12 sm:py-16 md:py-20">
-      <div className="max-w-[1320px] mx-auto px-3 xs:px-4 sm:px-6 md:px-8">
+      <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
         {/* Main Title */}
         <motion.h1 
           className={`${gothamLight.className} text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#05183A] text-center mb-8 xs:mb-12 sm:mb-14 md:mb-16`}

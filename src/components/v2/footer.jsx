@@ -76,10 +76,10 @@ export default function Footer() {
     ];
 
     return (
-        <footer className={`px-4 sm:px-6 lg:px-8 py-10 ${sora.className}`}>
+        <footer className={`px-4 md:px-8 lg:px-16 xl:px-32 pb-10 ${sora.className}`}>
             <div className="mx-auto rounded-[22px] border border-[#E1E6EF] bg-white overflow-hidden">
                 {/* Top banner */}
-                <div className="bg-[linear-gradient(180deg,#112C58_0%,#0E234E_100%)] px-5 md:px-7 py-5 md:py-6 rounded-t-[22px] rounded-b-[22px]">
+                <div className="bg-[linear-gradient(180deg,#112C58_0%,#0E234E_100%)] px-4 md:px-8 lg:px-16 xl:px-32 py-5 md:py-6 rounded-t-[22px] rounded-b-[22px]">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <h3 className={`${gotham.className} text-white text-[26px] md:text-[34px] leading-tight`}>
                             Join the World of Diamond Trade
@@ -251,18 +251,6 @@ export default function Footer() {
                             </div>
                         </div>
 
-                        <div className="mt-10 md:mt-auto flex justify-end">
-                            <Link href="/v3">
-                                <Image
-                                    src="/bdb-logo-black-font.png"
-                                    alt="Bharat Diamond Bourse"
-                                    width={190}
-                                    height={120}
-                                    className="h-auto w-[160px] md:w-[190px] hover:opacity-90 transition-opacity duration-200"
-                                    priority
-                                />
-                            </Link>
-                        </div>
                     </div>
                 </div>
             </div>

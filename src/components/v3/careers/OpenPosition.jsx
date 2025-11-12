@@ -72,7 +72,7 @@ export default function OpenPosition() {
 
   return (
     <section className="relative w-full bg-white py-8 sm:py-12 md:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-2">
+      <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
         
         {/* List */}
         <div className="divide-y divide-gray-200">

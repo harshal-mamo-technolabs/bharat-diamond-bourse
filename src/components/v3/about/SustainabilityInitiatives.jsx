@@ -56,7 +56,7 @@ export default function SustainabilityInitiatives() {
 
   return (
     <section className="relative w-full bg-white py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-2">
+      <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
         {/* Title */}
         <h1
           className={`${gothamLight.className} text-4xl sm:text-4xl md:text-5xl font-bold text-[#05183A] text-center mb-14`}

@@ -35,7 +35,7 @@ export default function President() {
 
   return (
     <section className="relative w-full bg-white py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-2">
+      <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
         {/* Main Card with Gray Background */}
         <motion.div
           className="relative bg-[#F2F4F6] overflow-hidden rounded-md"
@@ -119,7 +119,7 @@ export default function President() {
 
               {/* Bottom Button for Mobile/Tablets */}
               <motion.button
-                className="mt-6 absolute lg:bottom-0 lg:right-0 w-auto bottom-0 right-0 lg:w-auto bg-[#05183A] text-white p-2.5 sm:p-5 md:p-7 rounded-br-2xl flex items-center justify-center hover:bg-[#0b214f] transition-all"
+                className="mt-6 absolute lg:bottom-0 lg:right-0 w-auto bottom-0 right-0 lg:w-auto bg-[#05183A] text-white p-2.5 sm:p-5 md:p-7 rounded-br-md flex items-center justify-center hover:bg-[#0b214f] transition-all"
                 variants={fadeUp}
               >
                 <FaArrowRight className='w-4 sm:w-3 md:w-7 h-6 sm:h-3 md:h-7'/>

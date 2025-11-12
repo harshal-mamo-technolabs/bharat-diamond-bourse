@@ -60,7 +60,7 @@ export default function AboutSection() {
 
   return (
     <section className="w-full bg-white py-10 sm:py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-2 lg:px-2">
+      <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
         {/* Main heading */}
         <div className="text-left mb-8">
           <h1

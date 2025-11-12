@@ -295,7 +295,7 @@ export default function PillarOfProgress() {
   return (
     <section className="bg-white">
       {/* Updated container with consistent max-w-7xl and padding */}
-      <div className="max-w-7xl py-10 mx-auto px-4 sm:px-2 lg:px-2">
+      <div className="max-w-7xl mx-auto py-10 px-4 md:px-8 lg:px-16 xl:px-32">
         <h2
           className={`text-[#CBD3DD] text-center leading-none select-none pointer-events-none mb-8 sm:mb-10 tracking-[0.035em] ${gothamLight.className}`}
           style={{ fontSize: "clamp(34px, 6.2vw, 66px)" }}

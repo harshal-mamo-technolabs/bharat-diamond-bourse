@@ -92,7 +92,7 @@ export default function MissionSection() {
     <section
       className={`w-full bg-[#EFF3F6] py-10 ${gotham.className}`}
     >
-      <div className="max-w-7xl px-4 sm:px-2 lg:px-2 mx-auto">
+      <div className="px-4 md:px-8 lg:px-16 xl:px-32 mx-auto">
         <div className="relative mb-12">
           <div className="flex md:justify-between overflow-x-auto md:overflow-visible no-scrollbar">
             {Object.keys(CONTENT).map((tab) => (

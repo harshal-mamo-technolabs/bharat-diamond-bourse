@@ -261,7 +261,7 @@ export default function Header({
           <div className="flex items-center justify-between px-4 py-3">
             <Link href="/v3">
               <Image 
-                src="/BDB-LOGO.png" 
+                src="/bdb-logo-black-font.png" 
                 alt="BDB Logo" 
                 width={120} 
                 height={48}
@@ -592,7 +592,7 @@ export default function Header({
         )}
 
         {/* Content Container */}
-        <div className="relative z-20 flex flex-col justify-center h-full px-4 md:px-2 max-w-7xl mx-auto">
+        <div className="relative z-20 flex flex-col justify-center h-full px-4 md:px-8 lg:px-16 xl:px-32">
           {/* Divider and Title Row */}
           <div className="flex items-start mb-2 md:mb-2">
             {/* Standing Line Divider */}

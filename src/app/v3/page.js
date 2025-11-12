@@ -28,6 +28,7 @@ export default function Home() {
             {/* <Facility/> */}
             <Insights/>
             <Footer/>
+            <ScrollToTop />
         </div>
   );
 }

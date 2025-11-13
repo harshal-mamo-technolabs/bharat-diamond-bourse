@@ -90,7 +90,7 @@ const CustomsIDTC = () => {
       {/* White background with top border radius */}
       <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-white rounded-t-[30px] md:rounded-t-[40px] -translate-y-6 md:-translate-y-8 z-10"></div>
       
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 md:px-2">
+      <div className="relative z-20 px-4 md:px-8 lg:px-16 xl:px-32">
         {/* Breadcrumb */}
         <motion.div
           className="mb-6 sm:mb-8"
@@ -107,7 +107,7 @@ const CustomsIDTC = () => {
         </motion.div>
         {/* Main content card */}
         <motion.div 
-          className="p-6 sm:p-8 md:p-12"
+          className="p-0 sm:p-0 md:p-0"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
@@ -142,7 +142,7 @@ const CustomsIDTC = () => {
             >
               {/* Title - Always visible */}
               <motion.h2
-                className={`text-2xl sm:text-3xl md:text-5xl font-bold text-[#05183A] leading-tight ${gothamLight.className}`}
+                className={`text-2xl sm:text-3xl md:text-5xl lg:text-[52px] font-bold text-[#05183A] leading-tight ${gothamLight.className}`}
                 variants={contentVariants}
               >
                 Customs & IDTC
@@ -151,7 +151,7 @@ const CustomsIDTC = () => {
               {/* Description & Features - Hidden on mobile/tablet (will be shown after image) */}
               <motion.div className="hidden lg:block space-y-5">
                 <motion.p
-                  className={`text-base md:text-[12px] text-gray-700 leading-relaxed text-justify ${sora.className}`}
+                  className={`text-base md:text-[12px] lg:text-lg text-gray-700 leading-relaxed text-justify ${sora.className}`}
                   variants={contentVariants}
                 >
                   BOB houses a full-fledged customs clearance centre and the India Diamond Trading Centre (IDTC) – a secure zone where leading global mining companies like De Beers and ALROSA showcase rough diamonds.
@@ -174,7 +174,7 @@ const CustomsIDTC = () => {
                       variants={listItemVariants}
                     >
                       <div className="flex-shrink-0 w-1 h-1 bg-[#05183A] rounded-none mt-2 mr-4"></div>
-                      <span className={`text-gray-700 font-medium text-[12px] ${sora.className}`}>
+                      <span className={`text-gray-700 font-medium text-[12px] lg:text-[14px] ${sora.className}`}>
                         {item}
                       </span>
                     </motion.li>

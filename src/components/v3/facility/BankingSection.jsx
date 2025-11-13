@@ -103,7 +103,7 @@ const BankingSection = () => {
 
   return (
     <section className="w-full bg-white py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="px-4 md:px-8 lg:px-16 xl:px-32">
         <motion.div
           initial="hidden"
           whileInView="visible"

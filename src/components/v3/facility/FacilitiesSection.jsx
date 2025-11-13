@@ -85,7 +85,7 @@ const FacilitiesSection = () => {
 
   return (
     <section className="w-full bg-[#F2F4F6] py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="px-4 md:px-8 lg:px-16 xl:px-32">
         {/* Tabs Section */}
         <motion.div
           className="flex border-b border-transparent mb-8 md:mb-12"

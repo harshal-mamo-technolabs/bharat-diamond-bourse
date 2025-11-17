@@ -407,8 +407,8 @@ export default function NewsDetail() {
                                         whileHover={{ scale: 1.05, y: -2 }}
                                         whileTap={{ scale: 0.95 }}
                                         className="p-2 rounded-md bg-white border border-[#0E234E]/20 hover:bg-[#0E234E] hover:text-white text-[#0E234E] transition-all duration-200"
-                                        aria-label="Share on Twitter"
-                                        title="Share on Twitter"
+                                        aria-label="Copy link"
+                                        title="Copy link"
                                     >
                                         <FaLink className="w-4 h-4" />
                                     </motion.a>

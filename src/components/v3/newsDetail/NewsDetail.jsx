@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { FaTwitter, FaFacebook, FaEnvelope, FaUserCircle } from 'react-icons/fa';
+import { useState, useEffect, useMemo } from 'react';
+import { FaTwitter, FaFacebook, FaEnvelope, FaUserCircle, FaBookOpen, FaEye } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import localFont from 'next/font/local';
 import { Sora } from 'next/font/google';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const gotham = localFont({
     src: '../../../../public/fonts/Gotham.otf',
@@ -92,8 +93,116 @@ const latestArticles = [
     }
 ];
 
+const defaultCommentsData = [
+    {
+        id: 1,
+        name: "Anjali Patel",
+        comment: "Insightful coverage! Excited to see how BDB continues to lead the digital transition in the diamond space.",
+        date: "2025-11-12T10:00:00.000Z"
+    },
+    {
+        id: 2,
+        name: "Mark Feldman",
+        comment: "Loved the focus on AI-powered valuations. Transparency is the future of global trade.",
+        date: "2025-11-13T08:15:00.000Z"
+    }
+];
+
 export default function NewsDetail() {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [shareUrl, setShareUrl] = useState('');
+    const pathname = usePathname();
+    const [viewCount, setViewCount] = useState(0);
+    const [comments, setComments] = useState([]);
+    const [commentForm, setCommentForm] = useState({ name: '', comment: '' });
+    const [formError, setFormError] = useState('');
+
+    const viewsStorageKey = useMemo(() => `bdb-news-views-${articleData.title}`, []);
+    const commentsStorageKey = useMemo(() => `bdb-news-comments-${articleData.title}`, []);
+
+    // Get the full URL for sharing
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setShareUrl(window.location.href);
+        }
+    }, [pathname]);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const storedCount = Number(window.localStorage.getItem(viewsStorageKey)) || 0;
+        const updatedCount = storedCount + 1;
+        window.localStorage.setItem(viewsStorageKey, updatedCount.toString());
+        setViewCount(updatedCount);
+    }, [viewsStorageKey]);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const storedComments = window.localStorage.getItem(commentsStorageKey);
+        if (storedComments) {
+            setComments(JSON.parse(storedComments));
+        } else {
+            setComments(defaultCommentsData);
+        }
+    }, [commentsStorageKey]);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        if (comments.length) {
+            window.localStorage.setItem(commentsStorageKey, JSON.stringify(comments));
+        }
+    }, [comments, commentsStorageKey]);
+
+    const resolvedShareUrl = useMemo(() => {
+        if (shareUrl) return shareUrl;
+        if (typeof window !== 'undefined') return window.location.href;
+        return '';
+    }, [shareUrl]);
+
+    const shareMessage = `Discover what's happening at Bharat Diamond Bourse – "${articleData.title}" highlights the latest from the global diamond trade.`;
+    const encodedShareUrl = encodeURIComponent(resolvedShareUrl);
+    const encodedMessage = encodeURIComponent(shareMessage);
+    const emailBody = encodeURIComponent(`${shareMessage}\n\nRead more: ${resolvedShareUrl}`);
+
+    const twitterShareLink = `https://twitter.com/intent/tweet?text=${encodedMessage}&url=${encodedShareUrl}`;
+    const facebookShareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}&quote=${encodedMessage}`;
+    const gmailShareLink = `https://mail.google.com/mail/?view=cm&fs=1&su=${encodedMessage}&body=${emailBody}&ui=2&tf=1`;
+
+    const readingTimeMinutes = useMemo(() => {
+        const articleText = [articleData.title, ...articleData.keyPoints, ...articleData.paragraphs].join(' ');
+        const words = articleText.trim().split(/\s+/).filter(Boolean).length;
+        return Math.max(1, Math.ceil(words / 200));
+    }, []);
+
+    const formatCommentDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+        });
+    };
+
+    const handleCommentChange = (field, value) => {
+        setCommentForm((prev) => ({ ...prev, [field]: value }));
+    };
+
+    const handleCommentSubmit = (e) => {
+        e.preventDefault();
+        if (!commentForm.name.trim() || !commentForm.comment.trim()) {
+            setFormError('Please add both your name and a comment.');
+            return;
+        }
+
+        const newComment = {
+            id: Date.now(),
+            name: commentForm.name.trim(),
+            comment: commentForm.comment.trim(),
+            date: new Date().toISOString()
+        };
+
+        setComments((prev) => [newComment, ...prev]);
+        setCommentForm({ name: '', comment: '' });
+        setFormError('');
+    };
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -154,16 +263,16 @@ export default function NewsDetail() {
             <div className="relative z-20 w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
                 {/* Breadcrumb */}
                 <motion.div
-                    className="mb-6 sm:mb-8"
+                    className="mb-8 sm:mb-10"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
-                    <h6 className={`text-[#36465e] text-[14px] sm:text-[16px] ${gothamLight.className}`}>
-                        <Link href="/v3" className="">
+                    <h6 className={`text-[#0E1425]/70 text-[13px] sm:text-[14px] font-medium ${gotham.className}`}>
+                        <Link href="/v3" className="hover:text-[#0E234E] transition-colors">
                             HOME
-                        </Link>{' '} / NEWS / ARTICLE DETAIL
+                        </Link>{' '} / <Link href="/v3/news&events" className="hover:text-[#0E234E] transition-colors">NEWS & EVENTS</Link>{' '} / ARTICLE DETAIL
                     </h6>
                 </motion.div>
 
@@ -180,18 +289,31 @@ export default function NewsDetail() {
                             {/* Title */}
                             <motion.h1 
                                 variants={itemVariants}
-                                className={`text-[40px] md:text-[55px] leading-tight text-[#05183A] mb-2 ${gothamLight.className}`}
+                                className={`text-[32px] md:text-[42px] lg:text-[48px] leading-tight text-[#0E234E] mb-4 ${gothamLight.className}`}
                             >
                                 {articleData.title}
                             </motion.h1>
 
-                            {/* Date Information */}
+                            {/* Date Information with Reading Time and Views */}
                             <motion.div 
                                 variants={itemVariants}
-                                className={`uppercase text-gray-600 font-semibold text-[13px] mb-6 ${sora.className}`}
+                                className="flex flex-wrap items-center justify-between gap-3 mb-4"
                             >
-                                <span>{articleData.publishedDate}</span>
-                                <span className="ml-2">{articleData.updatedDate}</span>
+                                <div className={`text-[#36465e] font-medium text-[12px] md:text-[13px] ${sora.className}`}>
+                                    <span>{articleData.publishedDate}</span>
+                                    <span className="mx-2">•</span>
+                                    <span>{articleData.updatedDate}</span>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <div className={`flex items-center gap-2 text-[#36465e] text-[12px] md:text-[13px] ${sora.className}`}>
+                                        <FaEye className="w-3.5 h-3.5" />
+                                        <span>{viewCount.toLocaleString('en-IN')} views</span>
+                                    </div>
+                                    <div className={`flex items-center gap-2 text-[#36465e] text-[12px] md:text-[13px] ${sora.className}`}>
+                                        <FaBookOpen className="w-3.5 h-3.5" />
+                                        <span>{readingTimeMinutes} min read</span>
+                                    </div>
+                                </div>
                             </motion.div>
 
                             {/* Author */}
@@ -199,8 +321,8 @@ export default function NewsDetail() {
                                 variants={itemVariants}
                                 className="flex items-center gap-3 mb-6"
                             >
-                                <FaUserCircle className="w-6 h-6 text-[#05183A]" />
-                                <span className={`text-[#05183A] text-[14px] ${sora.className}`}>
+                                <FaUserCircle className="w-6 h-6 text-[#0E234E]" />
+                                <span className={`text-[#0E234E] text-[14px] font-medium ${sora.className}`}>
                                     By {articleData.author}
                                 </span>
                             </motion.div>
@@ -209,7 +331,7 @@ export default function NewsDetail() {
                             {/* Main Image */}
                             <motion.div 
                                 variants={itemVariants}
-                                className="relative h-64 md:h-[400px] w-full mb-2 rounded-md overflow-hidden"
+                                className="relative h-64 md:h-[400px] w-full mb-3 rounded-[6px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
                             >
                                 <Image
                                     src={articleData.image}
@@ -217,13 +339,14 @@ export default function NewsDetail() {
                                     fill
                                     className="object-cover"
                                     sizes="(max-width: 768px) 100vw, 60vw"
+                                    priority
                                 />
                             </motion.div>
 
                             {/* Image Description */}
                             <motion.p 
                                 variants={itemVariants}
-                                className="text-[11px] font-bold text-gray-600 mb-2"
+                                className={`text-[11px] md:text-[12px] text-[#0E1425]/60 mb-4 italic ${sora.className}`}
                             >
                                 {articleData.imageDescription}
                             </motion.p>
@@ -233,45 +356,60 @@ export default function NewsDetail() {
                                 variants={itemVariants}
                                 className="flex items-center justify-between py-4 mb-2"
                             >
-                                <span className={`text-[#05183A] text-sm md:text-[15px] font-semibold ${sora.className}`}>
+                                <span className={`text-[#0E234E] text-sm md:text-[15px] font-semibold ${sora.className}`}>
                                     Share this article
                                 </span>
                                 
-                                <div className="h-px w-[60%] bg-gray-300"></div>
+                                <div className="h-px flex-1 mx-4 bg-gray-300"></div>
                                 
                                 <div className="flex items-center gap-2">
-                                    <motion.button
-                                        whileHover={{ scale: 1.05 }}
+                                    <motion.a
+                                        href={twitterShareLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        whileHover={{ scale: 1.05, y: -2 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                                        className="p-2 rounded-md bg-white border border-[#0E234E]/20 hover:bg-[#0E234E] hover:text-white text-[#0E234E] transition-all duration-200"
+                                        aria-label="Share on Twitter"
+                                        title="Share on Twitter"
                                     >
                                         <FaTwitter className="w-4 h-4" />
-                                    </motion.button>
-                                    <motion.button
-                                        whileHover={{ scale: 1.05 }}
+                                    </motion.a>
+                                    <motion.a
+                                        href={facebookShareLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        whileHover={{ scale: 1.05, y: -2 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                                        className="p-2 rounded-md bg-white border border-[#0E234E]/20 hover:bg-[#0E234E] hover:text-white text-[#0E234E] transition-all duration-200"
+                                        aria-label="Share on Facebook"
+                                        title="Share on Facebook"
                                     >
                                         <FaFacebook className="w-4 h-4" />
-                                    </motion.button>
-                                    <motion.button
-                                        whileHover={{ scale: 1.05 }}
+                                    </motion.a>
+                                    <motion.a
+                                        href={gmailShareLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        whileHover={{ scale: 1.05, y: -2 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                                        className="p-2 rounded-md bg-white border border-[#0E234E]/20 hover:bg-[#0E234E] hover:text-white text-[#0E234E] transition-all duration-200"
+                                        aria-label="Share via Gmail"
+                                        title="Share via Gmail"
                                     >
                                         <FaEnvelope className="w-4 h-4" />
-                                    </motion.button>
+                                    </motion.a>
                                 </div>
                             </motion.div>
 
 
                             {/* Key Points and Content */}
-                            <div className="flex flex-col md:flex-row gap-8 ">
+                            <div className="flex flex-col md:flex-row gap-8">
                                 {/* Key Points - 20% */}
                                 <div className="md:w-[20%]">
                                     <motion.h3 
                                         variants={itemVariants}
-                                        className={`uppercase font-bold text-[#05183A] mb-2 text-sm md:text-[30px] ${sora.className}`}
+                                        className={`font-bold text-[#0E234E] mb-2 text-[14px] md:text-[16px] uppercase tracking-wide ${gotham.className}`}
                                     >
                                         KEY POINTS
                                     </motion.h3>
@@ -282,12 +420,12 @@ export default function NewsDetail() {
                                     {/* Key Points List */}
                                     <motion.ul 
                                         variants={itemVariants}
-                                        className="space-y-8 mb-6"
+                                        className="space-y-4 mb-6"
                                     >
                                         {articleData.keyPoints.map((point, index) => (
-                                            <li key={index} className="flex items-start gap-2">
-                                                <span className="w-1.5 h-1.5 bg-[#05183A] rounded-full mt-1 flex-shrink-0"></span>
-                                                <span className={`text-[#05183A] text-sm md:text-[13px] font-semibold text-justify ${sora.className}`}>
+                                            <li key={index} className="flex items-start gap-3">
+                                                <span className="w-1.5 h-1.5 bg-[#0E234E] rounded-full mt-2 flex-shrink-0"></span>
+                                                <span className={`text-[#0E1425]/70 text-[14px] md:text-[15px] leading-relaxed ${sora.className}`}>
                                                     {point}
                                                 </span>
                                             </li>
@@ -297,7 +435,7 @@ export default function NewsDetail() {
                                      {/* Horizontal Line */}
                             <motion.div 
                                 variants={itemVariants}
-                                className="h-0.5 bg-gray-300 mb-8"
+                                className="h-px bg-gray-200 mb-8"
                             ></motion.div>
 
                                     {/* Paragraphs */}
@@ -309,7 +447,7 @@ export default function NewsDetail() {
                                             <motion.p 
                                                 key={index}
                                                 variants={itemVariants}
-                                                className={`text-[#05183A] leading-relaxed text-sm md:text-[14px] text-justify ${sora.className}`}
+                                                className={`text-[#0E1425]/70 leading-relaxed text-[14px] md:text-[16px] ${sora.className}`}
                                             >
                                                 {paragraph}
                                             </motion.p>
@@ -320,36 +458,131 @@ export default function NewsDetail() {
                                 {/* Share Section */}
                                 <motion.div 
                                 variants={itemVariants}
-                                className="flex items-center justify-between py-4 mb-2"
+                                className="flex items-center justify-between py-4 mb-2 mt-8"
                             >
-                                <span className={`text-[#05183A] text-sm md:text-[15px] font-semibold ${sora.className}`}>
+                                <span className={`text-[#0E234E] text-sm md:text-[15px] font-semibold ${sora.className}`}>
                                     Share this article
                                 </span>
                                 
-                                <div className="h-px w-[60%] bg-gray-300"></div>
+                                <div className="h-px flex-1 mx-4 bg-gray-300"></div>
                                 
                                 <div className="flex items-center gap-2">
-                                    <motion.button
-                                        whileHover={{ scale: 1.05 }}
+                                    <motion.a
+                                        href={twitterShareLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        whileHover={{ scale: 1.05, y: -2 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                                        className="p-2 rounded-md bg-white border border-[#0E234E]/20 hover:bg-[#0E234E] hover:text-white text-[#0E234E] transition-all duration-200"
+                                        aria-label="Share on Twitter"
+                                        title="Share on Twitter"
                                     >
                                         <FaTwitter className="w-4 h-4" />
-                                    </motion.button>
-                                    <motion.button
-                                        whileHover={{ scale: 1.05 }}
+                                    </motion.a>
+                                    <motion.a
+                                        href={facebookShareLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        whileHover={{ scale: 1.05, y: -2 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                                        className="p-2 rounded-md bg-white border border-[#0E234E]/20 hover:bg-[#0E234E] hover:text-white text-[#0E234E] transition-all duration-200"
+                                        aria-label="Share on Facebook"
+                                        title="Share on Facebook"
                                     >
                                         <FaFacebook className="w-4 h-4" />
-                                    </motion.button>
-                                    <motion.button
-                                        whileHover={{ scale: 1.05 }}
+                                    </motion.a>
+                                    <motion.a
+                                        href={gmailShareLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        whileHover={{ scale: 1.05, y: -2 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                                        className="p-2 rounded-md bg-white border border-[#0E234E]/20 hover:bg-[#0E234E] hover:text-white text-[#0E234E] transition-all duration-200"
+                                        aria-label="Share via Gmail"
+                                        title="Share via Gmail"
                                     >
                                         <FaEnvelope className="w-4 h-4" />
-                                    </motion.button>
+                                    </motion.a>
+                                </div>
+                            </motion.div>
+
+                            {/* Comment Section */}
+                            <motion.div 
+                                variants={itemVariants}
+                                className="mt-12 border border-[#0E234E]/10 rounded-[8px] p-6 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
+                            >
+                                <h3 className={`text-[20px] md:text-[22px] text-[#0E234E] font-semibold mb-2 ${gothamLight.className}`}>
+                                    Join the conversation
+                                </h3>
+                                <p className={`text-sm text-[#0E1425]/70 mb-6 ${sora.className}`}>
+                                    Share your perspective or ask a question about this story.
+                                </p>
+
+                                <form onSubmit={handleCommentSubmit} className="space-y-4 mb-8">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <input
+                                            type="text"
+                                            value={commentForm.name}
+                                            onChange={(e) => handleCommentChange('name', e.target.value)}
+                                            placeholder="Your name"
+                                            className={`w-full border border-gray-300 rounded-md px-4 py-2.5 text-[#0E234E] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0E234E]/30 focus:border-[#0E234E] text-[14px] transition-all duration-200 ${sora.className}`}
+                                        />
+                                        <input
+                                            type="email"
+                                            placeholder="Email (optional)"
+                                            className={`w-full border border-gray-200 rounded-md px-4 py-2.5 text-[#0E234E] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0E234E]/20 focus:border-[#0E234E]/40 text-[14px] transition-all duration-200 ${sora.className}`}
+                                        />
+                                    </div>
+                                    <textarea
+                                        value={commentForm.comment}
+                                        onChange={(e) => handleCommentChange('comment', e.target.value)}
+                                        placeholder="Add your comment..."
+                                        rows={4}
+                                        className={`w-full border border-gray-300 rounded-md px-4 py-3 text-[#0E234E] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0E234E]/30 focus:border-[#0E234E] text-[14px] transition-all duration-200 ${sora.className}`}
+                                    />
+                                    {formError && (
+                                        <p className="text-sm text-red-500">{formError}</p>
+                                    )}
+                                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                        <p className={`text-xs text-[#0E1425]/60 ${sora.className}`}>
+                                            By sharing, you agree to follow BDB community guidelines.
+                                        </p>
+                                        <motion.button
+                                            whileHover={{ y: -1 }}
+                                            whileTap={{ scale: 0.98 }}
+                                            type="submit"
+                                            className={`inline-flex items-center justify-center bg-[#0E234E] text-white px-6 py-2.5 rounded-md text-[14px] font-medium hover:bg-[#0E234E]/90 transition-all duration-200 ${sora.className}`}
+                                        >
+                                            Post comment
+                                        </motion.button>
+                                    </div>
+                                </form>
+
+                                <div className="space-y-5">
+                                    {comments.length === 0 ? (
+                                        <p className={`text-sm text-[#0E1425]/60 ${sora.className}`}>
+                                            Be the first to add a comment.
+                                        </p>
+                                    ) : (
+                                        comments.map((comment) => (
+                                            <div
+                                                key={comment.id}
+                                                className="border border-gray-100 rounded-md p-4 bg-[#F9FBFC]"
+                                            >
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <p className={`text-[15px] font-semibold text-[#0E234E] ${sora.className}`}>
+                                                        {comment.name}
+                                                    </p>
+                                                    <span className={`text-xs text-[#0E1425]/60 ${sora.className}`}>
+                                                        {formatCommentDate(comment.date)}
+                                                    </span>
+                                                </div>
+                                                <p className={`text-[14px] text-[#0E1425]/80 leading-relaxed ${sora.className}`}>
+                                                    {comment.comment}
+                                                </p>
+                                            </div>
+                                        ))
+                                    )}
                                 </div>
                             </motion.div>
                         </motion.div>
@@ -363,27 +596,29 @@ export default function NewsDetail() {
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6 }}
-    className="bg-white border border-[#05183A] rounded-md p-6 relative pt-16" // Added pt-16 for top padding to accommodate fixed title
+    className="bg-white border border-[#0E234E]/20 rounded-[6px] shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden"
 >
     {/* Fixed Title */}
-    <div className="absolute top-0 left-0 right-0 bg-gray-200 py-2 mx-15 rounded-b-md">
-        <h3 className={`text-black text-center text-xs md:text-xs ${gothamLight.className}`}>
+    <div className="bg-[#EFF3F6] py-3 px-6">
+        <h3 className={`text-[#0E234E] text-center text-[11px] md:text-[12px] font-semibold tracking-wider ${gotham.className}`}>
             SUBSCRIBE TO OUR MAILING LIST
         </h3>
     </div>
     
     {/* Content */}
-    <div className="space-y-4 px-3">
+    <div className="space-y-4 p-6">
         <input
             type="email"
-            placeholder="Your email"
-            className="w-full border border-[#05183A] rounded-none px-3 py-2.5 text-[#05183A] placeholder-gray-500 focus:outline-none focus:border-[#05183A] text-sm md:text-sm"
+            placeholder="Enter your email"
+            className={`w-full border border-gray-300 rounded-md px-4 py-2.5 text-[#0E234E] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0E234E]/30 focus:border-[#0E234E] text-[14px] transition-all duration-200 ${sora.className}`}
         />
-        <div className="flex justify-center"> {/* Centering container for the button */}
-            <button className={`w-[60%] border-2 bg-[#05183A] rounded-md py-2 text-white hover:bg-white hover:border-[#05183A] hover:text-[#05183A] transition-colors text-sm md:text-sm ${sora.className}`}>
-                Subscribe Now
-            </button>
-        </div>
+        <motion.button 
+            whileHover={{ scale: 1.02, y: -1 }}
+            whileTap={{ scale: 0.98 }}
+            className={`w-full bg-[#0E234E] rounded-md py-2.5 text-white hover:bg-[#0E234E]/90 transition-all duration-200 text-[14px] font-medium shadow-sm ${sora.className}`}
+        >
+            Subscribe Now
+        </motion.button>
     </div>
 </motion.div>
 
@@ -395,30 +630,35 @@ export default function NewsDetail() {
                             transition={{ duration: 0.6, delay: 0.2 }}
                             className="bg-white"
                         >
-                            <h3 className={`text-[13px] md:text-[13px] text-[#05183A] underline mb-4 ${gothamLight.className}`}>
-                                Most Discussed
+                            <h3 className={`text-[14px] md:text-[15px] text-[#0E234E] font-semibold mb-4 pb-2 border-b-2 border-[#0E234E] tracking-wide ${gotham.className}`}>
+                                MOST DISCUSSED
                             </h3>
-                            <div className="space-y-4">
+                            <div className="space-y-5">
                                 {mostDiscussedArticles.map((article) => (
-                                    <div key={article.id} className="flex gap-3">
-                                        <div className="relative h-20 md:h-[100px] w-20 md:w-1/3 flex-shrink-0 rounded-md overflow-hidden">
+                                    <motion.div 
+                                        key={article.id} 
+                                        className="flex gap-3 group cursor-pointer"
+                                        whileHover={{ x: 2 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
+                                        <div className="relative h-20 md:h-[100px] w-20 md:w-1/3 flex-shrink-0 rounded-[6px] overflow-hidden">
                                             <Image
                                                 src={article.image}
                                                 alt={article.title}
                                                 fill
-                                                className="object-cover"
+                                                className="object-cover transition-transform duration-300 group-hover:scale-105"
                                                 sizes="(max-width: 768px) 80px, 150px"
                                             />
                                         </div>
                                         <div className="flex-1">
-                                            <h4 className={`uppercase text-[#05183A] text-xs upppercase md:text-xs font-semibold mb-1 ${gothamLight.className}`}>
+                                            <h4 className={`text-[#0E234E] text-[12px] md:text-[13px] font-semibold mb-1 leading-tight group-hover:text-[#0E234E]/80 transition-colors ${gotham.className}`}>
                                                 {article.title}
                                             </h4>
-                                            <p className={`text-[10px] md:text-[13px] text-gray-600 ${sora.className}`}>
+                                            <p className={`text-[11px] md:text-[12px] text-[#0E1425]/70 leading-relaxed ${sora.className}`}>
                                                 {article.description}
                                             </p>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 ))}
                             </div>
                         </motion.div>
@@ -429,59 +669,68 @@ export default function NewsDetail() {
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6, delay: 0.4 }}
-    className="bg-white border border-[#05183A] rounded-md p-6 relative pt-16" // Added pt-16 and relative
+    className="bg-white border border-[#0E234E]/20 rounded-[6px] shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden"
 >
     {/* Fixed Title */}
-    <div className="absolute top-0 left-0 right-0 bg-gray-200 py-2 mx-30 rounded-b-md">
-        <h3 className={`text-black text-center text-xs md:text-xs ${gothamLight.className}`}>
-            LATEST
+    <div className="bg-[#EFF3F6] py-3 px-6">
+        <h3 className={`text-[#0E234E] text-center text-[11px] md:text-[12px] font-semibold tracking-wider ${gotham.className}`}>
+            LATEST ARTICLES
         </h3>
     </div>
     
-    {/* Image Slider */}
-    <div className="relative mb-4">
-        <AnimatePresence mode="wait">
-            <motion.div
-                key={currentSlide}
-                custom={currentSlide}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                    x: { type: "spring", stiffness: 300, damping: 30 },
-                    opacity: { duration: 0.2 }
-                }}
-                className="relative h-48 md:h-[220px] w-full rounded-md overflow-hidden"
-            >
-                <Image
-                    src={latestArticles[currentSlide].image}
-                    alt={latestArticles[currentSlide].title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 40vw"
-                />
-            </motion.div>
-        </AnimatePresence>
-    </div>
+    <div className="p-6">
+        {/* Image Slider */}
+        <Link 
+            href={`/v3/news&events/${latestArticles[currentSlide].id}`}
+            className="block group"
+        >
+            <div className="relative mb-4">
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={currentSlide}
+                        custom={currentSlide}
+                        variants={slideVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{
+                            x: { type: "spring", stiffness: 300, damping: 30 },
+                            opacity: { duration: 0.2 }
+                        }}
+                        className="relative h-48 md:h-[220px] w-full rounded-[6px] overflow-hidden cursor-pointer"
+                    >
+                        <Image
+                            src={latestArticles[currentSlide].image}
+                            alt={latestArticles[currentSlide].title}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, 40vw"
+                        />
+                    </motion.div>
+                </AnimatePresence>
+            </div>
 
-    {/* Slide Content */}
-    <div className="text-center">
-        <h4 className={`text-[28px] md:text-[30px] text-[#05183A] mb-2 leading-none ${gothamLight.className}`}>
-            {latestArticles[currentSlide].title}
-        </h4>
-        <p className={`text-[16px] md:text-[16px] text-gray-600 mb-4 ${sora.className}`}>
-            {latestArticles[currentSlide].subtitle}
-        </p>
+            {/* Slide Content */}
+            <div className="text-center">
+                <h4 className={`text-[20px] md:text-[22px] text-[#0E234E] mb-3 leading-tight group-hover:text-[#0E234E]/80 transition-colors duration-200 ${gothamLight.className}`}>
+                    {latestArticles[currentSlide].title}
+                </h4>
+                <p className={`text-[14px] md:text-[15px] text-[#0E1425]/70 mb-4 leading-relaxed ${sora.className}`}>
+                    {latestArticles[currentSlide].subtitle}
+                </p>
+            </div>
+        </Link>
         
         {/* Navigation Dots */}
-        <div className="flex justify-center gap-2">
+        <div className="flex justify-center gap-2 mt-5">
             {latestArticles.map((_, index) => (
-                <button
+                <motion.button
                     key={index}
                     onClick={() => goToSlide(index)}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                        index === currentSlide ? 'bg-[#05183A]' : 'bg-gray-300'
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                        index === currentSlide ? 'bg-[#0E234E] w-6' : 'bg-gray-300 hover:bg-gray-400'
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                 />

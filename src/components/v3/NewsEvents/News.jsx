@@ -479,16 +479,19 @@ export default function News() {
                   </h3>
 
                   {/* Read More Button */}
-                  <motion.button
-                    whileHover={{ 
-                      scale: 1.05,
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`flex items-center gap-2 bg-transparent text-[#05183A] px-1 py-2 rounded-md text-[12px] font-medium transition-colors duration-200 ${sora.className}`}
-                  >
-                    Read More
-                    <FaArrowRight className="text-xs" />
-                  </motion.button>
+                  {/* Read More Button */}
+<Link href={`/v3/news&events/${card.id}`}>
+  <motion.button
+    whileHover={{ 
+      scale: 1.05,
+    }}
+    whileTap={{ scale: 0.95 }}
+    className={`flex items-center gap-2 bg-transparent text-[#05183A] px-1 py-2 rounded-md text-[12px] font-medium transition-colors duration-200 ${sora.className}`}
+  >
+    Read More
+    <FaArrowRight className="text-xs" />
+  </motion.button>
+</Link>
                 </div>
               </motion.div>
             );

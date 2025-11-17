@@ -6,7 +6,7 @@ import ScrollToTop from "@/components/v3/ScrollToTop";
 export default function NewsDetailPage() {
     return (
           <div className="">
-              <Header backgroundImage="/events/news-hero.png" backgroundType="image" title="News & Events" breadcrumb="HOME / NEWS & EVENTS" description="Bharat Diamond Bourse (BDB) is the world’s largest and most prestigious diamond trading hub, bringing together thousands of members across 100+ countries." showDivider={true}/>
+              <Header backgroundImage="/events/news-hero.png" backgroundType="image" title="News & Events" breadcrumb="HOME / NEWS & EVENTS" description="Stay updated with announcements, press releases, media coverage and major events happening at Bharat Diamond Bourse." showDivider={true}/>
               <NewsDetail/>
               <Footer/>
               <ScrollToTop />

@@ -81,10 +81,10 @@ export default function AboutSection() {
                   Who We Are
                 </h2>
                 <p className={`text-gray-700 leading-relaxed text-[15px] mb-3 text-justify ${sora.className}`}>
-                The Bharat Diamond Bourse (BDB) is the world's largest diamond bourse, a self-contained city dedicated to the gem and jewellery trade. Our purpose is to provide a secure and efficient ecosystem that facilitates seamless trade for a diverse community.
+                Bharat Diamond Bourse located at Bandra Kurla Complex in Mumbai is the worlds largest and most sophisticated diamond exchange. Operational since the year twenty ten, BDB houses more than four thousand member companies engaged in the import, export, manufacturing and marketing of rough and polished diamonds.
                 </p>
                 <p className={`text-gray-700 leading-relaxed text-[15px] text-justify ${sora.className}`}>
-                Around 2,500 Indian and international firms have established their offices here, ranging from large multinational corporations to small, independent traders.
+                Spread across twenty acres with nearly two million square feet of constructed area along with almost one million square feet of basements, the bourse integrates trading halls, walk in vaults, twenty four thousand five hundred safe deposit boxes, customs clearance, banks, laboratories and essential services, all in one location.
                 </p>
                 <Link
   href="/v3/about"

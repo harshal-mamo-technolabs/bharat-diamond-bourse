@@ -85,8 +85,7 @@ export default function Insights() {
                         Insights From The Diamond Trade
                     </h2>
                     <p className={`mx-auto mt-4 max-w-5xl text-[16px] md:text-[16px] leading-relaxed text-[#0E1425]/70 ${sora.className}`}>
-                        Stay informed with expert perspectives, industry updates, and stories that shape the global gem and jewelry
-                        market. From trade trends to infrastructure innovations, explore what's happening at the heart of diamond commerce.
+                    Stay informed with expert perspectives, industry updates and stories that shape the global gem and jewelry market. From trade trends to infrastructure innovations, explore what is happening at the heart of diamond commerce.
                     </p>
                 </div>
 

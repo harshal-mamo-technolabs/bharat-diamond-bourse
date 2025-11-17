@@ -11,7 +11,7 @@ import ScrollToTop from "@/components/v3/ScrollToTop";
 export default function Careers() {
     return (
           <div className="">
-              <Header backgroundImage="/careers-hero.png" backgroundType="image" title="CAREERS" description="Bharat Diamond Bourse (BDB) is the world’s largest and most prestigious diamond trading hub, bringing together thousands of members across 100+ countries." showDivider={true}/>
+              <Header backgroundImage="/careers-hero.png" backgroundType="image" title="CAREERS" description="Explore job opportunities and be part of a team contributing to the future of the diamond trade." showDivider={true}/>
               <HRComponent/>
               <ServicesSection/>
               <SportsFacilities/>

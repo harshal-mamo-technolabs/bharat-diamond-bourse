@@ -12,7 +12,7 @@ import ScrollToTop from "@/components/v3/ScrollToTop";
 export default function About() {
     return (
           <div className="">
-              <Header backgroundImage="/About/about-hero.png" backgroundType="image" title="About Us" breadcrumb="HOME / ABOUT" description="Bharat Diamond Bourse (BDB) is the world's largest and most prestigious diamond trading hub, bringing together thousands of members across 100+ countries." showDivider={true}/>
+              <Header backgroundImage="/About/about-hero.png" backgroundType="image" title="About Us" breadcrumb="HOME / ABOUT" description="Bharat Diamond Bourse also known as BDB is the worlds largest and most prestigious diamond trading hub, bringing together thousands of members across more than one hundred countries." showDivider={true}/>
               <DiamondhubSection/>
               <Mission/>
               <HistoryTimeline/>

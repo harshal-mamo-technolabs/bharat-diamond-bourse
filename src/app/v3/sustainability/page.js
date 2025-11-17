@@ -6,7 +6,7 @@ import ScrollToTop from "@/components/v3/ScrollToTop";
 export default function Sustainibility() {
     return (
           <div className="">
-              <Header backgroundImage="/sustainibility/sustainability-hero.png" backgroundType="image" title="SUSTAINIBILTY" breadcrumb="HOME / SUSTAINIBILITY" description="Bharat Diamond Bourse (BDB) is the world’s largest and most prestigious diamond trading hub, bringing together thousands of members across 100+ countries." showDivider={true}/>
+              <Header backgroundImage="/sustainibility/sustainability-hero.png" backgroundType="image" title="SUSTAINIBILTY" breadcrumb="HOME / SUSTAINIBILITY" description="BDB is committed to environmental care, responsible operational practices and community welfare. The campus integrates renewable energy systems, water conservation structures and waste management solutions." showDivider={true}/>
               <Sustainability/>
               <Footer/>
               <ScrollToTop />

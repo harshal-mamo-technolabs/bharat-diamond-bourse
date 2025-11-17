@@ -6,7 +6,7 @@ import ScrollToTop from "@/components/v3/ScrollToTop";
 export default function Circular() {
     return (
           <div className="">
-              <Header backgroundImage="/circular-hero.png" backgroundType="image" title="CIRCULARS" description="Bharat Diamond Bourse (BDB) is the world’s largest and most prestigious diamond trading hub, bringing together thousands of members across 100+ countries." showDivider={true}/>
+              <Header backgroundImage="/circular-hero.png" backgroundType="image" title="CIRCULARS" description="Access the latest circulars, important notices, security updates and downloadable documents issued for BDB members." showDivider={true}/>
               <Circulars/>
               <Footer/>
               <ScrollToTop />

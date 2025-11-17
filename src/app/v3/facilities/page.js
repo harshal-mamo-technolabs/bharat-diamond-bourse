@@ -12,7 +12,7 @@ import ScrollToTop from "@/components/v3/ScrollToTop";
 export default function Facilities() {
     return (
           <div className="">
-              <Header backgroundImage="/facilities/facility-hero.png" backgroundType="image" title="Facilities" breadcrumb="HOME / FACILITIES" description="Bharat Diamond Bourse (BDB) is the world’s largest and most prestigious diamond trading hub, bringing together thousands of members across 100+ countries." showDivider={true}/>
+              <Header backgroundImage="/facilities/facility-hero.png" backgroundType="image" title="Facilities" breadcrumb="HOME / FACILITIES" description="BDB provides a complete environment for diamond businesses with customs offices, banking halls, gem testing laboratories, trading halls, safe vaults, travel services, logistics support, telecom infrastructure, cafés, food courts and recreation spaces." showDivider={true}/>
               <CustomsIDTC/>
               <FacilitiesSection/>
               <SportsFacilities/>

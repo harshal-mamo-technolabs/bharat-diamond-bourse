@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { FaTwitter, FaFacebook, FaEnvelope, FaUserCircle, FaBookOpen, FaEye } from 'react-icons/fa';
+import { FaFacebook, FaEnvelope, FaUserCircle, FaBookOpen, FaEye } from 'react-icons/fa';
+import { FaXTwitter, FaLink  } from 'react-icons/fa6';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import localFont from 'next/font/local';
@@ -263,7 +264,7 @@ export default function NewsDetail() {
             <div className="relative z-20 w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
                 {/* Breadcrumb */}
                 <motion.div
-                    className="mb-8 sm:mb-10"
+                    className="mb-4 sm:mb-4"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -373,7 +374,7 @@ export default function NewsDetail() {
                                         aria-label="Share on Twitter"
                                         title="Share on Twitter"
                                     >
-                                        <FaTwitter className="w-4 h-4" />
+                                        <FaXTwitter className="w-4 h-4" />
                                     </motion.a>
                                     <motion.a
                                         href={facebookShareLink}
@@ -398,6 +399,18 @@ export default function NewsDetail() {
                                         title="Share via Gmail"
                                     >
                                         <FaEnvelope className="w-4 h-4" />
+                                    </motion.a>
+                                    <motion.a
+                                        href={twitterShareLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        whileHover={{ scale: 1.05, y: -2 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        className="p-2 rounded-md bg-white border border-[#0E234E]/20 hover:bg-[#0E234E] hover:text-white text-[#0E234E] transition-all duration-200"
+                                        aria-label="Share on Twitter"
+                                        title="Share on Twitter"
+                                    >
+                                        <FaLink className="w-4 h-4" />
                                     </motion.a>
                                 </div>
                             </motion.div>
@@ -477,7 +490,7 @@ export default function NewsDetail() {
                                         aria-label="Share on Twitter"
                                         title="Share on Twitter"
                                     >
-                                        <FaTwitter className="w-4 h-4" />
+                                        <FaXTwitter className="w-4 h-4" />
                                     </motion.a>
                                     <motion.a
                                         href={facebookShareLink}
@@ -502,6 +515,18 @@ export default function NewsDetail() {
                                         title="Share via Gmail"
                                     >
                                         <FaEnvelope className="w-4 h-4" />
+                                    </motion.a>
+                                    <motion.a
+                                        href={twitterShareLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        whileHover={{ scale: 1.05, y: -2 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        className="p-2 rounded-md bg-white border border-[#0E234E]/20 hover:bg-[#0E234E] hover:text-white text-[#0E234E] transition-all duration-200"
+                                        aria-label="Share on Twitter"
+                                        title="Share on Twitter"
+                                    >
+                                        <FaLink className="w-4 h-4" />
                                     </motion.a>
                                 </div>
                             </motion.div>

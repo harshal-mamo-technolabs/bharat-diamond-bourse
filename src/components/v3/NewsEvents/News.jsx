@@ -417,84 +417,86 @@ export default function News() {
               const currentImage = card.images[currentImageIndex] || card.images[0];
               
               return (
-                <motion.div
+                <Link 
                   key={card.id}
-                  variants={cardVariants}
-                  whileHover={{ 
-                    y: -5, 
-                    transition: { duration: 0.2 } 
-                  }}
-                  onMouseEnter={() => handleCardHover(card.id)}
-                  onMouseLeave={handleCardLeave}
-                  className="rounded-md overflow-hidden transition-all duration-300"
+                  href={`/v3/news&events/${card.id}`}
+                  className="block"
                 >
-                  {/* Image Container with Slideshow */}
-                  <div className="relative">
-                    <div className="w-full h-48 bg-gray-200 relative overflow-hidden">
-                      <AnimatePresence initial={false}>
-                        <motion.img
-                          key={`${card.id}-${currentImageIndex}`}
-                          src={currentImage}
-                          alt={card.title}
-                          className="absolute inset-0 w-full h-full object-cover"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ 
-                            duration: 0.6,
-                            ease: [0.4, 0, 0.2, 1]
-                          }}
-                          onError={(e) => {
-                            // Fallback if image doesn't exist
-                            const target = e.target;
-                            target.style.display = 'none';
-                            if (target.nextElementSibling) {
-                              target.nextElementSibling.classList.remove('hidden');
-                            }
-                          }}
-                        />
-                      </AnimatePresence>
-                      {/* Fallback div if image doesn't load */}
-                      <div className="hidden absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                        <span className="text-white font-semibold">Event Image</span>
+                  <motion.div
+                    variants={cardVariants}
+                    whileHover={{ 
+                      y: -5, 
+                      transition: { duration: 0.2 } 
+                    }}
+                    onMouseEnter={() => handleCardHover(card.id)}
+                    onMouseLeave={handleCardLeave}
+                    className="rounded-md overflow-hidden transition-all duration-300 cursor-pointer"
+                  >
+                    {/* Image Container with Slideshow */}
+                    <div className="relative">
+                      <div className="w-full h-48 bg-gray-200 relative overflow-hidden">
+                        <AnimatePresence initial={false}>
+                          <motion.img
+                            key={`${card.id}-${currentImageIndex}`}
+                            src={currentImage}
+                            alt={card.title}
+                            className="absolute inset-0 w-full h-full object-cover"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ 
+                              duration: 0.6,
+                              ease: [0.4, 0, 0.2, 1]
+                            }}
+                            onError={(e) => {
+                              // Fallback if image doesn't exist
+                              const target = e.target;
+                              target.style.display = 'none';
+                              if (target.nextElementSibling) {
+                                target.nextElementSibling.classList.remove('hidden');
+                              }
+                            }}
+                          />
+                        </AnimatePresence>
+                        {/* Fallback div if image doesn't load */}
+                        <div className="hidden absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                          <span className="text-white font-semibold">Event Image</span>
+                        </div>
+                      </div>
+                      
+                      {/* Date Label */}
+                      <div className="absolute top-3 right-3 bg-gray-100 px-3 py-1 rounded-md shadow-sm z-10">
+                        <span className={`text-black text-xs font-semibold ${sora.className}`}>{card.date}</span>
                       </div>
                     </div>
-                    
-                    {/* Date Label */}
-                    <div className="absolute top-3 right-3 bg-gray-100 px-3 py-1 rounded-md shadow-sm z-10">
-                      <span className={`text-black text-xs font-semibold ${sora.className}`}>{card.date}</span>
+
+                    {/* Card Content */}
+                    <div className="mt-4">
+                      {/* Event Range */}
+                      <p className={`text-xs text-gray-600 mb-2 font-medium ${gothamLight.className}`}>
+                      {card.eventRange}
+                      </p>
+
+                      {/* Title */}
+                      <h3 className={`text-[#05183A] text-[16px] font-semibold mb-2 leading-tight ${gothamLight.className}`}>
+                        {card.description}
+                      </h3>
+
+                      {/* Read More Button */}
+                      <motion.button
+                        whileHover={{ 
+                          scale: 1.05,
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`flex items-center gap-2 bg-transparent text-[#05183A] px-1 py-2 rounded-md text-[12px] font-medium transition-colors duration-200 ${sora.className}`}
+                      >
+                        Read More
+                        <FaArrowRight className="text-xs" />
+                      </motion.button>
                     </div>
-                  </div>
-
-                {/* Card Content */}
-                <div className="mt-4">
-                  {/* Event Range */}
-                  <p className={`text-xs text-gray-600 mb-2 font-medium ${gothamLight.className}`}>
-                   {card.eventRange}
-                  </p>
-
-                  {/* Title */}
-                  <h3 className={`text-[#05183A] text-[16px] font-semibold mb-2 leading-tight ${gothamLight.className}`}>
-                    {card.description}
-                  </h3>
-
-                  {/* Read More Button */}
-                  {/* Read More Button */}
-<Link href={`/v3/news&events/${card.id}`}>
-  <motion.button
-    whileHover={{ 
-      scale: 1.05,
-    }}
-    whileTap={{ scale: 0.95 }}
-    className={`flex items-center gap-2 bg-transparent text-[#05183A] px-1 py-2 rounded-md text-[12px] font-medium transition-colors duration-200 ${sora.className}`}
-  >
-    Read More
-    <FaArrowRight className="text-xs" />
-  </motion.button>
-</Link>
-                </div>
-              </motion.div>
-            );
+                  </motion.div>
+                </Link>
+              );
             })}
           </motion.div>
 

@@ -277,7 +277,7 @@ export default function NewsDetail() {
                 </motion.div>
 
                 {/* Main Content Grid */}
-                <div className="flex flex-col lg:flex-row gap-20">
+                <div className="flex flex-col lg:flex-row gap-5 sm:gap-20">
                     {/* Left Side - 60% on md+ */}
                     <div className="lg:w-[70%]">
                         <motion.div
@@ -319,7 +319,7 @@ export default function NewsDetail() {
                             {/* Author */}
                             <motion.div 
                                 variants={itemVariants}
-                                className="flex items-center gap-3 mb-6"
+                                className="flex items-center gap-3 mb-4"
                             >
                                 <FaUserCircle className="w-6 h-6 text-[#0E234E]" />
                                 <span className={`text-[#0E234E] text-[14px] font-medium ${sora.className}`}>
@@ -331,7 +331,7 @@ export default function NewsDetail() {
                             {/* Main Image */}
                             <motion.div 
                                 variants={itemVariants}
-                                className="relative h-64 md:h-[400px] w-full mb-3 rounded-[6px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+                                className="relative h-64 md:h-[400px] w-full mb-2 rounded-[6px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
                             >
                                 <Image
                                     src={articleData.image}
@@ -354,7 +354,7 @@ export default function NewsDetail() {
                             {/* Share Section */}
                             <motion.div 
                                 variants={itemVariants}
-                                className="flex items-center justify-between py-4 mb-2"
+                                className="flex items-center justify-between mb-4"
                             >
                                 <span className={`text-[#0E234E] text-sm md:text-[15px] font-semibold ${sora.className}`}>
                                     Share this article
@@ -404,7 +404,7 @@ export default function NewsDetail() {
 
 
                             {/* Key Points and Content */}
-                            <div className="flex flex-col md:flex-row gap-8">
+                            <div className="flex flex-col md:flex-row gap-4 sm:gap-8">
                                 {/* Key Points - 20% */}
                                 <div className="md:w-[20%]">
                                     <motion.h3 
@@ -420,7 +420,7 @@ export default function NewsDetail() {
                                     {/* Key Points List */}
                                     <motion.ul 
                                         variants={itemVariants}
-                                        className="space-y-4 mb-6"
+                                        className="space-y-4 mb-4"
                                     >
                                         {articleData.keyPoints.map((point, index) => (
                                             <li key={index} className="flex items-start gap-3">
@@ -435,7 +435,7 @@ export default function NewsDetail() {
                                      {/* Horizontal Line */}
                             <motion.div 
                                 variants={itemVariants}
-                                className="h-px bg-gray-200 mb-8"
+                                className="h-px bg-gray-200 mb-4"
                             ></motion.div>
 
                                     {/* Paragraphs */}
@@ -458,7 +458,7 @@ export default function NewsDetail() {
                                 {/* Share Section */}
                                 <motion.div 
                                 variants={itemVariants}
-                                className="flex items-center justify-between py-4 mb-2 mt-8"
+                                className="flex items-center justify-between py-4 mb-4"
                             >
                                 <span className={`text-[#0E234E] text-sm md:text-[15px] font-semibold ${sora.className}`}>
                                     Share this article
@@ -509,7 +509,7 @@ export default function NewsDetail() {
                             {/* Comment Section */}
                             <motion.div 
                                 variants={itemVariants}
-                                className="mt-12 border border-[#0E234E]/10 rounded-[8px] p-6 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
+                                className="border border-[#0E234E]/10 rounded-[8px] mb-4 p-6 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
                             >
                                 <h3 className={`text-[20px] md:text-[22px] text-[#0E234E] font-semibold mb-2 ${gothamLight.className}`}>
                                     Join the conversation
@@ -596,7 +596,7 @@ export default function NewsDetail() {
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6 }}
-    className="bg-white border border-[#0E234E]/20 rounded-[6px] shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden"
+    className="bg-white border border-[#0E234E]/20 rounded-[6px] shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden mb-4"
 >
     {/* Fixed Title */}
     <div className="bg-[#EFF3F6] py-3 px-6">
@@ -628,7 +628,7 @@ export default function NewsDetail() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="bg-white"
+                            className="bg-white mb-4"
                         >
                             <h3 className={`text-[14px] md:text-[15px] text-[#0E234E] font-semibold mb-4 pb-2 border-b-2 border-[#0E234E] tracking-wide ${gotham.className}`}>
                                 MOST DISCUSSED
@@ -669,7 +669,7 @@ export default function NewsDetail() {
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6, delay: 0.4 }}
-    className="bg-white border border-[#0E234E]/20 rounded-[6px] shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden"
+    className="bg-white border mb-4 border-[#0E234E]/20 rounded-[6px] shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden"
 >
     {/* Fixed Title */}
     <div className="bg-[#EFF3F6] py-3 px-6">

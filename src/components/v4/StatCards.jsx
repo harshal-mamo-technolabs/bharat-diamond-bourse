@@ -129,7 +129,7 @@ const StatsCard = () => {
   };
 
   return (
-    <div className="bg-white py-4 sm:py-10 lg:py-10">
+    <div className="py-4 sm:py-10 lg:py-10">
       <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
         {/* Header */}
         <motion.div

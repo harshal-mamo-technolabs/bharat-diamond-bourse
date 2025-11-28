@@ -59,26 +59,26 @@ export default function AboutSection() {
   };
 
   return (
-    <section className="w-full bg-white py-10 sm:py-10">
+    <section className="w-full py-10 sm:py-10">
       <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
         {/* Main heading */}
-        <div className="text-left mb-8">
+        {/* <div className="text-left mb-8">
           <h1
             className={`text-3xl md:text-3xl font-bold text-[#1D3156] leading-tight mx-auto ${gothamLight.className}`}
           >
             <span className="block xl:inline">BDB: Shaping The Future </span>
             <span className="block xl:inline">Of Diamond Trade</span>
           </h1>
-        </div>
+        </div> */}
 
         {/* Card container */}
         <div className="relative mb-0">
-          <div className="bg-[#EFF3F6] rounded-md p-6 sm:p-10 sm:pt-10 relative mb-0 overflow-visible">
+          <div className="rounded-md sm:pt-10 relative mb-0 overflow-visible">
             {/* Grid for lg+ screens, stacked for mobile and tablet */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-y-0 lg:gap-x-5 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-y-0 lg:gap-x-10 items-start">
               {/* WHO WE ARE */}
               <div className="max-w-7xl">
-                <h2 className={`text-3xl lg:text-5xl uppercase font-bold text-[#1D3156] mb-4 ${gothamLight.className}`}>
+                <h2 className={`text-3xl lg:text-5xl font-bold text-[#1D3156] mb-4 ${gothamLight.className}`}>
                   Who We Are
                 </h2>
                 <p className={`text-gray-700 leading-relaxed text-[15px] mb-3 text-justify ${sora.className}`}>
@@ -111,7 +111,7 @@ export default function AboutSection() {
 
               {/* Building 1 image - Smaller but fully visible on md+ screens */}
               <motion.div
-                className="group flex justify-center lg:justify-end items-end relative -mt-4 sm:-mt-10 lg:mt-5 mb-8 sm:mb-4 lg:mb-4"
+                className="group flex justify-center lg:justify-end items-end relative -mt-4 sm:-mt-10 lg:mt-15 mb-8 sm:mb-4 lg:mb-4"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.8 }}

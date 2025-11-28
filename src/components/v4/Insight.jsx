@@ -77,7 +77,7 @@ export default function Insights() {
     }, []);
 
     return (
-        <section className=" sm:py-10 py-10 bg-[#EFF3F6]">
+        <section className=" sm:py-10 py-10 bg-[#ecf3f7]/80">
             <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
                 {/* Header */}
                 <div className="mb-12 text-center">

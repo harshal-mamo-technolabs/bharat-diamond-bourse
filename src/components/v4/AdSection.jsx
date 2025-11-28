@@ -23,7 +23,7 @@ function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
 
 export default function AdSection() {
   return (
-    <section className="w-full bg-white py-10">
+    <section className="w-full py-10">
       <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32 grid grid-cols-12 gap-8 items-center">
         {/* Left text */}
         <div className="col-span-12 md:col-span-6">

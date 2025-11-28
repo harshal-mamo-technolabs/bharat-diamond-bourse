@@ -36,21 +36,21 @@ function widthClass(rel) {
   const a = Math.abs(rel);
   if (a === 0) {
     return [
-      "w-[80vw] sm:w-[60vw] lg:w-[20vw]", // Reduced from 24vw to 20vw for center card on md+ screens
-      "min-w-[280px] lg:min-w-[20vw]", // Reduced from 24vw to 20vw
+      "w-[80vw] sm:w-[60vw] lg:w-[24vw]", // Reduced from 24vw to 20vw for center card on md+ screens
+      "min-w-[280px] lg:min-w-[24vw]", // Reduced from 24vw to 20vw
       "max-w-[600px]", // Reduced from 680px
     ].join(" ");
   }
   if (a === 1) {
     return [
-      "w-[76vw] sm:w-[56vw] lg:w-[20vw]", 
-      "min-w-[260px] lg:min-w-[20vw]", 
+      "w-[76vw] sm:w-[56vw] lg:w-[22vw]", 
+      "min-w-[260px] lg:min-w-[22vw]", 
       "max-w-[640px]", 
     ].join(" ");
   }
   return [
-    "w-[76vw] sm:w-[56vw] lg:w-[20vw]", 
-    "min-w-[260px] lg:min-w-[20vw]", 
+    "w-[76vw] sm:w-[56vw] lg:w-[22vw]", 
+    "min-w-[260px] lg:min-w-[22vw]", 
     "max-w-[640px]", 
   ].join(" ");
 }
@@ -304,7 +304,7 @@ export default function PillarOfProgress() {
   };
 
   return (
-    <section className="bg-white">
+    <section className="">
       {/* Updated container with consistent max-w-7xl and padding */}
       <div className="max-w-7xl mx-auto py-10 px-4 md:px-8 lg:px-16 xl:px-32">
         <h2

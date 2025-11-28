@@ -11,24 +11,36 @@ import BannerWrapper from "@/components/v4/BannerWrapper";
 import AdSection from "@/components/v4/AdSection";
 import ScrollToTop from "@/components/v4/ScrollToTop";
 
-
 export default function Home() {
   return (
-        <div className="">
-            <Header/>
-            <BannerWrapper />
-            <Partners/>
-            <AboutSection/>
-            <StatsCard/>
-            {/* <BourseSection/>  */}
-            <CorporateTaxSection/>
-            <PillarOfProgress/>
-            <MissionSection/>
-            <AdSection/>
-            {/* <Facility/> */}
-            <Insights/>
-            <Footer/>
-            <ScrollToTop />
-        </div>
+    <div className="relative min-h-screen">
+      {/* Background Image with Low Opacity */}
+      <div 
+        className="fixed inset-0 z-0 opacity-70"
+        style={{
+          backgroundImage: 'url("/service-banner.jpg")', // Replace with your image path
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      />
+      
+      {/* Content Container */}
+      <div className="relative z-10">
+        <Header/>
+        <BannerWrapper />
+        <Partners/>
+        <AboutSection/>
+        <StatsCard/>
+        <CorporateTaxSection/>
+        <PillarOfProgress/>
+        <MissionSection/>
+        <AdSection/>
+        <Insights/>
+        <Footer/>
+        <ScrollToTop />
+      </div>
+    </div>
   );
 }

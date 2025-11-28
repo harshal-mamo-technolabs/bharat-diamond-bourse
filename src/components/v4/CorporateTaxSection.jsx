@@ -18,10 +18,10 @@ export default function BDBInfoNote() {
   };
 
   return (
-    <section className="relative w-full py-10 sm:py-10 bg-white">
-      <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
+    <section className="relative w-full py-10 sm:py-10">
+      <div className="">
         <motion.div 
-          className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 lg:gap-10 bg-[#ecf3f7] p-4 sm:p-6 lg:p-8 rounded-md relative"
+          className="flex flex-col sm:flex-row mx-auto px-4 md:px-8 lg:px-16 xl:px-32 items-start gap-4 sm:gap-6 lg:gap-10 bg-[#ecf3f7] p-4 sm:p-6 lg:p-8 rounded-md relative"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -40,7 +40,7 @@ export default function BDBInfoNote() {
           </div>
 
           {/* Bottom Right Button */}
-          <button className="absolute bottom-2 md:bottom-4 right-4 bg-white text-[#05183A] hover:bg-[#05183A] hover:text-white p-4 rounded-none">
+          <button className="absolute bottom-2 md:bottom-4 md:right-32 right-4 bg-white text-[#05183A] hover:bg-[#05183A] hover:text-white p-4 rounded-none">
             <FaArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </motion.div>

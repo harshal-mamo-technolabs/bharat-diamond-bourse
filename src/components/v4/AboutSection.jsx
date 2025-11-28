@@ -122,8 +122,8 @@ export default function AboutSection() {
                   style={{
                     // Responsive sizing - smaller on md+ screens but fully visible
                     width: '100%',
-                    maxWidth: '425px', // Reduced from 650px
-                    height: '235px', // Reduced from 350px
+                    maxWidth: '475px', // Reduced from 650px
+                    height: '255px', // Reduced from 350px
                     borderRadius: '6px',
                   }}
                 >

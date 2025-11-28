@@ -1,6 +1,5 @@
 import { Geist, Geist_Mono, Sora } from "next/font/google";
 import "./globals.css";
-import VideoCursor from "@/components/VideoCursor";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -33,7 +32,6 @@ export default function RootLayout({ children }) {
        <html lang="en" className="overflow-x-hidden">
       <body className={`max-w-[100vw] overflow-x-hidden ${sora.variable}`}>
         {children}
-        <VideoCursor/>
       </body>
     </html>
     );

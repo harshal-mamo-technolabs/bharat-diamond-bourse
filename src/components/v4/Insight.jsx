@@ -26,7 +26,7 @@ export default function Insights() {
     const insightCards = [
         {
             id: 1,
-            image: "/insight/inside-bdb-global-network.png",
+            image: "/insight/insight.webp",
             title: "The Evolution of Diamond Trading in India",
             description:
                 "Discover how Bharat Diamond Bourse transformed India's diamond industry into a global powerhouse...",

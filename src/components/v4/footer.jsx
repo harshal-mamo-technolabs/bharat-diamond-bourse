@@ -240,7 +240,7 @@ export default function Footer() {
                                 <h4 className={`${gotham.className} text-[#A6AFBE] tracking-[2px] uppercase text-[13px] mb-4`}>
                                     Stay Connected
                                 </h4>
-                                <div className="flex items-center gap-4 text-[#0E234E]">
+                                <div className="flex items-center gap-4 text-[#0E234E] mb-2">
                                     {socialLinks.map((social) => (
                                         <Link 
                                             key={social.name}
@@ -260,6 +260,23 @@ export default function Footer() {
                                         </Link>
                                     ))}
                                 </div>
+
+                                {/* Video Container - Smooth transform animation */}
+                                <div className="relative mt-2 mb-2 flex justify-end">
+                                    <div className="w-[120px] h-[120px] md:w-[300px] md:h-[300px] rounded-md overflow-hidden transform translate-x-[60px] md:translate-x-[260px]">
+                                        <video 
+                                            autoPlay 
+                                            muted 
+                                            loop 
+                                            playsInline
+                                            className="w-full h-full object-cover"
+                                        >
+                                            <source src="/diamond-video-1.webm" type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>

@@ -75,16 +75,16 @@ export default function AboutSection() {
         <div className="relative mb-0">
           <div className="rounded-md sm:pt-10 relative mb-0 overflow-visible">
             {/* Grid for lg+ screens, stacked for mobile and tablet */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-y-0 lg:gap-x-10 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-y-0 lg:gap-x-2 items-start">
               {/* WHO WE ARE */}
               <div className="max-w-7xl">
                 <h2 className={`text-3xl lg:text-5xl font-bold text-[#1D3156] mb-4 ${gothamLight.className}`}>
                   Who We Are
                 </h2>
-                <p className={`text-gray-700 leading-relaxed text-[15px] mb-3 text-justify ${sora.className}`}>
+                <p className={`text-gray-700 leading-relaxed text-[16px] mb-3 text-justify ${sora.className}`}>
                   Bharat Diamond Bourse located at Bandra Kurla Complex in Mumbai is the worlds largest and most sophisticated diamond exchange. Operational since the year twenty ten, BDB houses more than four thousand member companies engaged in the import, export, manufacturing and marketing of rough and polished diamonds.
                 </p>
-                <p className={`text-gray-700 leading-relaxed text-[15px] text-justify ${sora.className}`}>
+                <p className={`text-gray-700 leading-relaxed text-[16px] text-justify ${sora.className}`}>
                   Spread across twenty acres with nearly two million square feet of constructed area along with almost one million square feet of basements, the bourse integrates trading halls, walk in vaults, twenty four thousand five hundred safe deposit boxes, customs clearance, banks, laboratories and essential services, all in one location.
                 </p>
                 <Link
@@ -122,9 +122,9 @@ export default function AboutSection() {
                   style={{
                     // Responsive sizing - smaller on md+ screens but fully visible
                     width: '100%',
-                    maxWidth: '500px', // Reduced from 650px
-                    height: '280px', // Reduced from 350px
-                    borderRadius: '0px',
+                    maxWidth: '425px', // Reduced from 650px
+                    height: '235px', // Reduced from 350px
+                    borderRadius: '6px',
                   }}
                 >
                   <Image

@@ -76,10 +76,10 @@ export default function Footer() {
     ];
 
     return (
-        <footer className={`px-4 md:px-8 lg:px-16 xl:px-32 pb-10 ${sora.className}`}>
-            <div className="mx-auto rounded-[22px] border border-[#E1E6EF] bg-white overflow-hidden">
+        <footer className={`w-full pb-5 ${sora.className}`}>
+            <div className="mx-auto rounded-b-[22px] border border-[#E1E6EF] bg-white overflow-hidden">
                 {/* Top banner */}
-                <div className="bg-[linear-gradient(180deg,#112C58_0%,#0E234E_100%)] px-4 md:px-8 lg:px-16 xl:px-16 py-5 md:py-6 rounded-t-[6px] rounded-b-[0px]">
+                <div className="bg-[linear-gradient(180deg,#112C58_0%,#0E234E_100%)] px-4 md:px-8 lg:px-16 xl:px-32 py-5 md:py-6 rounded-t-[0px] rounded-b-[22px]">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <h3 className={`${gotham.className} text-white text-[26px] md:text-[34px] leading-tight`}>
                             Join the World of Diamond Trade
@@ -107,150 +107,161 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* Columns — flex layout so vertical alignment stays consistent */}
-                <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-[#E1E6EF]">
-                    {/* Office (md: 3/12) */}
-                    <div className="w-full md:w-3/12 p-6 md:p-7 flex flex-col justify-between">
-                        <div className="w-full">
-                            <h4 className={`${gotham.className} text-[#A6AFBE] tracking-[2px] uppercase text-[13px] mb-4`}>
-                                Office
-                            </h4>
+                {/* Columns Section with Background Image */}
+                <div className="relative">
+                    {/* Background Image with low opacity */}
+                    <div 
+                        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-85"
+                        style={{ backgroundImage: "url('/service-2.webp')" }}
+                    ></div>
+                    
+                    {/* Content overlay to ensure readability */}
+                    <div className="absolute inset-0 bg-white/50"></div>
+                    
+                    {/* Columns content */}
+                    <div className="relative z-10 flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-[#E1E6EF] px-4 md:px-8 lg:px-16 xl:px-32">
+                        {/* Office (md: 3/12) */}
+                        <div className="w-full md:w-3/12 pt-[24px] flex flex-col justify-between">
+                            <div className="w-full">
+                                <h4 className={`${gotham.className} text-[#A6AFBE] tracking-[2px] uppercase text-[13px] mb-4`}>
+                                    Office
+                                </h4>
 
-                            <div className="space-y-4 text-[#0E1425]/85 text-[14px]">
-                                <div className="flex items-start gap-3">
-                                    <Link 
-                                        href="https://maps.google.com/?q=G+Block+BKC+Bandra+Kurla+Complex+Bandra+East+Mumbai+Maharashtra+400051" 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                        aria-label="View location on Google Maps" 
-                                        className="hover:opacity-80 shrink-0 mt-0.5"
-                                    >
-                                        <Image
-                                            src="/footer/location-icon.png"
-                                            alt="Location"
-                                            width={20}
-                                            height={20}
-                                            className="w-5 h-5"
-                                        />
-                                    </Link>
-                                    <p className="leading-[1.6]">
-                                        G Block BKC, Bandra Kurla Complex, Bandra East, Mumbai,
-                                        Maharashtra 400051
-                                    </p>
-                                </div>
+                                <div className="space-y-4 text-[#0E1425]/85 text-[14px]">
+                                    <div className="flex items-start gap-3">
+                                        <Link 
+                                            href="https://maps.google.com/?q=G+Block+BKC+Bandra+Kurla+Complex+Bandra+East+Mumbai+Maharashtra+400051" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            aria-label="View location on Google Maps" 
+                                            className="hover:opacity-80 shrink-0 mt-0.5"
+                                        >
+                                            <Image
+                                                src="/footer/location-icon.png"
+                                                alt="Location"
+                                                width={20}
+                                                height={20}
+                                                className="w-5 h-5"
+                                            />
+                                        </Link>
+                                        <p className="leading-[1.6]">
+                                            G Block BKC, Bandra Kurla Complex, Bandra East, Mumbai,
+                                            Maharashtra 400051
+                                        </p>
+                                    </div>
 
-                                <div className="flex items-center gap-3">
-                                    <Link 
-                                        href="tel:+912233921500" 
-                                        aria-label="Call +91 22 3392 1500" 
-                                        className="hover:opacity-80 shrink-0"
-                                    >
-                                        <Image
-                                            src="/footer/phone-icon.png"
-                                            alt="Phone"
-                                            width={20}
-                                            height={20}
-                                            className="w-5 h-5"
-                                        />
-                                    </Link>
-                                    <Link href="tel:+912233921500" className="hover:underline">
-                                        +91 22 3392 1500
-                                    </Link>
-                                </div>
+                                    <div className="flex items-center gap-3">
+                                        <Link 
+                                            href="tel:+912233921500" 
+                                            aria-label="Call +91 22 3392 1500" 
+                                            className="hover:opacity-80 shrink-0"
+                                        >
+                                            <Image
+                                                src="/footer/phone-icon.png"
+                                                alt="Phone"
+                                                width={20}
+                                                height={20}
+                                                className="w-5 h-5"
+                                            />
+                                        </Link>
+                                        <Link href="tel:+912233921500" className="hover:underline">
+                                            +91 22 3392 1500
+                                        </Link>
+                                    </div>
 
-                                <div className="flex items-center gap-3">
-                                    <Link 
-                                        href="mailto:support@bdbindia.org" 
-                                        aria-label="Email support@bdbindia.org" 
-                                        className="hover:opacity-80 shrink-0"
-                                    >
-                                        <Image
-                                            src="/footer/email-icon.png"
-                                            alt="Email"
-                                            width={20}
-                                            height={20}
-                                            className="w-5 h-5"
-                                        />
-                                    </Link>
-                                    <Link href="mailto:support@bdbindia.org" className="hover:underline">
-                                        support@bdbindia.org
-                                    </Link>
+                                    <div className="flex items-center gap-3">
+                                        <Link 
+                                            href="mailto:support@bdbindia.org" 
+                                            aria-label="Email support@bdbindia.org" 
+                                            className="hover:opacity-80 shrink-0"
+                                        >
+                                            <Image
+                                                src="/footer/email-icon.png"
+                                                alt="Email"
+                                                width={20}
+                                                height={20}
+                                                className="w-5 h-5"
+                                            />
+                                        </Link>
+                                        <Link href="mailto:support@bdbindia.org" className="hover:underline">
+                                            support@bdbindia.org
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <p className="mt-8 md:mt-auto text-[11px] text-black">
-                            © 2025 Bharat Diamond Bourse. 
+                            <p className="mt-8 md:mt-auto text-[11px] text-black">
+                                © 2025 Bharat Diamond Bourse. 
  All Rights Reserved.
-                        </p>
-                    </div>
-
-                    {/* Facilities (md: 3/12) */}
-                    <div className="w-full md:w-3/12 p-6 md:p-7">
-                        <h4 className={`${gotham.className} text-[#A6AFBE] tracking-[2px] uppercase text-[13px] mb-4`}>
-                            Facilities
-                        </h4>
-                        <ul className="space-y-2 text-[#0E1425]/85 text-[14px]">
-                            {facilitiesLinks.map((facility) => (
-                                <li key={facility.name} className="list-disc ml-5 marker:text-[#A6AFBE]">
-                                    <Link 
-                                        href={facility.href} 
-                                        className="hover:underline transition-colors duration-200"
-                                    >
-                                        {facility.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Navigation (md: 3/12) */}
-                    <nav className="w-full md:w-3/12 p-6 md:p-7" aria-label="Main navigation">
-                        <h4 className={`${gotham.className} text-[#A6AFBE] tracking-[2px] uppercase text-[13px] mb-4`}>
-                            Navigation
-                        </h4>
-                        <ul className="space-y-2 text-[#0E1425]/85 text-[14px]">
-                            {navigationLinks.map((link) => (
-                                <li key={link.name} className="list-disc ml-5 marker:text-[#A6AFBE]">
-                                    <Link 
-                                        href={link.href} 
-                                        className="hover:underline transition-colors duration-200"
-                                    >
-                                        {link.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
-
-                    {/* Stay Connected + Logo (md: 3/12) */}
-                    <div className="w-full md:w-3/12 p-6 md:p-7 flex flex-col justify-between">
-                        <div className="w-full">
-                            <h4 className={`${gotham.className} text-[#A6AFBE] tracking-[2px] uppercase text-[13px] mb-4`}>
-                                Stay Connected
-                            </h4>
-                            <div className="flex items-center gap-4 text-[#0E234E]">
-                                {socialLinks.map((social) => (
-                                    <Link 
-                                        key={social.name}
-                                        href={social.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        aria-label={social.ariaLabel}
-                                        className="hover:opacity-80 transition-opacity duration-200"
-                                    >
-                                        <Image
-                                            src={social.icon}
-                                            alt={social.name}
-                                            width={20}
-                                            height={20}
-                                            className="w-5 h-5"
-                                        />
-                                    </Link>
-                                ))}
-                            </div>
+                            </p>
                         </div>
 
+                        {/* Facilities (md: 3/12) */}
+                        <div className="w-full md:w-3/12 p-6">
+                            <h4 className={`${gotham.className} text-[#A6AFBE] tracking-[2px] uppercase text-[13px] mb-4`}>
+                                Facilities
+                            </h4>
+                            <ul className="space-y-2 text-[#0E1425]/85 text-[14px]">
+                                {facilitiesLinks.map((facility) => (
+                                    <li key={facility.name} className="list-disc ml-5 marker:text-[#A6AFBE]">
+                                        <Link 
+                                            href={facility.href} 
+                                            className="hover:underline transition-colors duration-200"
+                                        >
+                                            {facility.name}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Navigation (md: 3/12) */}
+                        <nav className="w-full md:w-3/12 p-6" aria-label="Main navigation">
+                            <h4 className={`${gotham.className} text-[#A6AFBE] tracking-[2px] uppercase text-[13px] mb-4`}>
+                                Navigation
+                            </h4>
+                            <ul className="space-y-2 text-[#0E1425]/85 text-[14px]">
+                                {navigationLinks.map((link) => (
+                                    <li key={link.name} className="list-disc ml-5 marker:text-[#A6AFBE]">
+                                        <Link 
+                                            href={link.href} 
+                                            className="hover:underline transition-colors duration-200"
+                                        >
+                                            {link.name}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
+
+                        {/* Stay Connected + Logo (md: 3/12) */}
+                        <div className="w-full md:w-3/12 p-6 flex flex-col justify-between">
+                            <div className="w-full">
+                                <h4 className={`${gotham.className} text-[#A6AFBE] tracking-[2px] uppercase text-[13px] mb-4`}>
+                                    Stay Connected
+                                </h4>
+                                <div className="flex items-center gap-4 text-[#0E234E]">
+                                    {socialLinks.map((social) => (
+                                        <Link 
+                                            key={social.name}
+                                            href={social.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            aria-label={social.ariaLabel}
+                                            className="hover:opacity-80 transition-opacity duration-200"
+                                        >
+                                            <Image
+                                                src={social.icon}
+                                                alt={social.name}
+                                                width={20}
+                                                height={20}
+                                                className="w-5 h-5"
+                                            />
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

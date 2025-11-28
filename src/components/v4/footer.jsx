@@ -76,7 +76,7 @@ export default function Footer() {
     ];
 
     return (
-        <footer className={`w-full pb-5 ${sora.className}`}>
+        <footer className={`w-full pb-0 ${sora.className}`}>
             <div className="mx-auto rounded-b-[22px] border border-[#E1E6EF] bg-white overflow-hidden">
                 {/* Top banner */}
                 <div className="bg-[linear-gradient(180deg,#112C58_0%,#0E234E_100%)] px-4 md:px-8 lg:px-16 xl:px-32 py-5 md:py-6 rounded-t-[0px] rounded-b-[22px]">
@@ -111,12 +111,12 @@ export default function Footer() {
                 <div className="relative">
                     {/* Background Image with low opacity */}
                     <div 
-                        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-100"
+                        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70"
                         style={{ backgroundImage: "url('/service-2.webp')" }}
                     ></div>
                     
-                    {/* Content overlay to ensure readability */}
-                    <div className="absolute inset-0 bg-white/50"></div>
+                    {/* Content overlay with gradient from #CDF2FF (bottom) to white (top) */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#CDF2FF] to-white"></div>
                     
                     {/* Columns content */}
                     <div className="relative z-10 flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-[#E1E6EF] px-4 md:px-8 lg:px-16 xl:px-32">
@@ -263,7 +263,7 @@ export default function Footer() {
 
                                 {/* Video Container - Smooth transform animation */}
                                 <div className="relative mt-2 mb-2 flex justify-end">
-                                    <div className="w-[120px] h-[120px] md:w-[300px] md:h-[300px] rounded-md overflow-hidden transform translate-x-[60px] md:translate-x-[260px]">
+                                    <div className="w-[120px] h-[120px] md:w-[300px] md:h-[300px] rounded-md overflow-hidden transform translate-x-[60px] md:translate-x-[50px]">
                                         <video 
                                             autoPlay 
                                             muted 
@@ -284,7 +284,7 @@ export default function Footer() {
                     {/* Copyright Section - Outside the columns layout */}
                     <div className="relative z-10 px-4 md:px-8 lg:px-16 xl:px-32">
                         <div className="border-t border-[#E1E6EF] pt-4 md:pt-0 md:border-t-0">
-                            <p className="text-[11px] text-black text-center md:text-left mb-2">
+                            <p className="text-[14px] text-black text-center md:text-center mb-0">
                                 © 2025 Bharat Diamond Bourse. All Rights Reserved.
                             </p>
                         </div>

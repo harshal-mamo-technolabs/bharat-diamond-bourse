@@ -6,7 +6,7 @@ import localFont from 'next/font/local';
 import Link from 'next/link';
 import StartBusinessModal from '../v3/StartBusinessModal';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // Load Carentro from OTF
 const carentro = localFont({
@@ -48,6 +48,57 @@ function Arrow({ color = '#FFFFFF', size = 16, stroke = 2, className = '' }) {
 
 export default function AboutSection() {
   const [showModal, setShowModal] = useState(false);
+  const [screenSize, setScreenSize] = useState({
+    width: typeof window !== 'undefined' ? window.innerWidth : 1200,
+    height: typeof window !== 'undefined' ? window.innerHeight : 800
+  });
+
+  // Update screen size on resize
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleResize = () => {
+      setScreenSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Calculate dimensions based on screen size
+  const getImageDimensions = () => {
+    const { width } = screenSize;
+
+    if (width < 768) { // Mobile
+      return {
+        maxWidth: '100%',
+        height: '220px'
+      };
+    } else if (width >= 768 && width < 1024) { // Tablet
+      return {
+        maxWidth: '400px',
+        height: '240px'
+      };
+    } else if (width >= 1024 && width < 1280) { // Small desktop
+      return {
+        maxWidth: '450px',
+        height: '280px'
+      };
+    } else { // Large desktop
+      return {
+        maxWidth: '550px',
+        height: '350px'
+      };
+    }
+  };
+
+  const imageDimensions = getImageDimensions();
+
   const building1Variants = {
     hidden: { opacity: 0, x: 100 },
     visible: { opacity: 1, x: 0, transition: { duration: 1.2, ease: 'easeOut' } },
@@ -61,16 +112,6 @@ export default function AboutSection() {
   return (
     <section className="w-full py-10 sm:py-10">
       <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
-        {/* Main heading */}
-        {/* <div className="text-left mb-8">
-          <h1
-            className={`text-3xl md:text-3xl font-bold text-[#1D3156] leading-tight mx-auto ${gothamLight.className}`}
-          >
-            <span className="block xl:inline">BDB: Shaping The Future </span>
-            <span className="block xl:inline">Of Diamond Trade</span>
-          </h1>
-        </div> */}
-
         {/* Card container */}
         <div className="relative mb-0">
           <div className="rounded-md sm:pt-10 relative mb-0 overflow-visible">
@@ -109,9 +150,9 @@ export default function AboutSection() {
                 </Link>
               </div>
 
-              {/* Building 1 image - Smaller but fully visible on md+ screens */}
+              {/* Building 1 image - Dynamic sizing based on screen */}
               <motion.div
-                className="group flex justify-center lg:justify-end items-end relative -mt-4 sm:-mt-10 lg:mt-15 mb-8 sm:mb-4 lg:mb-4"
+                className="group flex justify-center lg:justify-end items-end relative mt-0 lg:mt-10 xl:mt-0 mb-8 sm:mb-4 lg:mb-4"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.8 }}
@@ -120,10 +161,9 @@ export default function AboutSection() {
                 <div
                   className="relative rounded-[6px] overflow-hidden transform-gpu transition-transform duration-300 group-hover:-translate-y-2"
                   style={{
-                    // Responsive sizing - smaller on md+ screens but fully visible
                     width: '100%',
-                    maxWidth: '475px', // Reduced from 650px
-                    height: '255px', // Reduced from 350px
+                    maxWidth: imageDimensions.maxWidth,
+                    height: imageDimensions.height,
                     borderRadius: '6px',
                   }}
                 >
@@ -134,7 +174,7 @@ export default function AboutSection() {
                     style={{ 
                       objectFit: 'cover', 
                       borderRadius: '0px',
-                      objectPosition: 'center' // Ensure the image is properly centered
+                      objectPosition: 'center'
                     }}
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 500px"
                     priority

@@ -111,7 +111,7 @@ export default function Footer() {
                 <div className="relative">
                     {/* Background Image with low opacity */}
                     <div 
-                        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-85"
+                        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-100"
                         style={{ backgroundImage: "url('/service-2.webp')" }}
                     ></div>
                     
@@ -121,7 +121,7 @@ export default function Footer() {
                     {/* Columns content */}
                     <div className="relative z-10 flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-[#E1E6EF] px-4 md:px-8 lg:px-16 xl:px-32">
                         {/* Office (md: 3/12) */}
-                        <div className="w-full md:w-3/12 pt-[24px] flex flex-col justify-between">
+                        <div className="w-full md:w-3/12 p-6 md:p-0 pt-5 md:pt-[24px] flex flex-col justify-between">
                             <div className="w-full">
                                 <h4 className={`${gotham.className} text-[#A6AFBE] tracking-[2px] uppercase text-[13px] mb-4`}>
                                     Office
@@ -190,10 +190,10 @@ export default function Footer() {
                                 </div>
                             </div>
 
-                            <p className="mt-8 md:mt-auto text-[11px] text-black">
-                                © 2025 Bharat Diamond Bourse. 
- All Rights Reserved.
-                            </p>
+                            {/* Empty space where copyright used to be on desktop */}
+                            <div className="mt-8 md:mt-auto hidden md:block">
+                                {/* This empty div maintains the spacing on desktop */}
+                            </div>
                         </div>
 
                         {/* Facilities (md: 3/12) */}
@@ -261,6 +261,15 @@ export default function Footer() {
                                     ))}
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    {/* Copyright Section - Outside the columns layout */}
+                    <div className="relative z-10 px-4 md:px-8 lg:px-16 xl:px-32">
+                        <div className="border-t border-[#E1E6EF] pt-4 md:pt-0 md:border-t-0">
+                            <p className="text-[11px] text-black text-center md:text-left mb-2">
+                                © 2025 Bharat Diamond Bourse. All Rights Reserved.
+                            </p>
                         </div>
                     </div>
                 </div>

@@ -52,6 +52,7 @@ export default function AboutSection() {
     width: typeof window !== 'undefined' ? window.innerWidth : 1200,
     height: typeof window !== 'undefined' ? window.innerHeight : 800
   });
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   // Update screen size on resize
   useEffect(() => {
@@ -99,14 +100,38 @@ export default function AboutSection() {
 
   const imageDimensions = getImageDimensions();
 
+  // Enhanced animation variants
   const building1Variants = {
-    hidden: { opacity: 0, x: 100 },
-    visible: { opacity: 1, x: 0, transition: { duration: 1.2, ease: 'easeOut' } },
+    hidden: { 
+      opacity: 0, 
+      x: 100,
+      scale: 0.95
+    },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      scale: 1,
+      transition: { 
+        duration: 1.2, 
+        ease: [0.25, 0.46, 0.45, 0.94],
+        delay: 0.2
+      } 
+    },
   };
 
-  const building2Variants = {
-    hidden: { opacity: 0, x: -100 },
-    visible: { opacity: 1, x: 0, transition: { duration: 1.2, ease: 'easeOut' } },
+  const imageLoadVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
   };
 
   return (
@@ -150,16 +175,16 @@ export default function AboutSection() {
                 </Link>
               </div>
 
-              {/* Building 1 image - Dynamic sizing based on screen */}
+              {/* Building 1 image - Enhanced with better loading and animation */}
               <motion.div
                 className="group flex justify-center lg:justify-end items-end relative mt-0 lg:mt-10 xl:mt-0 mb-8 sm:mb-4 lg:mb-4"
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.8 }}
+                viewport={{ once: true, amount: 0.3 }} // Reduced threshold for earlier trigger
                 variants={building1Variants}
               >
                 <div
-                  className="relative rounded-[6px] overflow-hidden transform-gpu transition-transform duration-300 group-hover:-translate-y-2"
+                  className="relative rounded-[6px] overflow-hidden transform-gpu transition-all duration-300 group-hover:-translate-y-2"
                   style={{
                     width: '100%',
                     maxWidth: imageDimensions.maxWidth,
@@ -167,18 +192,42 @@ export default function AboutSection() {
                     borderRadius: '6px',
                   }}
                 >
-                  <Image
-                    src="/About/bdb-about.png"
-                    alt="Modern skyscrapers viewed from below"
-                    fill
-                    style={{ 
-                      objectFit: 'cover', 
-                      borderRadius: '0px',
-                      objectPosition: 'center'
-                    }}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 500px"
-                    priority
-                  />
+                  {/* Loading skeleton */}
+                  {!imageLoaded && (
+                    <div 
+                      className="absolute inset-0 bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse z-10"
+                      style={{ borderRadius: '6px' }}
+                    />
+                  )}
+                  
+                  {/* Main Image with enhanced loading */}
+                  <motion.div
+                    initial="hidden"
+                    animate={imageLoaded ? "visible" : "hidden"}
+                    variants={imageLoadVariants}
+                    className="w-full h-full"
+                  >
+                    <Image
+                      src="/About/bdb-about.png"
+                      alt="Modern skyscrapers viewed from below"
+                      fill
+                      style={{ 
+                        objectFit: 'cover', 
+                        borderRadius: '0px',
+                        objectPosition: 'center'
+                      }}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 500px"
+                      priority
+                      onLoad={handleImageLoad}
+                      onError={(e) => {
+                        console.error('Image failed to load:', e);
+                        setImageLoaded(true); // Still show the container even if image fails
+                      }}
+                    />
+                  </motion.div>
+                  
+                  {/* Subtle overlay on hover */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300 pointer-events-none" />
                 </div>
               </motion.div>              
             </div>

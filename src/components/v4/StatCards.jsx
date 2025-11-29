@@ -177,7 +177,7 @@ const StatsCard = () => {
                 >
                   {/* Front Side - Original Card EXACTLY as it was */}
                   <motion.div
-                    className="absolute inset-0 h-[280px] sm:h-[320px] lg:h-[350px] bg-white rounded-lg border border-[#b9cada] p-6 sm:p-8 lg:p-9 flex flex-col relative group backface-hidden"
+                    className="absolute inset-0 h-[280px] sm:h-[320px] lg:h-[350px] bg-white/20 rounded-lg border border-[#b9cada] p-6 sm:p-8 lg:p-9 flex flex-col group backface-hidden"
                     style={{ backfaceVisibility: "hidden" }}
                   >
                     {/* Content */}
@@ -255,107 +255,108 @@ const StatsCard = () => {
         </div>
 
         {/* Mobile Swipeable Cards - Only visible on mobile */}
-        <div className="lg:hidden relative">
+        {/* Mobile Swipeable Cards - Only visible on mobile */}
+<div className="lg:hidden relative">
+  <motion.div
+    ref={scrollContainerRef}
+    className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide space-x-6 pb-4 px-4"
+    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+  >
+    {statsData.map((stat, index) => (
+      <motion.div
+        key={stat.id}
+        variants={cardVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative w-[280px] snap-center rounded-lg h-[280px] flex-shrink-0"
+        style={{ perspective: 1000 }}
+      >
+        {/* Flip Card Container */}
+        <motion.div
+          className="w-full h-full"
+          variants={flipVariants}
+          animate={flippedStates[index] ? "back" : "front"}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+          style={{ transformStyle: "preserve-3d" }}
+        >
+          {/* Front Side - Original Card */}
           <motion.div
-            ref={scrollContainerRef}
-            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide space-x-6 pb-4 px-4"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            className="absolute inset-0 h-[280px] bg-white rounded-lg border border-[#b9cada] p-6 flex flex-col group backface-hidden"
+            style={{ backfaceVisibility: "hidden" }}
           >
-            {statsData.map((stat, index) => (
+            {/* Content */}
+            <div className="flex-1 flex flex-col">
               <motion.div
-                key={stat.id}
-                variants={cardVariants}
-                initial="hidden"
-                animate="visible"
-                className="relative w-[280px] snap-center rounded-lg h-[220px] sm:h-[280px] flex-shrink-0"
-                style={{ perspective: 1000 }}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className={`text-2xl font-bold text-[#0E234E] mb-2 ${gothamLight.className}`}
               >
-                {/* Flip Card Container */}
-                <motion.div
-                  className="w-full h-full"
-                  variants={flipVariants}
-                  animate={flippedStates[index] ? "back" : "front"}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  {/* Front Side - Original Card EXACTLY as it was */}
-                  <motion.div
-                    className="absolute inset-0 bg-white rounded-lg border border-[#b9cada] p-8 flex flex-col relative group backface-hidden"
-                    style={{ backfaceVisibility: "hidden" }}
-                  >
-                    {/* Content */}
-                    <div className="flex-1 flex flex-col">
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className={`text-3xl font-bold text-[#0E234E] mb-2 ${gothamLight.className}`}
-                      >
-                        {stat.number}
-                      </motion.div>
-                      
-                      <motion.h3
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                        className={`text-2xl font-normal text-gray-400 mb-3 ${sora.className} leading-tight`}
-                      >
-                        {stat.title}
-                      </motion.h3>
-                      
-                      {stat.description && (
-                        <motion.p
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.5, delay: 0.4 }}
-                          className="text-gray-600 text-sm leading-relaxed mt-2"
-                        >
-                          {stat.description}
-                        </motion.p>
-                      )}
-                    </div>
-
-                    {/* Icon with gradient border */}
-                    <div className="absolute -bottom-4 -right-4">
-                      <motion.div
-                        variants={iconVariants}
-                        className="relative"
-                      >
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#0E234E]/10 from-20% to-[#0E234E] to-80% p-[2px]">
-                          <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
-                            <stat.icon className="w-6 h-6 text-[#0E234E]" />
-                          </div>
-                        </div>
-                      </motion.div>
-                    </div>
-                  </motion.div>
-
-                  {/* Back Side - Flipped Card */}
-                  <motion.div
-                    className="absolute inset-0 rounded-lg p-8 flex items-center justify-center backface-hidden"
-                    style={{ 
-                      backfaceVisibility: "hidden",
-                      transform: "rotateY(180deg)",
-                      backgroundColor: "#0E234E"
-                    }}
-                  >
-                    <div className="text-center">
-                      <div className="flex justify-center mb-4">
-                        <stat.icon className="w-12 h-12 text-white" />
-                      </div>
-                      <h3 className={`text-2xl font-bold text-white mb-2 ${gothamLight.className}`}>
-                        {stat.number}
-                      </h3>
-                      <p className={`text-xl font-normal text-white/80 ${sora.className}`}>
-                        {stat.title}
-                      </p>
-                    </div>
-                  </motion.div>
-                </motion.div>
+                {stat.number}
               </motion.div>
-            ))}
+              
+              <motion.h3
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className={`text-xl font-normal text-gray-400 mb-3 ${sora.className} leading-tight`}
+              >
+                {stat.title}
+              </motion.h3>
+              
+              {stat.description && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="text-gray-600 text-sm leading-relaxed mt-2"
+                >
+                  {stat.description}
+                </motion.p>
+              )}
+            </div>
+
+            {/* Icon with gradient border */}
+            <div className="absolute -bottom-4 -right-4">
+              <motion.div
+                variants={iconVariants}
+                className="relative"
+              >
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#0E234E]/10 from-20% to-[#0E234E] to-80% p-[2px]">
+                  <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
+                    <stat.icon className="w-6 h-6 text-[#0E234E]" />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
-        </div>
+
+          {/* Back Side - Flipped Card */}
+          <motion.div
+            className="absolute inset-0 h-[280px] rounded-lg p-6 flex items-center justify-center backface-hidden"
+            style={{ 
+              backfaceVisibility: "hidden",
+              transform: "rotateY(180deg)",
+              backgroundColor: "#0E234E"
+            }}
+          >
+            <div className="text-center">
+              <div className="flex justify-center mb-4">
+                <stat.icon className="w-12 h-12 text-white" />
+              </div>
+              <h3 className={`text-2xl font-bold text-white mb-2 ${gothamLight.className}`}>
+                {stat.number}
+              </h3>
+              <p className={`text-xl font-normal text-white/80 ${sora.className}`}>
+                {stat.title}
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+    ))}
+  </motion.div>
+</div>
       </div>
 
       {/* Hide scrollbar for Webkit browsers */}

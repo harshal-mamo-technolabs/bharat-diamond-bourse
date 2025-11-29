@@ -263,7 +263,7 @@ export default function Footer() {
                             />
                             <button
                                 type="submit"
-                                className="inline-flex items-center justify-center h-[56px] px-8 rounded-[14px] text-white text-[14px] font-semibold uppercase tracking-[0.5px] bg-gradient-to-r from-[#1E3A8A] to-[#1E40AF] hover:from-[#1E40AF] hover:to-[#1D4ED8] active:scale-95 transition-all duration-300 ease-out shadow-lg hover:shadow-xl"
+                                className="inline-flex items-center justify-center h-[56px] px-8 rounded-[14px] text-white text-[14px] font-semibold uppercase tracking-[0.5px] bg-gradient-to-r from-[#1E3A8A] to-[#1E40AF] hover:from-[#1E40AF] hover:to-[#051a54] active:scale-95 transition-all duration-300 ease-out shadow-lg hover:shadow-xl"
                             >
                                 SUBMIT
                             </button>

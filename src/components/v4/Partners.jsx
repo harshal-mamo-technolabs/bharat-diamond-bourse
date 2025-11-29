@@ -48,7 +48,7 @@ export default function Partners() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-white overflow-hidden"
+      className="relative w-full bg-white/55 overflow-hidden"
     >
       <div className="relative z-10 px-4 md:px-8 lg:px-16 xl:px-32 mx-auto py-10">
         

@@ -16,7 +16,7 @@ export default function Home() {
     <div className="relative min-h-screen">
       {/* Background Image with Low Opacity */}
       <div 
-        className="fixed inset-0 z-0 opacity-70"
+        className="fixed inset-0 z-0 opacity-75"
         style={{
           backgroundImage: 'url("/service-banner.jpg")', // Replace with your image path
           backgroundSize: 'cover',

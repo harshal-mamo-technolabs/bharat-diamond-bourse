@@ -36,21 +36,21 @@ function widthClass(rel) {
   const a = Math.abs(rel);
   if (a === 0) {
     return [
-      "w-[80vw] sm:w-[60vw] lg:w-[24vw]", // Reduced from 24vw to 20vw for center card on md+ screens
-      "min-w-[280px] lg:min-w-[24vw]", // Reduced from 24vw to 20vw
+      "w-[80vw] sm:w-[60vw] lg:w-[20vw]", // Reduced from 24vw to 20vw for center card on md+ screens
+      "min-w-[280px] lg:min-w-[20vw]", // Reduced from 24vw to 20vw
       "max-w-[600px]", // Reduced from 680px
     ].join(" ");
   }
   if (a === 1) {
     return [
-      "w-[76vw] sm:w-[56vw] lg:w-[22vw]", 
-      "min-w-[260px] lg:min-w-[22vw]", 
+      "w-[76vw] sm:w-[56vw] lg:w-[20vw]", 
+      "min-w-[260px] lg:min-w-[20vw]", 
       "max-w-[640px]", 
     ].join(" ");
   }
   return [
-    "w-[76vw] sm:w-[56vw] lg:w-[22vw]", 
-    "min-w-[260px] lg:min-w-[22vw]", 
+    "w-[76vw] sm:w-[56vw] lg:w-[20vw]", 
+    "min-w-[260px] lg:min-w-[20vw]", 
     "max-w-[640px]", 
   ].join(" ");
 }

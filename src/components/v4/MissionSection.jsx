@@ -90,7 +90,7 @@ export default function MissionSection() {
 
   return (
     <section
-      className={`w-full bg-[#ecf3f7]/80 py-10 ${gotham.className}`}
+      className={`w-full bg-[#ecf3f7]/50 py-10 ${gotham.className}`}
     >
       <div className="px-4 md:px-8 lg:px-16 xl:px-32 mx-auto">
         <div className="relative mb-12">

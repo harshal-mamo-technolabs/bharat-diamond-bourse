@@ -187,7 +187,7 @@ export default function Header() {
 
   // Navigation items
   const navItems = [
-    { href: '/v3', label: 'Home' },
+    { href: '/v4', label: 'Home' },
     { href: '/v3/about', label: 'About Us' },
     { 
       href: '/v3/facilities', 

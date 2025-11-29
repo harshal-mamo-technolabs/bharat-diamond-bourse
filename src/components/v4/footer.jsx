@@ -28,7 +28,7 @@ function FieldIcon({ children }) {
 export default function Footer() {
     // Navigation links with proper routes
     const navigationLinks = [
-        { name: "Home", href: "/v3" },
+        { name: "Home", href: "/v4" },
         { name: "About Us", href: "/v3/about" },
         { name: "Gallery", href: "/gallery" },
         { name: "Facilities", href: "/v3/facilities" },

@@ -130,7 +130,7 @@ export default function AboutSection() {
                   />
                   <Image
                     src="/infra-BDB.jpg"
-                    alt="Modern skyscrapers viewed from below"
+                    alt="Modern skyscrapers viewed from below site"
                     fill
                     style={{ objectFit: 'cover', borderRadius: '6px' }}
                   />

@@ -8,6 +8,7 @@ import { IoIosArrowRoundBack, IoIosArrowRoundForward } from 'react-icons/io';
 import { FiMenu } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
@@ -17,6 +18,22 @@ const languages = [
   { code: 'EN', label: 'English' },
   { code: 'FR', label: 'French' },
   { code: 'HI', label: 'Hindi' },
+];
+
+// Navigation items from v4
+const topNavItems = [
+  { href: '/v3/circulars', label: 'Circulars' },
+  { href: '/v3/members-directory', label: 'Member\'s directory' },
+  { href: '/v3/contact-us', label: 'Contact us' },
+  { href: '/v3/careers', label: 'Careers' },
+];
+
+const mainNavItems = [
+  { href: '/v4', label: 'Home' },
+  { href: '/v3/about', label: 'About Us' },
+  { href: '/v3/facilities', label: 'Facilities' },
+  { href: '/v3/news&events', label: 'News & Events' },
+  { href: '/v3/sustainability', label: 'Sustainability' },
 ];
 
 function Arrow({ color = "#FFFFFF", size = 16, stroke = 2, className = "" }) {
@@ -60,8 +77,8 @@ export default function Header() {
   }, []);
 
   const slides = isMobile
-    ? ['/bdb-1-hero.jpg', '/bdb-2-hero.jpg', '/building1.jpg'] // no /Bdb-hero-2.png on mobile
-    : ['/bdb-1-hero.jpg', '/bdb-2-hero.jpg', '/Bdb-hero-2.png'];
+    ? ['/bdb-1-hero.png', '/BDB-Hero-2.png', '/bdb-image-1.png'] // no /Bdb-hero-2.png on mobile
+    : ['/bdb-1-hero.png', '/BDB-Hero-2.png', '/bdb-image-1.png'];
 
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
@@ -102,17 +119,17 @@ export default function Header() {
           initial={{ y: -80 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.4 }}
-          className={`hidden md:flex fixed top-0 left-0 w-full bg-white shadow-md py-2 px-12 z-50 ${sora.className}`}
+          className={`hidden md:flex fixed top-0 left-0 w-full bg-white shadow-md mx-auto px-4 md:px-8 lg:px-16 xl:px-32 py-2 z-50 ${sora.className}`}
         >
           <div className="flex items-center justify-between w-full">
             {/* Logo change */}
             <Image src="/BDB-LOGO.png" alt="BDB Logo" width={120} height={50} />
             <ul className="flex space-x-8 text-[14px] font-medium text-[#0b2a57]">
-              <li className="hover:text-blue-700">Home</li>
-              <li className="hover:text-blue-700">About Us</li>
-              <li className="hover:text-blue-700">Our Facilities ▾</li>
-              <li className="hover:text-blue-700">BDB Circulars</li>
-              <li className="hover:text-blue-700">Board Members ▾</li>
+              {mainNavItems.map((item) => (
+                <li key={item.href} className="hover:text-blue-700">
+                  <Link href={item.href}>{item.label}</Link>
+                </li>
+              ))}
             </ul>
             <button
               className="ml-6 flex px-6 py-3.5 text-xs font-semibold rounded-lg text-white
@@ -136,14 +153,16 @@ export default function Header() {
         </div>
         {mobileMenuOpen && (
           <ul className="px-4 pb-4 space-y-3 text-[15px] font-semibold text-gray-800 bg-white">
-            <li className="hover:text-[#0b2a57] cursor-pointer">Home</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">About Us</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">Our Facilities</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">BDB Circulars</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">Photo Gallery</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">Board Members</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">News & Events</li>
-            <li className="hover:text-[#0b2a57] cursor-pointer">Contact Us</li>
+            {mainNavItems.map((item) => (
+              <li key={item.href} className="hover:text-[#0b2a57] cursor-pointer">
+                <Link href={item.href} onClick={() => setMobileMenuOpen(false)}>{item.label}</Link>
+              </li>
+            ))}
+            {topNavItems.map((item) => (
+              <li key={item.href} className="hover:text-[#0b2a57] cursor-pointer">
+                <Link href={item.href} onClick={() => setMobileMenuOpen(false)}>{item.label}</Link>
+              </li>
+            ))}
           </ul>
         )}
       </div>
@@ -183,14 +202,16 @@ export default function Header() {
 
         {/* ORIGINAL NAVBAR OVER IMAGE (unchanged) */}
         <nav
-          className={`hidden md:flex flex-col absolute top-0 left-0 w-full px-12 py-1 z-30 text-white ${sora.className} select-none`}
+          className={`hidden md:flex flex-col absolute top-0 left-0 w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32 py-1 z-30 text-white ${sora.className} select-none`}
           style={{ background: 'rgba(0,0,0,0.3)' }}
         >
           <div className="flex justify-end items-center space-x-6 text-[12px] mt-2 select-none">
             <ul className="flex space-x-6 text-[11px] uppercase cursor-pointer">
-              <li className="hover:text-[#0b2a57]">News</li>
-              <li className="hover:text-[#0b2a57]">Gallery</li>
-              <li className="hover:text-[#0b2a57]">Help center</li>
+              {topNavItems.map((item) => (
+                <li key={item.href} className="hover:text-[#0b2a57]">
+                  <Link href={item.href}>{item.label}</Link>
+                </li>
+              ))}
             </ul>
             <div className="relative w-24 text-white">
               <FaSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-white text-xs pointer-events-none" />
@@ -217,11 +238,11 @@ export default function Header() {
               <Image src="/bdb-logo-white.png" alt="BDB Logo" width={135} height={140} />
             </div>
             <ul className="flex space-x-8 text-[14px] font-normal cursor-pointer mx-auto">
-              <li className="hover:text-[#0b2a57]">Home</li>
-              <li className="hover:text-[#0b2a57]">About Us</li>
-              <li className="hover:text-[#0b2a57]">Our Facilities ▾</li>
-              <li className="hover:text-[#0b2a57]">BDB Circulars</li>
-              <li className="hover:text-[#0b2a57]">Board Members ▾</li>
+              {mainNavItems.map((item) => (
+                <li key={item.href} className="hover:text-[#0b2a57]">
+                  <Link href={item.href}>{item.label}</Link>
+                </li>
+              ))}
             </ul>
             <button
               className="ml-6 flex px-6 py-3.5 text-xs font-semibold rounded-lg text-white
@@ -248,7 +269,7 @@ export default function Header() {
             variants={slideFromRight}
             className="text-white text-[clamp(28px,5vw,80px)] font-extrabold tracking-wide whitespace-nowrap drop-shadow-[0_3px_6px_rgba(0,0,0,0.8)]"
           >
-            WORLD’S DIAMOND HUB
+            WORLD'S DIAMOND HUB
           </motion.h1>
         </div>
       </div>

@@ -96,7 +96,7 @@ export default function BourseSection() {
     };
 
     return (
-        <section className="bg-white pb-16">
+        <section className="pb-16">
             {/* Full-bleed video */}
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -109,7 +109,7 @@ export default function BourseSection() {
                     {/* video */}
                     <video
                         ref={videoRef}
-                        src="/bourse-tour/bourse-tour.mp4"
+                        src="/BDB-Hero.mp4"
                         className="absolute inset-0 h-full w-full object-cover z-0"
                         playsInline
                         preload="metadata"
@@ -144,14 +144,13 @@ export default function BourseSection() {
                 transition={{ duration: timings.header, ease, delay: 0.1 }}
                 className="relative -mt-10 z-20"
             >
-                <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
                     {/* OUTER CARD â€” rounded + #262626 border */}
                     <div
                         className={[
-                            "rounded-[24px] bg-white",
+                            "rounded-[6px] bg-white",
                             "border border-[#262626]",
-                            "shadow-[0_2px_10px_rgba(0,0,0,0.05)]",
-                            "px-6 sm:px-8 lg:px-10 py-7 lg:py-9",
+                            "px-6 sm:px-8 lg:px-10 py-10 lg:py-10",
                         ].join(" ")}
                     >
                         {/* Heading */}
@@ -189,7 +188,7 @@ export default function BourseSection() {
                                     }
                                     whileTap={reduce ? undefined : { scale: 0.995 }}
                                     className={[
-                                        "rounded-[16px] bg-[#EFF3F6]",
+                                        "rounded-[6px] bg-[#EFF3F6]",
                                         "px-6 sm:px-7 lg:px-9 py-6 lg:py-7",
                                         "min-h-[112px] lg:min-h-[120px]",
                                         "flex flex-col items-center justify-center text-center",

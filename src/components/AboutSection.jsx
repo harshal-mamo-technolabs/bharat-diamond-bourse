@@ -51,7 +51,7 @@ export default function AboutSection() {
   };
 
   return (
-    <section className="w-full bg-white py-14 sm:py-20">
+    <section className="w-full py-10 sm:py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
         {/* Main heading */}
         <div className="text-left mb-5">
@@ -66,7 +66,7 @@ export default function AboutSection() {
 
         {/* Card container */}
         <div className="relative mb-10">
-          <div className="bg-[#F2F4F6] rounded-3xl shadow-xl p-6 sm:p-10 sm:pt-20 relative mb-20 overflow-visible">
+          <div className="bg-[#F2F4F6]/15 rounded-md p-6 sm:p-10 sm:pt-20 relative mb-20 overflow-visible">
             {/* Grid for md+ screens, stacked for mobile */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 md:gap-y-0 md:gap-x-10 items-start">
 
@@ -104,12 +104,12 @@ export default function AboutSection() {
                 variants={building1Variants}
               >
                 <div
-                  className="relative rounded-[40px] overflow-hidden shadow-[20px_0px_50px_rgba(0,0,0,0.3)]"
+                  className="relative rounded-md overflow-hidden"
                   style={{
                     width: 450,
                     height: 450,
-                    border: '4px solid transparent',
-                    borderRadius: '40px',
+                    border: '1px solid transparent',
+                    borderRadius: '6px',
                     background:
                       'linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0)) padding-box, linear-gradient(135deg, #1D3156, #D6DCE5) border-box',
                   }}
@@ -125,16 +125,14 @@ export default function AboutSection() {
                   <div
                     className="absolute inset-0 z-20 pointer-events-none"
                     style={{
-                      boxShadow:
-                        'inset 0 0 40px rgba(255,255,255,0.7), inset 0 0 60px rgba(0,0,0,0.3)',
-                      borderRadius: '40px',
+                      borderRadius: '6px',
                     }}
                   />
                   <Image
-                    src="/building1.jpg"
+                    src="/infra-BDB.jpg"
                     alt="Modern skyscrapers viewed from below"
                     fill
-                    style={{ objectFit: 'cover', borderRadius: '40px' }}
+                    style={{ objectFit: 'cover', borderRadius: '6px' }}
                   />
                 </div>
               </motion.div>
@@ -148,12 +146,12 @@ export default function AboutSection() {
                 variants={building2Variants}
               >
                 <div
-                  className="relative rounded-[40px] overflow-hidden shadow-[-20px_0px_50px_rgba(0,0,0,0.3)]"
+                  className="relative rounded-md overflow-hidden"
                   style={{
                     width: 450,
                     height: 450,
-                    border: '4px solid transparent',
-                    borderRadius: '40px',
+                    border: '1px solid transparent',
+                    borderRadius: '6px',
                     background:
                       'linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0)) padding-box, linear-gradient(135deg, #1D3156, #D6DCE5) border-box',
                   }}
@@ -169,16 +167,14 @@ export default function AboutSection() {
                   <div
                     className="absolute inset-0 z-20 pointer-events-none"
                     style={{
-                      boxShadow:
-                        'inset 0 0 40px rgba(255,255,255,0.7), inset 0 0 60px rgba(0,0,0,0.3)',
-                      borderRadius: '40px',
+                      borderRadius: '6px',
                     }}
                   />
                   <Image
-                    src="/building2.jpg"
+                    src="/IDTC.png"
                     alt="Modern glass building architecture"
                     fill
-                    style={{ objectFit: 'cover', borderRadius: '40px' }}
+                    style={{ objectFit: 'cover', borderRadius: '6px' }}
                   />
                 </div>
               </motion.div>
@@ -210,11 +206,10 @@ export default function AboutSection() {
                   href=""
                   className={[
                     "group relative inline-flex items-center justify-between",
-                    "rounded-[8px] px-5 py-3.5",
+                    "rounded-[6px] px-5 py-3.5",
                     "bg-[#0E234E]",
                     "text-white font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]",
-                    "shadow-[0_0_12px_rgba(14,35,78,0.6)]",
-                    "transition-all duration-200 hover:-translate-y-px hover:shadow-[0_0_16px_rgba(14,35,78,0.7)]",
+                    "transition-all duration-200 hover:-translate-y-px",
                     "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
                     "w-max",
                   ].join(" ")}

@@ -32,8 +32,8 @@ export default function Header() {
   }, []);
 
   const slides = isMobile
-    ? ['/building2.jpg', '/Hero-Banner.jpg', '/building1.jpg'] // no /Bdb-hero-2.png on mobile
-    : ['/Hero-Banner.jpg', '/building2.jpg', '/Bdb-hero-2.png'];
+    ? ['/bdb-1-hero.png', '/BDB-Hero-2.png', '/bdb-image-1.png'] // no /Bdb-hero-2.png on mobile
+    : ['/bdb-1-hero.png', '/BDB-Hero-2.png', '/bdb-image-1.png'];
 
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
@@ -175,10 +175,9 @@ export default function Header() {
               {/* Button */}
               <div className="flex items-center pl-2 ml-2 border-l border-gray-300">
                 <button
-                  className="px-6 py-3 text-xs font-semibold leading-tight rounded-lg text-white
-                             bg-[#0E234E] shadow-[0_0_12px_rgba(14,35,78,0.6)]
+                  className="px-6 py-3 text-xs font-semibold leading-tight rounded-md text-white
+                             bg-[#0E234E]
                              transition-all duration-200 hover:-translate-y-px
-                             hover:shadow-[0_0_16px_rgba(14,35,78,0.7)]
                              focus:outline-none focus-visible:ring-2
                              focus-visible:ring-white/40 text-center"
                 >
@@ -216,7 +215,7 @@ export default function Header() {
             variants={slideFromRight}
             transition={{ duration: 1, ease: 'easeOut' }}
           >
-            <nav className={`max-w-7xl mx-auto px-6 flex items-center justify-center h-20 w-full ${sora.className}`}>
+            <nav className={`mx-auto px-4 md:px-8 lg:px-16 xl:px-32 flex items-center justify-center h-20 w-full ${sora.className}`}>
               <ul className="flex items-center space-x-8 text-[15px] font-semibold text-gray-800">
                 <li className="hover:text-[#0b2a57] cursor-pointer">Home</li>
                 <li className="hover:text-[#0b2a57] cursor-pointer">About Us</li>

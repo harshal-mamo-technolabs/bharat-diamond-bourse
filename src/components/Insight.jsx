@@ -71,8 +71,8 @@ export default function Insights() {
     }, []);
 
     return (
-        <section className=" py-16 px-4 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-7xl">
+        <section className="py-10">
+            <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
                 {/* Header */}
                 <div className="mb-12 text-center">
                     <h2 className={`font-carentro text-[#0E234E] text-[32px] md:text-[42px] lg:text-[48px] leading-tight ${carentro.className}`}>
@@ -91,11 +91,11 @@ export default function Insights() {
                             key={card.id}
                             ref={(el) => (refs.current[i] = el)}
                             className="
-                group relative rounded-[20px] bg-[#F2F4F6]
-                ring-1 ring-black/5 shadow-[0_1px_2px_rgba(0,0,0,0.04)]
+                group relative rounded-[6px] bg-[#F2F4F6]/50
+                ring-1 ring-black/5
                 transition-all duration-500 ease-out
                 opacity-0 translate-y-4
-                hover:-translate-y-1 hover:shadow-lg
+                hover:-translate-y-1 
                 active:scale-[0.99]
                 will-change-transform
                 motion-reduce:transition-none motion-reduce:transform-none motion-reduce:opacity-100 motion-reduce:translate-y-0
@@ -104,7 +104,7 @@ export default function Insights() {
                         >
                             {/* Image wrapper */}
                             <div className="relative mx-5 mt-5">
-                                <div className="relative h-[240px] w-full overflow-hidden rounded-[12px] bg-gray-100">
+                                <div className="relative h-[240px] w-full overflow-hidden rounded-[6px] bg-gray-100">
                                     <Image
                                         src={card.image}
                                         alt={card.title}
@@ -121,7 +121,7 @@ export default function Insights() {
                                     aria-label="Open"
                                     className="
                     absolute -right-px -top-px z-20 grid h-9 w-9 place-items-center
-                    rounded-bl-[12px]
+                    rounded-bl-[6px]
                     transition-colors duration-300
                     hover:bg-[#0E234E]
                     focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E234E] focus-visible:ring-offset-2
@@ -147,7 +147,7 @@ export default function Insights() {
                             {/* Whole card clickable + keyboard focus ring */}
                             <Link
                                 href={card.href}
-                                className="absolute inset-0 z-[1] rounded-[20px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E234E] focus-visible:ring-offset-2"
+                                className="absolute inset-0 z-[1] rounded-[6px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E234E] focus-visible:ring-offset-2"
                                 aria-label={card.title}
                             />
                         </article>
@@ -159,13 +159,12 @@ export default function Insights() {
                     <Link
                         href="#"
                         className="
-              group inline-flex items-center gap-3 rounded-[12px]
+              group inline-flex items-center gap-3 rounded-[6px]
               bg-[#0E234E] px-8 py-4 text-[13px] sm:text-[14px]
               font-semibold uppercase tracking-[0.14em] text-white
-              shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_10px_20px_rgba(2,6,23,0.18)]
               ring-1 ring-black/5
               transition-all duration-300 ease-out
-              hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_16px_28px_rgba(2,6,23,0.22)]
+              hover:-translate-y-0.5
               active:translate-y-0
               focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E234E]
             "

@@ -34,7 +34,7 @@ export default function President() {
   };
 
   return (
-    <section className="relative w-full bg-white py-10">
+    <section className="relative w-full bg-white py-8 md:py-10">
       <div className="w-full mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
         {/* Main Card with Gray Background */}
         <motion.div
@@ -52,57 +52,58 @@ export default function President() {
             <Image
               src="/About/AbstractDesign.png"
               alt="Decorative Pattern"
-              width={350}
-              height={350}
-              className="opacity-70 max-w-[80%] sm:max-w-[60%] md:max-w-[100%] h-auto"
+              width={300}
+              height={300}
+              className="opacity-70 w-[180px] sm:w-[220px] md:w-[300px] h-auto"
             />
           </motion.div>
 
-          {/* Grid */}
-          <div className="rounded-md relative z-10 grid grid-cols-1 lg:grid-cols-[2.5fr_2fr] gap-2 md:gap-6">
-
+          {/* Grid - Only change at 2xl (1536px) breakpoint */}
+          <div className="rounded-md relative z-10 grid grid-cols-1 lg:grid-cols-[2.5fr_2fr] 2xl:grid-cols-[4.5fr_2fr] gap-2 md:gap-4">
             {/* Right Side - Image first in responsive */}
             <motion.div
-              className="order-1 lg:order-2 relative flex items-center justify-center p-4 sm:p-6"
+              className="order-1 lg:order-2 relative flex items-center justify-center p-2 sm:p-4"
               variants={fadeUp}
             >
-              <div className="relative w-full h-full rounded-md overflow-hidden bg-gray-200">
-                <Image
-                  src="/About/president.png"
-                  alt="Mr. Anoop V. Mehta - President of Bharat Diamond Bourse"
-                  width={800}
-                  height={1000}
-                  className="w-full h-auto object-contain rounded-md"
-                  priority
-                />
+              <div className="relative w-full h-full flex items-center justify-center">
+                <div className="relative w-full aspect-[4/5] max-h-[500px] rounded-md overflow-hidden bg-gray-200">
+                  <Image
+                    src="/About/president.png"
+                    alt="Mr. Anoop V. Mehta - President of Bharat Diamond Bourse"
+                    fill
+                    className="object-cover object-top rounded-md"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+                    priority
+                  />
+                </div>
               </div>
             </motion.div>
 
             {/* Left Side - Content */}
             <motion.div
-              className="order-2 lg:order-1 bg-white rounded-md md:m-6 m-2 p-6 sm:p-8 md:p-16 relative flex flex-col"
+              className="order-2 lg:order-1 bg-white rounded-md md:m-4 m-2 p-4 sm:p-6 md:p-8 lg:p-10 relative flex flex-col"
               variants={fadeUp}
             >
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-5">
                 {/* Title */}
-                <div>
-                  <h2 className={`${gothamLight.className} text-xl sm:text-2xl md:text-4xl font-bold text-[#05183A]`}>
+                <div className="mb-2">
+                  <h2 className={`${gothamLight.className} text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#05183A] leading-tight`}>
                     Mr. Anoop V. Mehta
                   </h2>
-                  <p className={`${sora.className} text-[12px] sm:text-[13px] md:text-[14px] text-gray-600 mt-2`}>
+                  <p className={`${sora.className} text-xs sm:text-sm md:text-sm lg:text-sm xl:text-sm text-gray-600 mt-1 md:mt-2`}>
                     President Of Bharat Diamond Bourse
                   </p>
                 </div>
 
                 {/* Content */}
-                <div className={`${sora.className} space-y-4 text-gray-700 leading-relaxed text-justify text-[12px] sm:text-[13px] md:text-[14px]`}>
-                  <p>
+                <div className={`${sora.className} mt-5 space-y-3 md:space-y-4 text-gray-700 leading-relaxed text-justify text-xs sm:text-sm md:text-base lg:text-base xl:text-base`}>
+                  <p className="leading-snug md:leading-relaxed">
                     It is a privilege and an honour to serve as the President of the 
                     Bharat Diamond Bourse — the pride of India&apos;s gem and 
                     jewellery industry and a shining symbol of our nation&apos;s 
                     craftsmanship, trust, and global leadership.
                   </p>
-                  <p>
+                  <p className="leading-snug md:leading-relaxed">
                     BDB is not merely an exchange; it is a vision brought to life — a 
                     community built on transparency, excellence, and innovation. 
                     Our commitment remains firm to uphold the highest 
@@ -110,22 +111,22 @@ export default function President() {
                     opportunities that empower every stakeholder in our 
                     ecosystem.
                   </p>
-                  <p>
+                  <p className="leading-snug md:leading-relaxed">
                     Together, we continue to illuminate the world with the 
                     brilliance of Indian diamonds and the values that define us.
                   </p>
                 </div>
               </div>
 
-              {/* Bottom Button for Mobile/Tablets */}
+              {/* Bottom Right Corner Button */}
               <motion.button
-                className="mt-6 absolute lg:bottom-0 lg:right-0 w-auto bottom-0 right-0 lg:w-auto bg-[#05183A] text-white p-2.5 sm:p-5 md:p-7 rounded-br-md flex items-center justify-center hover:bg-[#0b214f] transition-all"
+                className="mt-6 md:mt-8 absolute bottom-0 right-0 bg-[#05183A] text-white p-3 sm:p-4 md:p-5 rounded-br-md rounded-tl-md hover:bg-[#0b214f] transition-all flex items-center justify-center"
                 variants={fadeUp}
+                aria-label="Read more about president"
               >
-                <FaArrowRight className='w-4 sm:w-3 md:w-7 h-6 sm:h-3 md:h-7'/>
+                <FaArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </motion.button>
             </motion.div>
-
           </div>
         </motion.div>
       </div>

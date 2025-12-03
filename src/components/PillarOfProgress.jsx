@@ -182,7 +182,7 @@ export default function PillarOfProgress() {
   const baseIndex = (idx) => ((idx % ITEMS.length) + ITEMS.length) % ITEMS.length;
 
   return (
-    <section className="bg-white pt-10 pb-12 sm:pb-14">
+    <section className="pt-10 pb-12 sm:pb-14">
       <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
         <h2
           className={`text-[#CBD3DD] text-center leading-none select-none pointer-events-none mb-8 sm:mb-10 tracking-[0.035em] ${carentro.className}`}
@@ -219,9 +219,9 @@ export default function PillarOfProgress() {
                 ].join(" ")}
               >
                 {isActive ? (
-                  <div className="relative isolate rounded-[22px] border border-[#CBD3DD] p-[10px] bg-white shadow-[0_10px_28px_rgba(14,35,78,0.14)]">
+                  <div className="relative isolate rounded-[6px] border border-[#CBD3DD] p-[10px] bg-white">
                     <div
-                      className="relative h-[64vw] sm:h-[48vw] lg:h-[360px] w-full overflow-hidden rounded-[18px] bg-white shadow-[inset_0_0_0_1px_rgba(225,230,239,1)]"
+                      className="relative h-[64vw] sm:h-[48vw] lg:h-[360px] w-full overflow-hidden rounded-[6px] bg-white shadow-[inset_0_0_0_1px_rgba(225,230,239,1)]"
                     >
                       <img
                         src={item.src}
@@ -232,7 +232,7 @@ export default function PillarOfProgress() {
                       />
                     </div>
 
-                    <div className="mt-3 rounded-[14px] bg-[#0E234E] text-white px-4 py-3 flex items-center justify-between">
+                    <div className="mt-3 rounded-[6px] bg-[#0E234E] text-white px-4 py-3 flex items-center justify-between">
                       <div className={`text-[13px] leading-tight whitespace-pre-line ${sora.className}`}>
                         {item.title}
                       </div>

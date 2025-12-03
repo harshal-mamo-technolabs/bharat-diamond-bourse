@@ -786,7 +786,7 @@ export default function Header() {
         {/* Background video */}
         <video
           ref={heroVideoRef}
-          src="/bdb-hero.mp4"
+          src="/bdb-hero-video.mp4"
           className="absolute inset-0 w-full h-full object-cover"
           autoPlay
           muted

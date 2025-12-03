@@ -109,7 +109,7 @@ export default function BourseSection() {
                     {/* video */}
                     <video
                         ref={videoRef}
-                        src="/BDB-Hero.mp4"
+                        src="/bdb-hero-video.mp4"
                         className="absolute inset-0 h-full w-full object-cover z-0"
                         playsInline
                         preload="metadata"
@@ -214,8 +214,8 @@ export default function BourseSection() {
 
                         {error && (
                             <p className="mt-3 text-sm text-red-600">
-                                {error} Place the file in <code className="font-mono">/public/bourse-tour/</code> and reference it as{" "}
-                                <code className="font-mono">/bourse-tour/bourse-tour.mp4</code>.
+                                {error} Place the file in <code className="font-mono">/public/bdb-hero-video.mp4/</code> and reference it as{" "}
+                                <code className="font-mono">/bdb-hero-video.mp4</code>.
                             </p>
                         )}
                     </div>

@@ -109,7 +109,7 @@ export default function BourseSection() {
                     {/* video */}
                     <video
                         ref={videoRef}
-                        src="/bdb-hero-video.mp4"
+                        src="/BDB2.mp4"
                         className="absolute inset-0 h-full w-full object-cover z-0"
                         playsInline
                         preload="metadata"

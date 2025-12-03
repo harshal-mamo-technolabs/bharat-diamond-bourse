@@ -77,8 +77,8 @@ export default function Header() {
   }, []);
 
   const slides = isMobile
-    ? ['/bdb-1-hero.png', '/BDB-Hero-2.png', '/bdb-image-1.png'] // no /Bdb-hero-2.png on mobile
-    : ['/bdb-1-hero.png', '/BDB-Hero-2.png', '/bdb-image-1.png'];
+    ? ['/bdb-1-hero.png', '/home/BDB-Hero-2.png', '/bdb-image-1.png'] // no /Bdb-hero-2.png on mobile
+    : ['/bdb-1-hero.png', '/home/BDB-Hero-2.png', '/bdb-image-1.png'];
 
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);

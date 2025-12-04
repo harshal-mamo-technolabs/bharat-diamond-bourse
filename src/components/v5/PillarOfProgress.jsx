@@ -328,14 +328,14 @@ export default function PillarOfProgress() {
         <div className="flex space-x-3">
           <button
             onClick={goToPrev}
-            className="w-12 h-12 bg-[#F2F4F6] text-[#05183A] rounded-md flex items-center justify-center shadow-lg hover:bg-[#E5E7EB] hover:scale-105 active:scale-95 transition-all duration-200"
+            className="w-12 h-12 bg-white text-[#05183A] rounded-md flex items-center justify-center shadow-md hover:bg-[#05183A] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200"
           >
             <FaArrowLeft className='w-3 h-3 justify-center'/>
           </button>
           
           <button
             onClick={goToNext}
-            className="w-12 h-12 bg-[#F2F4F6] text-[#05183A] rounded-md flex items-center justify-center shadow-lg hover:bg-[#E5E7EB] hover:scale-105 active:scale-95 transition-all duration-200"
+            className="w-12 h-12 bg-white text-[#05183A] rounded-md flex items-center justify-center shadow-md hover:bg-[#05183A] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200"
           >
             <FaArrowRight className='w-3 h-3 justify-center'/>
           </button>

@@ -14,11 +14,6 @@ const carentro = localFont({
   style: 'normal',
 });
 
-const gothamLight = localFont({
-    src: "../../public/fonts/Gotham Medium.otf",
-    weight: "400",
-    style: "normal",
-  });
 
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
@@ -109,7 +104,7 @@ export default function Facility() {
             <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
                 {/* Header */}
                 <header className="mb-8">
-                    <h1 className={`uppercase text-[#0E234E] text-[44px] md:text-[48px] leading-[1] font-[400] ${gothamLight.className}`}>
+                    <h1 className={`uppercase text-[#0E234E] text-[44px] md:text-[48px] leading-[1] font-[400] ${carentro.className}`}>
                         OUR WORLD-CLASS FACILITIES
                     </h1>
 
@@ -157,7 +152,7 @@ export default function Facility() {
                       <Image src={row.iconSrc} alt={`${row.name} icon`} width={22} height={22} />
                     </span>
 
-                    <span className={[`${gothamLight.className} uppercase text-[20px] leading-[1] tracking-[0.2px] font-[400]`, isActive ? `text-white` : `text-[#0E234E]`].join(" ")}>
+                    <span className={[`${carentro.className} uppercase text-[20px] leading-[1] tracking-[0.2px] font-[400]`, isActive ? `text-white` : `text-[#0E234E]`].join(" ")}>
                       {row.name}
                     </span>
                   </span>

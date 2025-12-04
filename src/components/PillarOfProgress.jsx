@@ -13,7 +13,7 @@ const carentro = localFont({
 });
 
 const gothamLight = localFont({
-  src: "../../../public/fonts/Gotham Medium.otf",
+  src: "../../public/fonts/Gotham Medium.otf",
   weight: "400",
   style: "normal",
 });

@@ -77,7 +77,7 @@ const StatsCard = () => {
         
         return newState;
       });
-    }, 3000); // Change card every 3 seconds
+    }, 2500); // Change card every 3 seconds
 
     return () => clearInterval(interval);
   }, [statsData.length]);

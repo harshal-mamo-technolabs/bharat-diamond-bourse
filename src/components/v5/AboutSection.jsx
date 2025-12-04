@@ -66,7 +66,7 @@ export default function AboutSection() {
     <section className="w-full py-10 sm:py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
         {/* Main heading */}
-        <div className="text-left mb-5">
+        <div className="text-left mb-2">
           <h1
             className={`text-3xl sm:text-4xl font-bold text-[#1D3156] leading-tight max-w-6xl mx-auto ${gothamLight.className}`}
           >
@@ -78,7 +78,7 @@ export default function AboutSection() {
 
         {/* Card container */}
         <div className="relative mb-10">
-          <div className="bg-[#F2F4F6]/15 rounded-md p-6 sm:p-10 sm:pt-20 relative mb-20 overflow-visible">
+          <div className="bg-[#F2F4F6]/15 rounded-md p-6 sm:p-10 sm:pt-10 relative mb-20 overflow-visible">
             {/* Grid for md+ screens, stacked for mobile */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 md:gap-y-0 md:gap-x-10 items-start">
 
@@ -109,7 +109,7 @@ export default function AboutSection() {
 
               {/* Building 1 image with framer-motion */}
               <motion.div
-                className="flex justify-center md:justify-end items-end relative -mt-4 sm:-mt-12 md:-mt-45 mb-8 sm:mb-16 md:mb-25"
+                className="flex justify-center md:justify-end items-end relative -mt-4 sm:-mt-12 md:-mt-35 mb-8 sm:mb-16 md:mb-25"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.8 }}

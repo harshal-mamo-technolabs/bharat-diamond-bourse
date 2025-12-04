@@ -643,10 +643,245 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Sora } from 'next/font/google';
-import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaYoutube, FaInstagram, FaLinkedin, FaSearch } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaYoutube, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 // Load Sora font
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
+
+// Animation variants - Unique names for each type
+const footerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 1.2,
+      ease: "easeOut"
+    }
+  }
+};
+
+const gridStagger = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const columnReveal = {
+  hidden: { y: 40, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 60,
+      damping: 20,
+      mass: 1,
+      duration: 1
+    }
+  }
+};
+
+const linkItem = {
+  hidden: { x: -15, opacity: 0 },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut"
+    }
+  },
+  hover: {
+    x: 6,
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 25,
+      duration: 0.3
+    }
+  }
+};
+
+const socialButton = {
+  hidden: { scale: 0, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 150,
+      damping: 18,
+      duration: 0.8
+    }
+  },
+  hover: {
+    scale: 1.1,
+    rotate: [0, 5, -5, 0],
+    transition: {
+      scale: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10
+      },
+      rotate: {
+        duration: 0.6,
+        ease: "easeInOut"
+      }
+    }
+  }
+};
+
+const contactButton = {
+  hidden: { scale: 0.9, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 200,
+      damping: 15,
+      duration: 0.7
+    }
+  },
+  hover: {
+    scale: 1.05,
+    y: -2,
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 10
+    }
+  },
+  tap: { scale: 0.98 }
+};
+
+const sectionSlideUp = {
+  hidden: { y: 50, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 1.5,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
+
+const iconGlow = {
+  hidden: { scale: 0.8, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      duration: 0.7,
+      ease: "easeOut"
+    }
+  },
+  hover: {
+    scale: 1.3,
+    rotate: 360,
+    transition: {
+      rotate: {
+        duration: 0.8,
+        ease: "easeInOut"
+      },
+      scale: {
+        duration: 0.3
+      }
+    }
+  }
+};
+
+const backgroundSparkle = {
+  animate: {
+    opacity: [0.1, 0.7, 0.1],
+    scale: [1, 1.4, 1],
+    transition: {
+      duration: 6,
+      repeat: Infinity,
+      repeatDelay: 2,
+      ease: "easeInOut"
+    }
+  }
+};
+
+const backgroundFloat = {
+  animate: {
+    y: [0, -40, 0],
+    x: [0, 20, 0],
+    rotate: [0, 90, 180, 270, 360],
+    transition: {
+      duration: 30,
+      repeat: Infinity,
+      ease: "linear"
+    }
+  }
+};
+
+const backgroundFloatSlow = {
+  animate: {
+    y: [0, -30, 10, 0],
+    x: [0, 30, -20, 0],
+    transition: {
+      duration: 40,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  }
+};
+
+const backgroundPulse = {
+  animate: {
+    opacity: [0.08, 0.18, 0.08],
+    scale: [1, 1.2, 1],
+    transition: {
+      duration: 15,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  }
+};
+
+const titleGlide = {
+  hidden: { y: 25, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 1,
+      ease: "easeOut"
+    }
+  }
+};
+
+const bottomBarReveal = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1.2,
+      ease: "easeOut"
+    }
+  }
+};
+
+const copyrightFade = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 1.5,
+      ease: "easeOut"
+    }
+  }
+};
 
 export default function Footer() {
     // Navigation items from header (Main Navigation)
@@ -699,213 +934,425 @@ export default function Footer() {
     ];
 
     return (
-        <footer className={`bg-[#0C1A32] text-white ${sora.className}`}>
+        <motion.footer 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={footerContainer}
+            className={`bg-[#0C1A32] text-white ${sora.className} overflow-hidden`}
+        >
+            {/* Animated Background Elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {/* Sparkle Effects */}
+                <motion.div 
+                    variants={backgroundSparkle}
+                    animate="animate"
+                    className="absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full"
+                />
+                <motion.div 
+                    variants={backgroundSparkle}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 0.5, 0] }}
+                    transition={{ delay: 1, duration: 6, repeat: Infinity, repeatDelay: 2 }}
+                    className="absolute top-1/3 right-1/3 w-3 h-3 bg-blue-300 rounded-full"
+                />
+                <motion.div 
+                    variants={backgroundSparkle}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 0.4, 0] }}
+                    transition={{ delay: 2, duration: 6, repeat: Infinity, repeatDelay: 2 }}
+                    className="absolute bottom-1/4 left-1/2 w-2 h-2 bg-cyan-200 rounded-full"
+                />
+
+                {/* Floating Gradient Orbs */}
+                <motion.div 
+                    variants={backgroundFloat}
+                    animate="animate"
+                    className="absolute -top-20 -left-20 w-80 h-80 bg-gradient-to-r from-[#1E3A8A]/10 to-[#3B82F6]/5 rounded-full blur-3xl"
+                />
+                <motion.div 
+                    variants={backgroundFloatSlow}
+                    animate="animate"
+                    className="absolute -bottom-20 -right-20 w-96 h-96 bg-gradient-to-r from-[#0EA5E9]/8 to-[#0369A1]/5 rounded-full blur-3xl"
+                />
+                <motion.div 
+                    variants={backgroundPulse}
+                    animate="animate"
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-[#8B5CF6]/10 to-[#A78BFA]/8 rounded-full blur-3xl"
+                />
+            </div>
+
             {/* Main Footer Content */}
-            <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32 py-12">
+            <div className="relative z-10 mx-auto px-4 md:px-8 lg:px-16 xl:px-32 py-12">
                 {/* Grid Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-6 gap-8">
-                    {/* Column 1: Quick Links (From header's topNavItems) */}
-                    <div className="md:col-span-1">
-                        <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
+                <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={gridStagger}
+                    className="grid grid-cols-1 md:grid-cols-6 gap-8"
+                >
+                    {/* Column 1: Quick Links */}
+                    <motion.div 
+                        variants={columnReveal}
+                        className="md:col-span-1"
+                    >
+                        <motion.h4 
+                            variants={titleGlide}
+                            whileHover={{ scale: 1.02 }}
+                            className="text-white font-semibold text-sm mb-6 uppercase tracking-wider"
+                        >
                             Quick Links
-                        </h4>
+                        </motion.h4>
                         <ul className="space-y-3">
-                            {topNavItems.map((item) => (
-                                <li key={item.href}>
+                            {topNavItems.map((item, index) => (
+                                <motion.li 
+                                    key={item.href}
+                                    variants={linkItem}
+                                    custom={index}
+                                    whileHover="hover"
+                                >
                                     <Link 
                                         href={item.href} 
-                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200 block"
+                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-300 block"
                                     >
                                         {item.label}
                                     </Link>
-                                </li>
+                                </motion.li>
                             ))}
                         </ul>
-                    </div>
+                    </motion.div>
 
-                    {/* Column 2: Main Navigation (From header's navItems) */}
-                    <div className="md:col-span-1">
-                        <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
+                    {/* Column 2: Main Navigation */}
+                    <motion.div 
+                        variants={columnReveal}
+                        className="md:col-span-1"
+                    >
+                        <motion.h4 
+                            variants={titleGlide}
+                            whileHover={{ scale: 1.02 }}
+                            className="text-white font-semibold text-sm mb-6 uppercase tracking-wider"
+                        >
                             Navigation
-                        </h4>
+                        </motion.h4>
                         <ul className="space-y-3">
-                            {navItems.map((item) => (
-                                <li key={item.href}>
+                            {navItems.map((item, index) => (
+                                <motion.li 
+                                    key={item.href}
+                                    variants={linkItem}
+                                    custom={index}
+                                    whileHover="hover"
+                                >
                                     <Link 
                                         href={item.href} 
-                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200 block"
+                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-300 block"
                                     >
                                         {item.label}
                                     </Link>
-                                </li>
+                                </motion.li>
                             ))}
                         </ul>
-                    </div>
+                    </motion.div>
 
-                    {/* Column 3: Facilities (From header's facilitiesSubnavItems) */}
-                    <div className="md:col-span-1">
-                        <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
+                    {/* Column 3: Facilities */}
+                    <motion.div 
+                        variants={columnReveal}
+                        className="md:col-span-1"
+                    >
+                        <motion.h4 
+                            variants={titleGlide}
+                            whileHover={{ scale: 1.02 }}
+                            className="text-white font-semibold text-sm mb-6 uppercase tracking-wider"
+                        >
                             Facilities
-                        </h4>
+                        </motion.h4>
                         <ul className="space-y-3">
                             {facilitiesSubnavItems.slice(0, 4).map((item, index) => (
-                                <li key={index}>
+                                <motion.li 
+                                    key={index}
+                                    variants={linkItem}
+                                    custom={index}
+                                    whileHover="hover"
+                                >
                                     <Link 
                                         href={`/v3/${item.toLowerCase().replace(/\s+/g, '-')}`} 
-                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200 block"
+                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-300 block"
                                     >
                                         {item}
                                     </Link>
-                                </li>
+                                </motion.li>
                             ))}
                         </ul>
-                    </div>
+                    </motion.div>
 
                     {/* Column 4: More Facilities */}
-                    <div className="md:col-span-1">
-                        <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
+                    <motion.div 
+                        variants={columnReveal}
+                        className="md:col-span-1"
+                    >
+                        <motion.h4 
+                            variants={titleGlide}
+                            whileHover={{ scale: 1.02 }}
+                            className="text-white font-semibold text-sm mb-6 uppercase tracking-wider"
+                        >
                             Facilities
-                        </h4>
+                        </motion.h4>
                         <ul className="space-y-3">
                             {facilitiesSubnavItems.slice(4).map((item, index) => (
-                                <li key={index}>
+                                <motion.li 
+                                    key={index}
+                                    variants={linkItem}
+                                    custom={index}
+                                    whileHover="hover"
+                                >
                                     <Link 
                                         href={`/v3/${item.toLowerCase().replace(/\s+/g, '-')}`} 
-                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200 block"
+                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-300 block"
                                     >
                                         {item}
                                     </Link>
-                                </li>
+                                </motion.li>
                             ))}
                         </ul>
-                    </div>
+                    </motion.div>
 
                     {/* Column 5: Office Information */}
-                    <div className="md:col-span-2">
-                        <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
+                    <motion.div 
+                        variants={columnReveal}
+                        className="md:col-span-2"
+                    >
+                        <motion.h4 
+                            variants={titleGlide}
+                            whileHover={{ scale: 1.02 }}
+                            className="text-white font-semibold text-sm mb-6 uppercase tracking-wider"
+                        >
                             Office
-                        </h4>
+                        </motion.h4>
                         <div className="space-y-4">
                             {/* Address */}
-                            <div className="flex items-start gap-3">
-                                <div className="shrink-0 mt-0.5">
+                            <motion.div 
+                                variants={linkItem}
+                                whileHover={{ x: 5 }}
+                                className="flex items-start gap-3"
+                            >
+                                <motion.div 
+                                    variants={iconGlow}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true }}
+                                    whileHover="hover"
+                                    className="shrink-0 mt-0.5"
+                                >
                                     <FaMapMarkerAlt className="w-4 h-4 text-[#94A3B8]" />
-                                </div>
+                                </motion.div>
                                 <p className="text-[#94A3B8] text-sm leading-relaxed">
                                     G Block BKC, Bandra Kurla Complex, Bandra East, Mumbai,
                                     Maharashtra 400051
                                 </p>
-                            </div>
+                            </motion.div>
 
                             {/* Phone */}
-                            <div className="flex items-center gap-3">
-                                <FaPhoneAlt className="w-4 h-4 text-[#94A3B8]" />
+                            <motion.div 
+                                variants={linkItem}
+                                whileHover={{ x: 5 }}
+                                className="flex items-center gap-3"
+                            >
+                                <motion.div 
+                                    variants={iconGlow}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true }}
+                                    whileHover="hover"
+                                    className="shrink-0"
+                                >
+                                    <FaPhoneAlt className="w-4 h-4 text-[#94A3B8]" />
+                                </motion.div>
                                 <Link 
                                     href="tel:+912233921500" 
-                                    className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200"
+                                    className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-300"
                                 >
                                     +91 22 3392 1500
                                 </Link>
-                            </div>
+                            </motion.div>
 
                             {/* Email */}
-                            <div className="flex items-center gap-3">
-                                <FaEnvelope className="w-4 h-4 text-[#94A3B8]" />
+                            <motion.div 
+                                variants={linkItem}
+                                whileHover={{ x: 5 }}
+                                className="flex items-center gap-3"
+                            >
+                                <motion.div 
+                                    variants={iconGlow}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true }}
+                                    whileHover="hover"
+                                    className="shrink-0"
+                                >
+                                    <FaEnvelope className="w-4 h-4 text-[#94A3B8]" />
+                                </motion.div>
                                 <Link 
                                     href="mailto:support@bdbindia.org" 
-                                    className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200"
+                                    className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-300"
                                 >
                                     support@bdbindia.org
                                 </Link>
-                            </div>
+                            </motion.div>
                         </div>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
 
                 {/* How can we help section */}
-                <div className="mt-12 pt-8 border-t border-[#2D4A6B]">
+                <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={sectionSlideUp}
+                    className="mt-12 pt-8 border-t border-[#2D4A6B]"
+                >
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div>
-                            <h3 className="text-white text-xl font-semibold mb-2">
+                            <motion.h3 
+                                variants={titleGlide}
+                                whileHover={{ scale: 1.01 }}
+                                className="text-white text-xl font-semibold mb-2"
+                            >
                                 How can we help?
-                            </h3>
-                            <p className="text-[#94A3B8] text-sm">
+                            </motion.h3>
+                            <motion.p 
+                                variants={titleGlide}
+                                whileHover={{ x: 5 }}
+                                className="text-[#94A3B8] text-sm"
+                            >
                                 Get in touch with our team for any queries or assistance
-                            </p>
+                            </motion.p>
                         </div>
-                        <Link 
-                            href="/v3/contact-us"
-                            className="bg-white text-[#0C1A32] font-semibold py-3 px-8 rounded-md hover:bg-gray-100 transition-colors duration-300 whitespace-nowrap inline-block"
+                        <motion.div
+                            variants={contactButton}
+                            whileHover="hover"
+                            whileTap="tap"
                         >
-                            Contact Us
-                        </Link>
+                            <Link 
+                                href="/v3/contact-us"
+                                className="bg-white text-[#0C1A32] font-semibold py-3 px-8 rounded-md hover:bg-gray-100 transition-colors duration-300 whitespace-nowrap inline-block"
+                            >
+                                Contact Us
+                            </Link>
+                        </motion.div>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Logo section */}
-                <div className="mt-10 pt-8 border-t border-[#2D4A6B]">
+                <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={sectionSlideUp}
+                    className="mt-10 pt-8 border-t border-[#2D4A6B]"
+                >
                     <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                         <div>
-                            <Image
-                                src="/bdb-logo-white.png"
-                                alt="Bharat Diamond Bourse"
-                                width={140}
-                                height={45}
-                                className="h-auto w-40"
-                                priority
-                            />
-                            <p className="text-[#94A3B8] text-sm mt-2">
+                            <motion.div
+                                variants={contactButton}
+                                whileHover="hover"
+                                className="inline-block"
+                            >
+                                <Image
+                                    src="/bdb-logo-white.png"
+                                    alt="Bharat Diamond Bourse"
+                                    width={140}
+                                    height={45}
+                                    className="h-auto w-40"
+                                    priority
+                                />
+                            </motion.div>
+                            <motion.p 
+                                variants={titleGlide}
+                                whileHover={{ x: 5 }}
+                                className="text-[#94A3B8] text-sm mt-2"
+                            >
                                 World's largest diamond trading hub
-                            </p>
+                            </motion.p>
                         </div>
                         
                         {/* Social Media */}
-                        <div className="flex space-x-4">
-                            {socialLinks.map((social) => (
-                                <Link
+                        <motion.div 
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.1 }}
+                            variants={gridStagger}
+                            className="flex space-x-4"
+                        >
+                            {socialLinks.map((social, index) => (
+                                <motion.div
                                     key={social.name}
-                                    href={social.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={social.name}
-                                    className="w-10 h-10 rounded-md bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
+                                    variants={socialButton}
+                                    custom={index}
+                                    whileHover="hover"
                                 >
-                                    <div className="text-white">
-                                        {social.icon}
-                                    </div>
-                                </Link>
+                                    <Link
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={social.name}
+                                        className="w-10 h-10 rounded-md bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
+                                    >
+                                        <div className="text-white">
+                                            {social.icon}
+                                        </div>
+                                    </Link>
+                                </motion.div>
                             ))}
-                        </div>
+                        </motion.div>
                     </div>
-                </div>
+                </motion.div>
             </div>
 
             {/* Bottom Footer Bar */}
-            <div className="bg-[#091526] py-6">
+            <motion.div 
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
+                variants={bottomBarReveal}
+                className="bg-[#091526] py-6"
+            >
                 <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
                     {/* Terms and Copyright */}
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <div className="flex flex-wrap justify-center gap-6">
-                            <Link href="/privacy-policy" className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200">
-                                Privacy policy
-                            </Link>
-                            <Link href="/cookie-policy" className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200">
-                                Cookie policy
-                            </Link>
-                            <Link href="#" className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200">
-                                Terms of use
-                            </Link>
-                            <Link href="#" className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200">
-                                Accessibility
-                            </Link>
-                        </div>
+                        <motion.div 
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.1 }}
+                            variants={gridStagger}
+                            className="flex flex-wrap justify-center gap-6"
+                        >
+                            {['Privacy policy', 'Cookie policy', 'Terms of use', 'Accessibility'].map((item, index) => (
+                                <motion.div
+                                    key={item}
+                                    variants={linkItem}
+                                    custom={index}
+                                    whileHover="hover"
+                                >
+                                    <Link 
+                                        href={`/${item.toLowerCase().replace(/\s+/g, '-')}`} 
+                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-300"
+                                    >
+                                        {item}
+                                    </Link>
+                                </motion.div>
+                            ))}
+                        </motion.div>
                         
-                        <p className="text-[#94A3B8] text-sm">
+                        <motion.p 
+                            variants={copyrightFade}
+                            whileHover={{ scale: 1.01 }}
+                            className="text-[#94A3B8] text-sm"
+                        >
                             © {new Date().getFullYear()} Bharat Diamond Bourse. All Rights Reserved.
-                        </p>
+                        </motion.p>
                     </div>
                 </div>
-            </div>
-        </footer>
+            </motion.div>
+        </motion.footer>
     );
 }

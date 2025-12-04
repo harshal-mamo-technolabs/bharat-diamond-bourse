@@ -208,7 +208,7 @@ export default function AboutSection() {
                     className="w-full h-full"
                   >
                     <Image
-                      src="/About/bdb-about.png"
+                      src="/Infra-BDB.png"
                       alt="Modern skyscrapers viewed from below"
                       fill
                       style={{ 

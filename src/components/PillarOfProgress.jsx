@@ -12,6 +12,12 @@ const carentro = localFont({
   style: 'normal',
 });
 
+const gothamLight = localFont({
+  src: "../../../public/fonts/Gotham Medium.otf",
+  weight: "400",
+  style: "normal",
+});
+
 // Load Sora font
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
@@ -185,7 +191,7 @@ export default function PillarOfProgress() {
     <section className="pt-10 pb-12 sm:pb-14">
       <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
         <h2
-          className={`text-[#CBD3DD] text-center leading-none select-none pointer-events-none mb-8 sm:mb-10 tracking-[0.035em] ${carentro.className}`}
+          className={`text-[#CBD3DD] text-center leading-none select-none pointer-events-none mb-8 sm:mb-10 tracking-[0.035em] ${gothamLight.className}`}
           style={{ fontSize: "clamp(34px, 6.2vw, 66px)" }}
         >
           OUR PILLARS OF PROGRESS

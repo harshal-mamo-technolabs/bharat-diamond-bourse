@@ -97,9 +97,9 @@ export default function PromoBanner() {
               transition={{ duration: 0.35, ease: [0.22, 0.61, 0.36, 1] }}
               className={[
                 // MOBILE & TABLET — same styling for screens below 1024px
-                'relative w-[94vw] max-h-[85vh] h-auto min-w-[300px] bg-white rounded-[16px] shadow-2xl overflow-hidden',
+                'relative w-[94vw] max-h-[85vh] h-auto min-w-[300px] bg-white rounded-[6px] shadow-2xl overflow-hidden',
                 // DESKTOP — only for large screens (1024px and above)
-                'lg:w-[48vw] lg:h-[70vh] lg:max-w-[900px] lg:max-h-[600px] lg:min-w-[320px] lg:rounded-[18px]',
+                'lg:w-[48vw] lg:h-[70vh] lg:max-w-[900px] lg:max-h-[600px] lg:min-w-[320px] lg:rounded-[6px]',
                 sora.className,
               ].join(' ')}
             >
@@ -166,7 +166,7 @@ export default function PromoBanner() {
                       setShowModal(true);
                     }}
                     className={[
-                      'group inline-flex items-center gap-3 rounded-[12px]',
+                      'group inline-flex items-center gap-3 rounded-[6px]',
                       'bg-[#0E234E] text-white uppercase tracking-[0.14em]',
                       gotham.className,
                       'px-6 py-3 text-[12px] lg:px-8 lg:py-4 lg:text-[14px]',

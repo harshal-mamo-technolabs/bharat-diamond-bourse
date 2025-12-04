@@ -16,11 +16,34 @@ const carentro = localFont({
   style: 'normal',
 });
 
+const gotham = localFont({
+    src: "../../../public/fonts/Gotham.otf",
+    weight: "400",
+    style: "normal",
+  });
+
+const gothamLight = localFont({
+    src: "../../../public/fonts/Gotham Medium.otf",
+    weight: "400",
+    style: "normal",
+  });
+
+
 export default function Insights() {
+
+    function Arrow({ color = "#FFFFFF", size = 16, stroke = 2, className = "" }) {
+        return (
+            <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3 12h14" stroke={color} strokeWidth={stroke} strokeLinecap="round" />
+                <path d="M14 7l5 5-5 5" stroke={color} strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+        );
+    }
+
     const insightCards = [
         {
             id: 1,
-            image: "/insight/inside-bdb-global-network.png",
+            image: "/insight/insight.webp",
             title: "The Evolution of Diamond Trading in India",
             description:
                 "Discover how Bharat Diamond Bourse transformed India's diamond industry into a global powerhouse...",
@@ -75,7 +98,7 @@ export default function Insights() {
             <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32">
                 {/* Header */}
                 <div className="mb-12 text-center">
-                    <h2 className={`font-carentro text-[#0E234E] text-[32px] md:text-[42px] lg:text-[48px] leading-tight ${carentro.className}`}>
+                    <h2 className={`font-carentro text-[#0E234E] text-[32px] md:text-[42px] lg:text-[48px] leading-tight ${gothamLight.className}`}>
                         INSIGHTS FROM THE DIAMOND TRADE
                     </h2>
                     <p className={`mx-auto mt-4 max-w-5xl text-[16px] md:text-[16px] leading-relaxed text-[#0E1425]/70 ${sora.className}`}>
@@ -116,7 +139,7 @@ export default function Insights() {
                                 </div>
 
                                 {/* Arrow holder overlays the image corner to fake the notch */}
-                                <button
+                                {/* <button
                                     type="button"
                                     aria-label="Open"
                                     className="
@@ -131,7 +154,7 @@ export default function Insights() {
                   <span className="inline-block transition-transform duration-300 group-hover:translate-x-0.5">
                     <Image src="/insight/arrow-icon-black.png" alt="" width={16} height={16} />
                   </span>
-                                </button>
+                                </button> */}
                             </div>
 
                             {/* Text */}
@@ -156,38 +179,27 @@ export default function Insights() {
 
                 {/* CTA */}
                 <div className="mt-10 text-center">
-                    <Link
-                        href="#"
-                        className="
-              group inline-flex items-center gap-3 rounded-[6px]
-              bg-[#0E234E] px-8 py-4 text-[13px] sm:text-[14px]
-              font-semibold uppercase tracking-[0.14em] text-white
-              ring-1 ring-black/5
-              transition-all duration-300 ease-out
-              hover:-translate-y-0.5
-              active:translate-y-0
-              focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E234E]
-            "
-                        aria-label="View News and Events"
-                    >
-                        View News & Events
-                        <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            className="transition-transform duration-300 group-hover:translate-x-1"
-                            aria-hidden="true"
-                        >
-                            <path
-                                d="M5 12h14M13 5l7 7-7 7"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                    </Link>
+                <button
+                    onClick={() => setShowModal(true)}
+                    className={[
+                      "group relative inline-flex items-center justify-between",
+                      "rounded-[8px] px-1 py-2",
+                      "",
+                      `${gotham.className}`,
+                      "text-[#0E234E] hover:text-[#0e234e] active:text-[#0E234E] font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]",
+                      "transition-all duration-200 hover:-translate-y-px",
+                      "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
+                      "w-max",
+                    ].join(" ")}
+                  >
+                    <span>View news & events</span>
+                    <Arrow
+                      color="#0E234E"
+                      size={18}
+                      stroke={2}
+                      className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
+                    />
+                  </button>
                 </div>
             </div>
         </section>

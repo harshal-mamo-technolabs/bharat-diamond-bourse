@@ -9,7 +9,7 @@ import { Sora } from "next/font/google";
 
 // Load Carentro from OTF
 const carentro = localFont({
-  src: '../../public/fonts/Carentro.otf',
+  src: '../../../public/fonts/Carentro.otf',
   weight: '400',
   style: 'normal',
 });
@@ -19,6 +19,13 @@ const gothamLight = localFont({
     weight: "400",
     style: "normal",
   });
+
+const gotham = localFont({
+    src: "../../../public/fonts/Gotham.otf",
+    weight: "400",
+    style: "normal",
+  });
+
 
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '700'] });
 
@@ -203,21 +210,27 @@ export default function Facility() {
                                     {current.copy}
                                 </p>
 
-                                <Link
-                                    href={current.url}
-                                    className={[
-                                        "group relative inline-flex items-center justify-between",
-                                        "rounded-[6px] px-5 py-2.5",
-                                        "bg-[#0E234E]",
-                                        "text-white font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]",
-                                        "transition-all duration-200 hover:-translate-y-px",
-                                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-                                        "w-max",
-                                    ].join(" ")}
-                                >
-                                    <span>Learn more</span>
-                                    <Arrow color="#FFFFFF" size={16} stroke={2} className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1" />
-                                </Link>
+                                <button
+                    onClick={() => setShowModal(true)}
+                    className={[
+                      "group relative inline-flex items-center justify-between",
+                      "rounded-[8px] px-1 py-2",
+                      "",
+                      `${gotham.className}`,
+                      "text-[#0E234E] hover:text-[#0e234e] active:text-[#0E234E] font-carentro uppercase text-[13px] font-[600] tracking-[0.5px]",
+                      "transition-all duration-200 hover:-translate-y-px",
+                      "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
+                      "w-max",
+                    ].join(" ")}
+                  >
+                    <span>Learn more</span>
+                    <Arrow
+                      color="#0E234E"
+                      size={18}
+                      stroke={2}
+                      className="ml-3 transform-gpu transition-transform duration-200 group-hover:translate-x-1"
+                    />
+                  </button>
                             </motion.div>
                         </AnimatePresence>
                     </div>

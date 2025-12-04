@@ -638,38 +638,120 @@
 //     );
 // }
 
-
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { Sora } from 'next/font/google';
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaYoutube, FaInstagram, FaLinkedin, FaSearch } from 'react-icons/fa';
 
 // Load Sora font
 const sora = Sora({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
 export default function Footer() {
+    // Navigation items from header (Main Navigation)
+    const navItems = [
+        { href: '/v3', label: 'Home' },
+        { href: '/v3/about', label: 'About Us' },
+        { href: '/v3/facilities', label: 'Facilities' },
+        { href: '/v3/news&events', label: 'News & Events' },
+        { href: '/v3/sustainability', label: 'Sustainability' },
+    ];
+
+    // Top navigation items from header (Quick Links)
+    const topNavItems = [
+        { href: '/v3/circulars', label: 'Circulars' },
+        { href: '/v3/members-directory', label: 'Member\'s directory' },
+        { href: '/v3/contact-us', label: 'Contact us' },
+        { href: '/v3/careers', label: 'Careers' },
+    ];
+
+    // Facilities subnavigation items from header
+    const facilitiesSubnavItems = [
+        'Banks',
+        'Internet Telecom',
+        'Resturants',
+        'Online Trading',
+        'Bus Services',
+        'Testing Laboratories',
+        'Diamond Equipments',
+        'Trading Hall',
+        'Travel Agents',
+    ];
+
+    // Social media links
+    const socialLinks = [
+        { 
+            name: "LinkedIn", 
+            href: "https://in.linkedin.com/company/bharat-diamond-bourse",
+            icon: <FaLinkedin className="w-5 h-5" />
+        },
+        { 
+            name: "YouTube", 
+            href: "https://youtube.com/@bharatdiamondbourse?si=Gmf8Og-vbMyfJ6-o",
+            icon: <FaYoutube className="w-5 h-5" />
+        },
+        { 
+            name: "Instagram", 
+            href: "https://www.instagram.com/bharatdiamondbourse/?hl=en",
+            icon: <FaInstagram className="w-5 h-5" />
+        },
+    ];
+
     return (
         <footer className={`bg-[#0C1A32] text-white ${sora.className}`}>
             {/* Main Footer Content */}
             <div className="mx-auto px-4 md:px-8 lg:px-16 xl:px-32 py-12">
                 {/* Grid Layout */}
                 <div className="grid grid-cols-1 md:grid-cols-6 gap-8">
-                    {/* Column 1: About */}
+                    {/* Column 1: Quick Links (From header's topNavItems) */}
                     <div className="md:col-span-1">
                         <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
-                            About
+                            Quick Links
                         </h4>
                         <ul className="space-y-3">
-                            {[
-                                "Our company",
-                                "Board of directors",
-                                "Awards",
-                                "Success stories"
-                            ].map((item) => (
-                                <li key={item}>
+                            {topNavItems.map((item) => (
+                                <li key={item.href}>
                                     <Link 
-                                        href="#" 
+                                        href={item.href} 
+                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200 block"
+                                    >
+                                        {item.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Column 2: Main Navigation (From header's navItems) */}
+                    <div className="md:col-span-1">
+                        <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
+                            Navigation
+                        </h4>
+                        <ul className="space-y-3">
+                            {navItems.map((item) => (
+                                <li key={item.href}>
+                                    <Link 
+                                        href={item.href} 
+                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200 block"
+                                    >
+                                        {item.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Column 3: Facilities (From header's facilitiesSubnavItems) */}
+                    <div className="md:col-span-1">
+                        <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
+                            Facilities
+                        </h4>
+                        <ul className="space-y-3">
+                            {facilitiesSubnavItems.slice(0, 4).map((item, index) => (
+                                <li key={index}>
+                                    <Link 
+                                        href={`/v3/${item.toLowerCase().replace(/\s+/g, '-')}`} 
                                         className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200 block"
                                     >
                                         {item}
@@ -679,21 +761,16 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Column 2: Help */}
+                    {/* Column 4: More Facilities */}
                     <div className="md:col-span-1">
                         <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
-                            Help
+                            Facilities
                         </h4>
                         <ul className="space-y-3">
-                            {[
-                                "Contact us",
-                                "Member portal",
-                                "Help centre",
-                                "Executive biographies"
-                            ].map((item) => (
-                                <li key={item}>
+                            {facilitiesSubnavItems.slice(4).map((item, index) => (
+                                <li key={index}>
                                     <Link 
-                                        href="#" 
+                                        href={`/v3/${item.toLowerCase().replace(/\s+/g, '-')}`} 
                                         className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200 block"
                                     >
                                         {item}
@@ -703,100 +780,45 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Column 3: Newsroom */}
-                    <div className="md:col-span-1">
+                    {/* Column 5: Office Information */}
+                    <div className="md:col-span-2">
                         <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
-                            Newsroom
+                            Office
                         </h4>
-                        <ul className="space-y-3">
-                            {[
-                                "News",
-                                "Media room",
-                                "Factsheets",
-                                "Market updates"
-                            ].map((item) => (
-                                <li key={item}>
-                                    <Link 
-                                        href="#" 
-                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200 block"
-                                    >
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                        <div className="space-y-4">
+                            {/* Address */}
+                            <div className="flex items-start gap-3">
+                                <div className="shrink-0 mt-0.5">
+                                    <FaMapMarkerAlt className="w-4 h-4 text-[#94A3B8]" />
+                                </div>
+                                <p className="text-[#94A3B8] text-sm leading-relaxed">
+                                    G Block BKC, Bandra Kurla Complex, Bandra East, Mumbai,
+                                    Maharashtra 400051
+                                </p>
+                            </div>
 
-                    {/* Column 4: Careers */}
-                    <div className="md:col-span-1">
-                        <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
-                            Careers
-                        </h4>
-                        <ul className="space-y-3">
-                            {[
-                                "Early careers",
-                                "Jobs",
-                                "Life in BDB",
-                                "Employee benefits"
-                            ].map((item) => (
-                                <li key={item}>
-                                    <Link 
-                                        href="#" 
-                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200 block"
-                                    >
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                            {/* Phone */}
+                            <div className="flex items-center gap-3">
+                                <FaPhoneAlt className="w-4 h-4 text-[#94A3B8]" />
+                                <Link 
+                                    href="tel:+912233921500" 
+                                    className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200"
+                                >
+                                    +91 22 3392 1500
+                                </Link>
+                            </div>
 
-                    {/* Column 5: Sustainability */}
-                    <div className="md:col-span-1">
-                        <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
-                            Sustainability
-                        </h4>
-                        <ul className="space-y-3">
-                            {[
-                                "Our commitment",
-                                "Download report",
-                                "Public register",
-                                "ESG initiatives"
-                            ].map((item) => (
-                                <li key={item}>
-                                    <Link 
-                                        href="#" 
-                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200 block"
-                                    >
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Column 6: Business directory */}
-                    <div className="md:col-span-1">
-                        <h4 className="text-white font-semibold text-sm mb-6 uppercase tracking-wider">
-                            Business directory
-                        </h4>
-                        <ul className="space-y-3">
-                            {[
-                                "Members directory",
-                                "Restaurant directory",
-                                "Banking services",
-                                "Testing laboratories"
-                            ].map((item) => (
-                                <li key={item}>
-                                    <Link 
-                                        href="#" 
-                                        className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200 block"
-                                    >
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+                            {/* Email */}
+                            <div className="flex items-center gap-3">
+                                <FaEnvelope className="w-4 h-4 text-[#94A3B8]" />
+                                <Link 
+                                    href="mailto:support@bdbindia.org" 
+                                    className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200"
+                                >
+                                    support@bdbindia.org
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -811,9 +833,12 @@ export default function Footer() {
                                 Get in touch with our team for any queries or assistance
                             </p>
                         </div>
-                        <button className="bg-white text-[#0C1A32] font-semibold py-3 px-8 rounded-md hover:bg-gray-100 transition-colors duration-300 whitespace-nowrap">
+                        <Link 
+                            href="/v3/contact-us"
+                            className="bg-white text-[#0C1A32] font-semibold py-3 px-8 rounded-md hover:bg-gray-100 transition-colors duration-300 whitespace-nowrap inline-block"
+                        >
                             Contact Us
-                        </button>
+                        </Link>
                     </div>
                 </div>
 
@@ -836,25 +861,18 @@ export default function Footer() {
                         
                         {/* Social Media */}
                         <div className="flex space-x-4">
-                            {[
-                                { name: "LinkedIn", icon: "/footer/linkedin-icon.png" },
-                                { name: "Twitter", icon: "/footer/twitter-icon.png" },
-                                { name: "Facebook", icon: "/footer/facebook-icon.png" },
-                                { name: "Instagram", icon: "/footer/instagram-icon.png" },
-                            ].map((social) => (
+                            {socialLinks.map((social) => (
                                 <Link
                                     key={social.name}
-                                    href="#"
+                                    href={social.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     aria-label={social.name}
-                                    className="w-10 h-10 rounded-full bg-[#1A2E4A] flex items-center justify-center hover:bg-[#2D4A6B] transition-colors duration-300"
+                                    className="w-10 h-10 rounded-md bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
                                 >
-                                    <Image
-                                        src={social.icon}
-                                        alt={social.name}
-                                        width={16}
-                                        height={16}
-                                        className="w-5 h-5"
-                                    />
+                                    <div className="text-white">
+                                        {social.icon}
+                                    </div>
                                 </Link>
                             ))}
                         </div>
@@ -868,14 +886,14 @@ export default function Footer() {
                     {/* Terms and Copyright */}
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <div className="flex flex-wrap justify-center gap-6">
-                            <Link href="#" className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200">
-                                Terms of use
-                            </Link>
-                            <Link href="#" className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200">
+                            <Link href="/privacy-policy" className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200">
                                 Privacy policy
                             </Link>
-                            <Link href="#" className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200">
+                            <Link href="/cookie-policy" className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200">
                                 Cookie policy
+                            </Link>
+                            <Link href="#" className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200">
+                                Terms of use
                             </Link>
                             <Link href="#" className="text-[#94A3B8] hover:text-white text-sm transition-colors duration-200">
                                 Accessibility
@@ -883,11 +901,9 @@ export default function Footer() {
                         </div>
                         
                         <p className="text-[#94A3B8] text-sm">
-                            All rights reserved. Copyright BDB ©{new Date().getFullYear()}
+                            © {new Date().getFullYear()} Bharat Diamond Bourse. All Rights Reserved.
                         </p>
                     </div>
-
-                
                 </div>
             </div>
         </footer>
